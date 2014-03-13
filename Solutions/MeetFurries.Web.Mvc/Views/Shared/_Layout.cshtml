@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+             tomorrow comes today 
+        </title>
+        
+        <link rel="SHORTCUT ICON" href="/Content/img/favicon.ico"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css" rel="stylesheet">
+        
+        
+        <script src="@Url.Content("/Scripts/jquery-2.0.3.min.js")"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="@Url.Content("/Scripts/modernizr-2.6.2.js")"></script>
+        
+        <link href="@Url.Content("/Content/css/styles.css")" type="text/css" rel="stylesheet" />
+        
+        <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+        <script src="@Url.Content("/Content/js/widgets/locations-widget.js")"></script>
+        <script src="@Url.Content("/Content/js/oauth.js")" type="text/javascript"></script>
+        <script src="@Url.Content("/Content/js/oauth-twitter-init.js")"></script>
+        <script src="@Url.Content("/Content/js/bootstrap-mvc-validation.js")"></script>
+        <script src="@Url.Content("/Scripts/jquery.signalR-1.0.0.min.js")"></script>
+        <script src="@Url.Content("~/signalr/hubs")" type="text/javascript"></script>
+        <script src="@Url.Content("/Scripts/knockout-2.3.0.js")"></script>
+        <script src="@Url.Content("/Scripts/knockout.mapping-latest.js")"></script>
+    </head>
+    <body>
+        
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "login" }))
+        {
+            <input type="hidden" id="provider" name="provider"/>
+            <input type="hidden" id="response" name="response"/>
+        }
+
+        <div class="navbar navbar-fixed-top">
+            <div class="container">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="/">tomorrowcomes.today</a>
+                <div class="collapse navbar-collapse">                
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-map-marker"></i> Meets <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("All Meets", "AllEvents", "Account")</li>
+                                <li><a href="#">Happening soon</a></li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Meets I'm Attending", "Attending", "Account")</li>
+                                <li>@Html.ActionLink("Meets I'm Organising", "Organising", "Account")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Create a Meet", "Create", "Meet")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                     
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span><i class="icon-user"></i> Your profile<b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header text-center">Ohai, you/li>
+                                <li class="dropdown-header text-center"></li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Edit Account", "Edit", "Account")</li>
+                                <li>@Html.ActionLink("Log Out", "LogOut", "Account")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+        
+        @* /Nav bar *@       
+        <div class="container">
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+    </body>
+</html>

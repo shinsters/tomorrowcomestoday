@@ -1,0 +1,136 @@
+body {
+     padding-top: 50px;
+     background-image: url("/Content/img/squairy_light.png")
+
+}
+
+.navbar-fixed-top  {
+    background-color: #333;
+    color: #ccc;
+
+}
+.navbar-fixed-top a  {
+    color: #ccc;
+}
+
+.nav .caret {
+    color: #ccc;
+}
+
+.leftpane, .rightpane {
+     padding-top: 20px; 
+     padding-bottom: 20px;
+}
+
+.adminonly
+{
+    display: none;
+}
+
+body.admin .adminonly
+{
+    display: inherit;
+}
+
+.panel .panel-heading a.dropdown-toggle
+{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.panel .panel-heading a
+{
+    text-decoration: none;
+}
+
+.mapwidget
+{
+    height: 500px;
+}
+
+.mapwidget .mapwidget-pin
+{
+    display: none;
+}
+
+.panel > .list-group { margin: -15px -15px -15px; border-radius: 0; }
+.panel > .list-group .list-group-item { border-left: 0; border-right: 0; border-radius: 0; }
+.panel > .list-group .list-group-item:last-child { border-bottom: 0; }
+.panel > .list-group .list-group-item:first-child { border-top: 0; }
+
+.btn-default { border-color: #CCC; background: white; color: black; }
+.btn-default:hover { border-color: #ADADAD; background: #EBEBEB; color: black; }
+
+.btn-group .btn { border-left-width: 0px; }
+.btn-group .btn:first-child { border-left-width: 1px; }
+
+.flip-clock-wrapper
+{
+    margin: 0;
+    padding: 1em;
+    width: 650px;
+    display: inline-block;
+}
+.flip-clock-wrapper.countdown-canvas-wide
+{
+    width: 720px;
+}
+
+.countdown-canvas-wide .flip-clock-divider.days .flip-clock-label {
+    right: -119px;
+}
+
+.dropdown form input {
+    margin-bottom: 15px;
+    font-size: 25px;
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+.dropdown form {
+    padding: 15px;
+    margin: 0;
+    width: 360px;
+}
+
+.dropdown form button {
+    width: 100%;
+}
+
+.dropdown form .rdio label,
+.dropdown form .chckbox label
+{
+    display: block;
+}
+
+.dropdown form .chckbox input,
+.dropdown form .rdio input
+{
+    font-size: inherit;
+    vertical-align: top;
+}
+
+.map-canvas
+{
+    height: 250px;
+}
+
+.list-group-nopadding .list-group-item
+{
+    padding-right: 15px;
+}
+
+#locations .list-group-item:first-child .btn-danger
+{
+    display: none;
+}
+
+.homepage #map-canvas
+{
+    height: 500px;
+}
+
+/* Dashboard */
+.headerImage {
+    background-image: url("/Content/img/header.jpg")
+}

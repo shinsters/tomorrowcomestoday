@@ -1,0 +1,40 @@
+﻿@model TomorrowComesToday.Web.Mvc.Controllers.ViewModels.Event.IndexViewModel
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-10 col-md-offset-1">
+    <div class="panel panel-default headerImage">
+        <div class="text-center">
+            <h2>@ViewBag.title</h2>
+            <p>@Model.Description</p>
+            <p>
+                <em>@Model.StartTime.ToString("dd/MM/yyyy h:mm tt")</em>
+                @if (!Model.IsOver)
+                {
+                    <em> - <strong>In @Model.DaysUntilMeet days</strong></em>
+                }
+            </p> 
+        </div>
+        
+    </div>
+    
+</div>
+                                                                            
+<div class="col-md-2">  
+    <ul class="list-group">
+        <li class="list-group-item"><a href="#Map">Map</a></li>
+        <li class="list-group-item"><a href="#LiveChat">Live Chat</a></li>
+        <li class="list-group-item"><a href="#Attendees">Attendees</a></li>
+    </ul>
+</div>
+
+@this.RenderPage("ChatWidget.cshtml")
+
+@this.RenderPage("AttendanceWidget.cshtml")
+
+<script type="text/javascript">
+    var token = "@Model.Token";
+</script>
+<script src="../../Content/js/widgets/Dashboard.js"></script>

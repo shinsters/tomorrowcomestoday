@@ -1,0 +1,39 @@
+﻿@model TomorrowComesToday.Web.Mvc.Controllers.ViewModels.Account.MeetListViewModel
+
+@{
+    ViewBag.Title = "Meets I'm Organising";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="text-center">
+    <h2>Meets I'm Organising</h2>
+</div>
+
+@if (!Model.Meets.Any())
+{
+<div class="text-center">
+    <h3>None. It's probably for the best.</h3>
+</div>
+
+}else{
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Starts</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meet in Model.Meets)
+            {
+                <tr onclick="document.location = '/m/@meet.Slug';">
+                    <td>@meet.Name</td>
+                    <td>@meet.StartTime</td>
+                    <td>@meet.LocationName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+    

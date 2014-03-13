@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SignalR.Castle.Windsor</id>
+    <version>1.0.0</version>
+    <title>SignalR.Castle.Windsor</title>
+    <authors>Steven Lauwers</authors>
+    <owners>Steven Lauwers</owners>
+    <projectUrl>https://github.com/stevenlauwers22/SignalR.Castle.Windsor/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A Castle.Windsor dependency resolver implementation for SignalR.</description>
+    <language>en-US</language>
+    <tags>SignalR Castle Windsor</tags>
+    <dependencies>
+      <dependency id="Castle.Windsor" version="3.1.0" />
+      <dependency id="Microsoft.AspNet.SignalR.Core" version="1.0.1" />
+    </dependencies>
+    <references>
+      <reference file="SignalR.Castle.Windsor.dll" />
+    </references>
+  </metadata>
+</package>

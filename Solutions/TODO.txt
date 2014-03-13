@@ -1,0 +1,49 @@
+Thanks again for the help :)
+If you get sick of it, don't feel obliged to carry on helping. 
+Feel free to modify this file, add bits w/e.
+
+Todo:
+ - Meets really need a town/city location. Adding a 'is venue' flag is a little confusing
+  - This should autocomplete. Get list of towns in the UK, but allow to add new. Autocomplete but editable?
+ - When adding a meet in a town/city, suggest venues?
+ - I guess front end, when pushing stuff through sockets, should really use angular. 
+ - Look into signalr integration with castle windsor. Injecting services into them would be awesome.
+ - TESTS. I know you can't be fucked, but just fucking do them.
+ - User input validation, get some swearing blocked.  This is a professional website, for professional people.
+
+
+Front End
+=========
+ - Bootstrap 3 
+ - Dashboard style
+ - Widgets in partials
+ - Top menu with links/auth
+ - Responsive?
+ - Logo?  I made one, once. It wasn't great.
+
+Backend
+========
+
+ - Event (possibly some more properties than these)
+	Title
+	Date
+	Administrators (Can modify settings)
+	Moderators (Can delete comments etc)
+	Widgets
+	ConfirmedAttendees
+	MaybeAttendees
+ 
+ - Users
+	Finish authentication
+	Gravitar? (enter email address)
+
+ - Widgets (these are panels for the dashboard of varying types?)
+	Calandar
+	Map
+	Wall
+	Tweets
+	Photos?
+	Meet Organiser Details (photo, content details?)
+
+ - Administrative tool
+    Send SMS to all confirmed attendees
