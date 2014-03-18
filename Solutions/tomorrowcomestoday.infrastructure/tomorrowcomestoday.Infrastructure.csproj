@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Implementations\Repositories\UserRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
+    <Compile Include="Interfaces\Services\IGameStartService.cs" />
     <Compile Include="NHibernateMaps\AutomappingConfiguration.cs" />
     <Compile Include="NHibernateMaps\Conventions\CustomForeignKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\HasManyConvention.cs" />
@@ -148,7 +149,6 @@
   <ItemGroup>
     <Folder Include="Enums\" />
     <Folder Include="Implementations\Services\" />
-    <Folder Include="Interfaces\Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

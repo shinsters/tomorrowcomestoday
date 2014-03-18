@@ -65,16 +65,26 @@ namespace TomorrowComesToday.Tests.SpecflowTests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 6
+#line 7
+ testRunner.Given("I have a deck of cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("When a game starts users are handed")]
         public virtual void WhenAGameStartsUsersAreHanded()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When a game starts users are handed", ((string[])(null)));
-#line 6
+#line 10
 this.ScenarioSetup(scenarioInfo);
-#line 7
+#line 6
+this.FeatureBackground();
+#line 11
  testRunner.Given("I have a started game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 8
+#line 12
  testRunner.Then("I expect every user will have a full set of cards in their hand", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

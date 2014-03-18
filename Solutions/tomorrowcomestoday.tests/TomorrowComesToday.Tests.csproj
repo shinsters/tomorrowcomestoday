@@ -65,6 +65,7 @@
       <DependentUpon>GameRoundTests.feature</DependentUpon>
     </Compile>
     <Compile Include="SpecflowTests\StepDefinitions\GameRoundSteps.cs" />
+    <Compile Include="SpecflowTests\StepDefinitions\GameTestSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
