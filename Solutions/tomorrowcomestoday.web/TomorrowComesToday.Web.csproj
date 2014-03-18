@@ -245,11 +245,11 @@
     <Content Include="Views\Meet\AttendanceWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MeetFurries.Domain\MeetFurries.Domain.csproj">
+    <ProjectReference Include="..\TomorrowComesToday.Domain\TomorrowComesToday.Domain.csproj">
       <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
       <Name>MeetFurries.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MeetFurries.Infrastructure\MeetFurries.Infrastructure.csproj">
+    <ProjectReference Include="..\TomorrowComesToday.Infrastructure\TomorrowComesToday.Infrastructure.csproj">
       <Project>{9544D94B-9B6E-4B61-8A09-88382205BF86}</Project>
       <Name>MeetFurries.Infrastructure</Name>
     </ProjectReference>

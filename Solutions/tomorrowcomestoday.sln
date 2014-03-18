@@ -15,13 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AC222E
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetFurries.Domain", "MeetFurries.Domain\MeetFurries.Domain.csproj", "{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomorrowComesToday.Domain", "TomorrowComesToday.Domain\TomorrowComesToday.Domain.csproj", "{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetFurries.Infrastructure", "MeetFurries.Infrastructure\MeetFurries.Infrastructure.csproj", "{9544D94B-9B6E-4B61-8A09-88382205BF86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomorrowComesToday.Infrastructure", "TomorrowComesToday.Infrastructure\TomorrowComesToday.Infrastructure.csproj", "{9544D94B-9B6E-4B61-8A09-88382205BF86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomorrowComesToday.Web", "MeetFurries.Web.Mvc\TomorrowComesToday.Web.csproj", "{39613BA0-1206-4A4B-A16A-C1F2A22D1267}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TomorrowComesToday.Database", "MeetFurriesDatabase\TomorrowComesToday.Database.sqlproj", "{E76EA07A-8F1E-48E7-86F8-B712141C1592}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomorrowComesToday.Web", "TomorrowComesToday.Web\TomorrowComesToday.Web.csproj", "{39613BA0-1206-4A4B-A16A-C1F2A22D1267}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
