@@ -8,8 +8,8 @@
     <ProjectGuid>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MeetFurries.Domain</RootNamespace>
-    <AssemblyName>MeetFurries.Domain</AssemblyName>
+    <RootNamespace>TomorrowComesToday.Domain</RootNamespace>
+    <AssemblyName>TomorrowComesToday.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>false</SignAssembly>
@@ -90,15 +90,6 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Enums\Forums\ForumAccessibility.cs" />
-    <Compile Include="Forum.cs" />
-    <Compile Include="Enums\StateCache\CachedType.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="Comment.cs" />
-    <Compile Include="Enums\Authentication\AuthenticationProvider.cs" />
-    <Compile Include="Meet.cs" />
-    <Compile Include="Sms.cs" />
-    <Compile Include="StateCacheItem.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -118,9 +109,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contracts\Tasks\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config">

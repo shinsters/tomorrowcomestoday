@@ -108,46 +108,20 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Domain\AwaitingJoinToHub.cs" />
-    <Compile Include="Enums\Authentication\AuthenticationState.cs" />
-    <Compile Include="Enums\Meets\MeetAttendanceStatus.cs" />
-    <Compile Include="Enums\StateCache\CachedType.cs" />
-    <Compile Include="Implementations\Repositories\ForumRepository.cs" />
-    <Compile Include="Implementations\Repositories\MeetRepository.cs" />
-    <Compile Include="Implementations\Repositories\StateCacheRepository.cs" />
     <Compile Include="Implementations\Repositories\UserRepository.cs" />
-    <Compile Include="Implementations\Services\MeetHubStateService.cs" />
-    <Compile Include="Implementations\Services\MeetService.cs" />
-    <Compile Include="Implementations\Services\StateCacheService.cs" />
-    <Compile Include="Implementations\Services\WebAuthenticationService.cs" />
-    <Compile Include="Interfaces\Repositories\IForumRepository.cs" />
-    <Compile Include="Interfaces\Repositories\IMeetRepository.cs" />
-    <Compile Include="Interfaces\Repositories\IStateCacheRepository.cs" />
-    <Compile Include="Interfaces\Services\IFormsAuthenticationService.cs" />
     <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
-    <Compile Include="Implementations\Services\WebFormsAuthenticationService.cs" />
-    <Compile Include="Interfaces\Services\IAuthenticationService.cs" />
-    <Compile Include="Interfaces\Services\IMeetHubStateService.cs" />
-    <Compile Include="Interfaces\Services\IMeetService.cs" />
-    <Compile Include="Interfaces\Services\IStateCacheService.cs" />
-    <Compile Include="Interfaces\Services\IUserContextService.cs" />
-    <Compile Include="Implementations\Services\WebUserContextService.cs" />
     <Compile Include="NHibernateMaps\AutomappingConfiguration.cs" />
     <Compile Include="NHibernateMaps\Conventions\CustomForeignKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\HasManyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
-    <Compile Include="NHibernateMaps\Mappings\CommentMap.cs" />
-    <Compile Include="NHibernateMaps\Mappings\ForumMap.cs" />
-    <Compile Include="NHibernateMaps\Mappings\LocationMap.cs" />
-    <Compile Include="NHibernateMaps\Mappings\MeetMap.cs" />
     <Compile Include="NHibernateMaps\Mappings\UserMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TomorrowComesToday.Domain\TomorrowComesToday.Domain.csproj">
       <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
-      <Name>MeetFurries.Domain</Name>
+      <Name>TomorrowComesToday.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +145,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Implementations\Services\" />
+    <Folder Include="Interfaces\Services\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

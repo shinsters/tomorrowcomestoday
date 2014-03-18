@@ -229,33 +229,26 @@
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Account\Edit.cshtml" />
-    <Content Include="Views\Meet\Index.cshtml" />
-    <Content Include="Views\Meet\Edit.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Account\Organising.cshtml" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
-    <Content Include="Views\Meet\HubTest.cshtml" />
-    <Content Include="Views\Meet\ChatWidget.cshtml" />
-    <Content Include="Views\Meet\AttendanceWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TomorrowComesToday.Domain\TomorrowComesToday.Domain.csproj">
       <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
-      <Name>MeetFurries.Domain</Name>
+      <Name>TomorrowComesToday.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\TomorrowComesToday.Infrastructure\TomorrowComesToday.Infrastructure.csproj">
       <Project>{9544D94B-9B6E-4B61-8A09-88382205BF86}</Project>
-      <Name>MeetFurries.Infrastructure</Name>
+      <Name>TomorrowComesToday.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NHibernate.config" />
+    <Content Include="NHibernate.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Queries\" />

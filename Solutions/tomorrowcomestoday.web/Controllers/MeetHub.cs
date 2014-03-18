@@ -8,9 +8,6 @@
     using Microsoft.AspNet.SignalR.Hubs;
 
     using TomorrowComesToday.Domain;
-    using TomorrowComesToday.Infrastructure.Enums.Meets;
-    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
-    using TomorrowComesToday.Infrastructure.Interfaces.Services;
 
     [HubName("MeetHub")]
     public class MeetHub : Hub

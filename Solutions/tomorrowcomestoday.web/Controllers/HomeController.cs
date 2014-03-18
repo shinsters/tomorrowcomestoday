@@ -3,7 +3,6 @@
     using System.Web.Mvc;
 
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
-    using TomorrowComesToday.Infrastructure.Interfaces.Services;
 
     public class HomeController : Controller
     {

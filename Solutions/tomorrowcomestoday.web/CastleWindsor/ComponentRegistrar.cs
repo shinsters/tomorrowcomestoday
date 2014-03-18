@@ -4,17 +4,11 @@
     using Castle.Windsor;
 
     using SharpArch.Domain.Commands;
-    using SharpArch.Domain.Events;
     using SharpArch.Domain.PersistenceSupport;
     using SharpArch.NHibernate;
     using SharpArch.NHibernate.Contracts.Repositories;
     using SharpArch.Web.Mvc.Castle;
 
-    using TomorrowComesToday.Infrastructure.Implementations.Repositories;
-    using TomorrowComesToday.Infrastructure.Implementations.Services;
-    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
-    using TomorrowComesToday.Infrastructure.Interfaces.Services;
-    using TomorrowComesToday.Web.Controllers;
 
     public class ComponentRegistrar
     {
@@ -89,9 +83,6 @@
                     .BasedOn(typeof(NHibernateQuery))
                     .WithService.DefaultInterfaces());
 
-            // container.Register(
-            //    Classes.FromThisAssembly()
-            //    .InSameNamespaceAs<MeetHub>());
         }
 
         private static void AddHandlersTo(IWindsorContainer container)
