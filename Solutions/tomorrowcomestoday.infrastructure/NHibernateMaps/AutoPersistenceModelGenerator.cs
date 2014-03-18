@@ -14,6 +14,8 @@
     using SharpArch.Domain.DomainModel;
     using SharpArch.NHibernate.FluentNHibernate;
 
+    using TomorrowComesToday.Domain.Entities;
+
     #endregion
 
     /// <summary>
@@ -28,7 +30,7 @@
         public AutoPersistenceModel Generate()
         {
             // I'm not sure if we'll need to make one of these for every domain object?
-            var mappings = AutoMap.AssemblyOf<User>(new AutomappingConfiguration());
+            var mappings = AutoMap.AssemblyOf<Card>(new AutomappingConfiguration());
             mappings.IgnoreBase<Entity>();
             mappings.IgnoreBase(typeof(EntityWithTypedId<>));
             mappings.Conventions.Setup(GetConventions());

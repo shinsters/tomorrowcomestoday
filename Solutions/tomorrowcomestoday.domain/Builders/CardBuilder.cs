@@ -1,5 +1,7 @@
 ﻿namespace TomorrowComesToday.Domain.Builders
 {
+    using System;
+
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
 
@@ -11,15 +13,7 @@
         /// <summary>
         /// The card being constructed
         /// </summary>
-        private readonly Card entity;
-
-        /// <summary>
-        /// Create a card using a fluent interface
-        /// </summary>
-        public CardBuilder()
-        {
-            this.entity = new Card();
-        }
+        private readonly Card entity = new Card();
 
         /// <summary>
         /// Sets the text of the card
@@ -49,6 +43,11 @@
         /// <returns></returns>
         public Card Create()
         {
+            if (string.IsNullOrEmpty(this.entity.Text))
+            {
+                throw new Exception("Card requires text to be set");
+            }
+
             return this.entity;
         }
     }

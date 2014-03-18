@@ -109,7 +109,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Implementations\Repositories\UserRepository.cs" />
-    <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICardRepository.cs" />
     <Compile Include="Interfaces\Services\IGameStartService.cs" />
     <Compile Include="NHibernateMaps\AutomappingConfiguration.cs" />
     <Compile Include="NHibernateMaps\Conventions\CustomForeignKeyConvention.cs" />

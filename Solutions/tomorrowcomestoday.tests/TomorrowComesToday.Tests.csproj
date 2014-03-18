@@ -40,6 +40,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="SharpArch.Domain">
+      <HintPath>..\..\Packages\SharpArch.Domain.2.0.4\lib\NET40\SharpArch.Domain.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="TechTalk.SpecFlow">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
@@ -66,6 +69,7 @@
     </Compile>
     <Compile Include="SpecflowTests\StepDefinitions\GameRoundSteps.cs" />
     <Compile Include="SpecflowTests\StepDefinitions\GameTestSetup.cs" />
+    <Compile Include="TestImplementations\Repositories\TestCardRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,7 +79,16 @@
       <LastGenOutput>GameRoundTests.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TomorrowComesToday.Domain\TomorrowComesToday.Domain.csproj">
+      <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
+      <Name>TomorrowComesToday.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TomorrowComesToday.Infrastructure\TomorrowComesToday.Infrastructure.csproj">
+      <Project>{9544D94B-9B6E-4B61-8A09-88382205BF86}</Project>
+      <Name>TomorrowComesToday.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -90,9 +90,10 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Card.cs" />
+    <Compile Include="CommonConcepts.cs" />
+    <Compile Include="Entities\Card.cs" />
+    <Compile Include="Builders\CardBuilder.cs" />
     <Compile Include="Enums\CardType.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -111,7 +112,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Builders\Interfaces\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config">
