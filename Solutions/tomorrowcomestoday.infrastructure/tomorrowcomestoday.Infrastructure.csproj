@@ -109,7 +109,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Helpers\CardResourceParserHelper.cs" />
-    <Compile Include="Implementations\Repositories\UserRepository.cs" />
+    <Compile Include="Implementations\Repositories\CardRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICardRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\Services\IGameStartService.cs" />

@@ -1,11 +1,16 @@
 ﻿namespace TomorrowComesToday.Tests.TestImplementations.Repositories
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     using SharpArch.Domain.PersistenceSupport;
 
+    using TomorrowComesToday.Domain.Builders;
     using TomorrowComesToday.Domain.Entities;
+    using TomorrowComesToday.Domain.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
 
     /// <summary>
@@ -14,21 +19,35 @@
     public class TestCardRepository : ICardRepository
     {
         /// <summary>
+        /// Path to the black cards for loading resources
+        /// </summary>
+        private const string BlackCardsResourceLocation = "TomorrowComesToday.Domain.Resources.bcards.txt";
+
+        /// <summary>
+        /// Path to the white cards for loading resources
+        /// </summary>
+        private const string WhiteCardsResourceLocation = "";
+
+        /// <summary>
         /// Constructs 
         /// </summary>
         public TestCardRepository()
         {
-            this.Cards = new List<Card>();
-
-            // we need to get the list of cards from a resource in this situation.
-            // in the full game this'll persisted entities inside the database.
-            // these are stored in the domain assembly
-            var assembly = typeof(Card).Assembly;
-
-
+            this.Cards = this.GetCardsFromResource();
         }
 
         public IDbContext DbContext { get; set; }
+
+        /// <summary>
+        /// Get a number of cards from the deck
+        /// </summary> 
+        /// <param name="numberRequired">The number Required</param>
+        /// <param name="cardsToExclude">The cards to exclude, so already dealt</param>
+        /// <returns>The <see cref="System.Collections.IList"/> of cards</returns>
+        public IList<Card> GetBlackFromDeck(int numberRequired, IList<Card> cardsToExclude)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Domain object
@@ -54,5 +73,49 @@
         {
             throw new System.NotImplementedException();
         }
+
+        private IList<Card> GetCardsFromResource()
+        {
+            var cards = new List<Card>();
+            
+            // we need to get the list of cards from a resource in this situation.
+            // in the full game this'll persisted entities inside the database.
+            // these are stored in the domain assembly
+            var assembly = typeof(Card).Assembly;
+
+            var resourceStream = assembly.GetManifestResourceStream(BlackCardsResourceLocation);
+
+            if (resourceStream == null)
+            {
+                throw new Exception(string.Format("Unable to load resource {0}", BlackCardsResourceLocation));
+            }
+
+            string filesAsString;
+
+            // the file being loaded was provided by cards against humanity's website. 
+            // so the formatting is a little unusual for what we need. But rather than
+            // modify their file, just deal with it so to retain compatability
+            using (var reader = new StreamReader(resourceStream))
+            {
+                filesAsString = reader.ReadToEnd();
+            }
+
+            // first split the file on cards=
+            // this is a bit crap, if a card has an = in it it'll break.
+            // but good enough just for test data?
+            filesAsString = filesAsString.Split('=')[1];
+
+            foreach (var cardText in filesAsString.Split(new[] { "<>" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var card = new CardBuilder()
+                    .Text(cardText)
+                    .Type(CardType.Black)
+                    .Create();
+
+                cards.Add(card);
+            }
+
+            return cards;
+        } 
     }
 }

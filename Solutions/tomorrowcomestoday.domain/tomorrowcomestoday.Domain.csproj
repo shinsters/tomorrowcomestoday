@@ -122,9 +122,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\bcards.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <EmbeddedResource Include="Resources\bcards.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Resources\bcards1.txt" />
     <Content Include="Resources\bcards2.txt" />
     <Content Include="Resources\wcards.txt" />

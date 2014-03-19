@@ -1,16 +1,17 @@
-﻿namespace TomorrowComesToday.Infrastructure.Interfaces.Repositories
+﻿namespace TomorrowComesToday.Infrastructure.Implementations.Repositories
 {
     using System.Collections;
     using System.Collections.Generic;
 
-    using SharpArch.Domain.PersistenceSupport;
+    using SharpArch.NHibernate;
 
     using TomorrowComesToday.Domain.Entities;
+    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
 
     /// <summary>
     /// The card repository.
     /// </summary>
-    public interface ICardRepository : IRepository<Card>
+    public class CardRepository : LinqRepository<Card>, ICardRepository
     {
         /// <summary>
         /// Get a number of cards from the deck
@@ -18,13 +19,9 @@
         /// <param name="numberRequired">The number Required</param>
         /// <param name="cardsToExclude">The cards to exclude, so already dealt</param>
         /// <returns>The <see cref="IList"/> of cards</returns>
-        IList<Card> GetBlackFromDeck(int numberRequired, IList<Card> cardsToExclude);
-
-        ///// <summary>
-        ///// Get user from identifier
-        ///// </summary>
-        ///// <param name="userFormId">Form Id from h</param>
-        ///// <returns></returns>
-        //  User GetFromFormId(string userFormId);
+        public IList<Card> GetBlackFromDeck(int numberRequired, IList<Card> cardsToExclude)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
