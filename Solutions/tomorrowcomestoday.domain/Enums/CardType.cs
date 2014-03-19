@@ -5,7 +5,14 @@
     /// </summary>
     public enum CardType 
     {
-        Question,
-        Answer
+        /// <summary>
+        /// Question cards
+        /// </summary>
+        Black,
+
+        /// <summary>
+        /// Answer cards
+        /// </summary>
+        White
     }
 }

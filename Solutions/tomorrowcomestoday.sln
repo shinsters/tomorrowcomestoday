@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomorrowComesToday.Web", "T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{BDFE2903-0BAB-4E7D-9C8D-E034CF9ACE89}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "tomorrowcomestoday.database", "tomorrowcomestoday.database\TomorrowComesToday.Database.sqlproj", "{0528C576-9426-4366-A93E-D0A60853FCC8}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TomorrowComesToday.Database", "tomorrowcomestoday.database\TomorrowComesToday.Database.sqlproj", "{0528C576-9426-4366-A93E-D0A60853FCC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C8C4A751-BD7A-47AB-996E-C6693A740179}"
 EndProject

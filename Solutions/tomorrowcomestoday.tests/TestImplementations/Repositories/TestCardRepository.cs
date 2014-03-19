@@ -19,6 +19,13 @@
         public TestCardRepository()
         {
             this.Cards = new List<Card>();
+
+            // we need to get the list of cards from a resource in this situation.
+            // in the full game this'll persisted entities inside the database.
+            // these are stored in the domain assembly
+            var assembly = typeof(Card).Assembly;
+
+
         }
 
         public IDbContext DbContext { get; set; }

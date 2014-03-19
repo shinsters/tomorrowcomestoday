@@ -26,7 +26,7 @@
             {
                 var card = new CardBuilder()
                     .Text("Hello World")
-                    .Type(CardType.Question)
+                    .Type(CardType.Black)
                     .Create();
 
                 cards.Add(card);
