@@ -1,0 +1,7 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>Initalise</Value>
+    </CollectionProperty>
+  </GlobalSettings>
+</StyleCopSettings>

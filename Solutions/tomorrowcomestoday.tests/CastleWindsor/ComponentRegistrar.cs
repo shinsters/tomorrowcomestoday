@@ -24,15 +24,19 @@
         {
             container.Register(
                 AllTypes
-                    .FromAssemblyNamed("TomorrowComesToday.Infrastructure")
+                    .FromAssemblyNamed("TomorrowComesToday.Tests")
                     .BasedOn(typeof(IRepositoryWithTypedId<,>))
                     .WithService.FirstInterface());
 
             container.Register(
+                Component.For(typeof(IRepositoryFactory))
+                    .ImplementedBy(typeof(RepositoryFactory))
+                    .Named("RepositoryFactory"));
+
+            container.Register(
               Component.For(typeof(ICardRepository))
                   .ImplementedBy(typeof(TestCardRepository))
-                  .Named("UserRepository"));
-
+                  .Named("CardRepository"));
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)
@@ -68,15 +72,9 @@
         private static void AddQueryObjectsTo(IWindsorContainer container)
         {
             container.Register(
-                AllTypes.FromAssemblyNamed("TomorrowComesToday.Web")
+                AllTypes.FromAssemblyNamed("TomorrowComesToday.Tests")
                     .BasedOn<NHibernateQuery>()
                     .WithService.DefaultInterfaces());
-
-            container.Register(
-                AllTypes.FromAssemblyNamed("TomorrowComesToday.Infrastructure")
-                    .BasedOn(typeof(NHibernateQuery))
-                    .WithService.DefaultInterfaces());
-
         }
     }
 }

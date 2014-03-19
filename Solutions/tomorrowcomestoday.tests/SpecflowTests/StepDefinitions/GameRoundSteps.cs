@@ -8,6 +8,7 @@
     using TomorrowComesToday.Domain.Builders;
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
+    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
 
     /// <summary>
     /// Steps for the game round.
@@ -18,6 +19,10 @@
         [Given(@"I have a deck of cards")]
         public void GivenIHaveADeckOfCards()
         {
+            var cardRepository = InitaliseTests.Container.Resolve<ICardRepository>();
+
+            var derp = cardRepository.GetAll();
+
             const int DeckSize = CommonConcepts.DeckSize;
 
             var cards = new List<Card>();

@@ -111,6 +111,7 @@
     <Compile Include="Helpers\CardResourceParserHelper.cs" />
     <Compile Include="Implementations\Repositories\UserRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICardRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\Services\IGameStartService.cs" />
     <Compile Include="NHibernateMaps\AutomappingConfiguration.cs" />
     <Compile Include="NHibernateMaps\Conventions\CustomForeignKeyConvention.cs" />
