@@ -2,7 +2,10 @@
 {
     using System.Collections.Generic;
 
+    using FluentNHibernate.Conventions.Inspections;
+
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Builders;
@@ -16,32 +19,24 @@
     [Binding]
     public class GameRoundSteps
     {
-        [Given(@"I have a deck of cards")]
-        public void GivenIHaveADeckOfCards()
-        {
-            var cardRepository = InitaliseTests.Container.Resolve<ICardRepository>();
-
-            var derp = cardRepository.GetAll();
-
-            const int DeckSize = CommonConcepts.DeckSize;
-
-            var cards = new List<Card>();
-
-            for (var i = 0; i < DeckSize; i++)
-            {
-                var card = new CardBuilder()
-                    .Text("Hello World")
-                    .Type(CardType.Black)
-                    .Create();
-
-                cards.Add(card);
-            }
-        }
-
         [Given(@"I have a started game")]
         public void GivenIHaveAStartedGame()
         {
             ScenarioContext.Current.Pending();
+        }
+
+        [Given(@"I have the following players:")]
+        public void GivenIHaveTheFollowingPlayers(Table table)
+        {
+
+            foreach (var row in table.Rows)
+            {
+                var name = row.GetString("Name");
+
+                var player = new PlayerBuilder()
+                    .Named(name)
+                    .Create();
+            }
         }
     }
 }

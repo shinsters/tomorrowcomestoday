@@ -19,12 +19,5 @@
         /// <param name="cardsToExclude">The cards to exclude, so already dealt</param>
         /// <returns>The <see cref="IList"/> of cards</returns>
         IList<Card> GetBlackFromDeck(int numberRequired, IList<Card> cardsToExclude);
-
-        ///// <summary>
-        ///// Get user from identifier
-        ///// </summary>
-        ///// <param name="userFormId">Form Id from h</param>
-        ///// <returns></returns>
-        //  User GetFromFormId(string userFormId);
     }
 }

@@ -5,7 +5,12 @@
 
 Background: I have a fully configured back end
 	Given I have an initalised back end
-	Given I have a deck of cards
+	And I have the following players:
+	| Name         |
+	| Freda        |
+	| Bob          |
+	| James        |
+	| Hank Skyman |
 
 
 Scenario: When a game starts users are handed 

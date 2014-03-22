@@ -70,8 +70,19 @@ namespace TomorrowComesToday.Tests.SpecflowTests.Features
 #line 6
 #line 7
  testRunner.Given("I have an initalised back end", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table1.AddRow(new string[] {
+                        "Freda"});
+            table1.AddRow(new string[] {
+                        "Bob"});
+            table1.AddRow(new string[] {
+                        "James"});
+            table1.AddRow(new string[] {
+                        "Hank Skyman"});
 #line 8
- testRunner.Given("I have a deck of cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.And("I have the following players:", ((string)(null)), table1, "And ");
 #line hidden
         }
         
@@ -80,11 +91,11 @@ namespace TomorrowComesToday.Tests.SpecflowTests.Features
         public virtual void WhenAGameStartsUsersAreHanded()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When a game starts users are handed", ((string[])(null)));
-#line 11
+#line 16
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 12
+#line 17
  testRunner.Given("I have a started game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             this.ScenarioCleanup();
