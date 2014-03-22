@@ -74,13 +74,13 @@ namespace TomorrowComesToday.Tests.SpecflowTests.Features
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name"});
             table1.AddRow(new string[] {
-                        "Freda"});
-            table1.AddRow(new string[] {
-                        "Bob"});
-            table1.AddRow(new string[] {
                         "James"});
             table1.AddRow(new string[] {
-                        "Hank Skyman"});
+                        "Jean Luc"});
+            table1.AddRow(new string[] {
+                        "Benjamin"});
+            table1.AddRow(new string[] {
+                        "Kathryn"});
 #line 8
  testRunner.And("I have the following players:", ((string)(null)), table1, "And ");
 #line hidden
@@ -91,12 +91,38 @@ namespace TomorrowComesToday.Tests.SpecflowTests.Features
         public virtual void WhenAGameStartsUsersAreHanded()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When a game starts users are handed", ((string[])(null)));
-#line 16
+#line 15
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 17
- testRunner.Given("I have a started game", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Player"});
+            table2.AddRow(new string[] {
+                        "Jean Luc"});
+            table2.AddRow(new string[] {
+                        "Benjamin"});
+#line 16
+ testRunner.Given("I have a started game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containi" +
+                    "ng following players:", ((string)(null)), table2, "Given ");
+#line 20
+ testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Player",
+                        "Points",
+                        "Cards in hand"});
+            table3.AddRow(new string[] {
+                        "Jean Luc",
+                        "0",
+                        "10"});
+            table3.AddRow(new string[] {
+                        "Benjamin",
+                        "0",
+                        "10"});
+#line 21
+ testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' players are in the followin" +
+                    "g state:", ((string)(null)), table3, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

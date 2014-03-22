@@ -10,6 +10,11 @@
     /// </summary>
     public interface IPlayerRepository : IRepository<Player>
     {
-
+        /// <summary>
+        /// Get a player by name
+        /// </summary>
+        /// <param name="name">The name of the player to get</param>
+        /// <returns>The <see cref="Player"/>.</returns>
+        Player GetByName(string name);
     }
 }

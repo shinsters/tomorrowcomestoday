@@ -1,6 +1,7 @@
 ﻿namespace TomorrowComesToday.Tests.TestImplementations.Repositories
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using SharpArch.Domain.PersistenceSupport;
 
@@ -15,6 +16,16 @@
         private readonly List<Player> players = new List<Player>();
 
         public IDbContext DbContext { get; private set; }
+
+        /// <summary>
+        /// Get a player by name
+        /// </summary>
+        /// <param name="name">The name of the player to get</param>
+        /// <returns>The <see cref="Player"/>.</returns>
+        public Player GetByName(string name)
+        {
+            return this.players.FirstOrDefault(o => o.Name == name);
+        }
 
         public Player Get(int id)
         {

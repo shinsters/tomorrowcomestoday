@@ -6,12 +6,20 @@
 Background: I have a fully configured back end
 	Given I have an initalised back end
 	And I have the following players:
-	| Name         |
-	| Freda        |
-	| Bob          |
-	| James        |
-	| Hank Skyman |
-
+	| Name     |
+	| James    |
+	| Jean Luc |
+	| Benjamin |
+	| Kathryn  | 
 
 Scenario: When a game starts users are handed 
-	Given I have a started game
+	Given I have a started game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
+	| Player   |
+	| Jean Luc |
+	| Benjamin |
+	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
+	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' players are in the following state:
+	| Player   | Points | Cards in hand |
+	| Jean Luc | 0      | 10            |
+	| Benjamin | 0      | 10            |
+
