@@ -21,9 +21,9 @@
         public Guid GameGuid { get; set; }
 
         /// <summary>
-        /// Active players in the game
+        /// The state of active players
         /// </summary>
-        public IList<Player> ActivePlayers { get; set; }
+        public IList<GamePlayerState> GamePlayerStates { get; set; }
 
         /// <summary>
         /// Cards that have been dealt so shouldn't be reused

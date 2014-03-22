@@ -1,7 +1,6 @@
 ﻿namespace TomorrowComesToday.Domain.Entities
 {
-    using System.Collections;
-    using System.Collections.Generic;
+    using System;
 
     using SharpArch.Domain.DomainModel;
 
@@ -10,8 +9,14 @@
     /// </summary>
     public class Player : Entity
     {
+        /// <summary>
+        /// Display name for the player
+        /// </summary>
         public string Name { get; set; }
 
-        public IList<Card> InHandCards { get; set; }
+        /// <summary>
+        /// The guid for the player
+        /// </summary>
+        public Guid Guid { get; set; }
     }
 }

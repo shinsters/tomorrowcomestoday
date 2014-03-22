@@ -97,7 +97,7 @@ this.ScenarioSetup(scenarioInfo);
 this.FeatureBackground();
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Player"});
+                        "Name"});
             table2.AddRow(new string[] {
                         "Jean Luc"});
             table2.AddRow(new string[] {
@@ -109,7 +109,7 @@ this.FeatureBackground();
  testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Player",
+                        "Name",
                         "Points",
                         "Cards in hand"});
             table3.AddRow(new string[] {

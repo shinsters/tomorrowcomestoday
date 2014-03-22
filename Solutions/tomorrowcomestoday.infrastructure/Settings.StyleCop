@@ -4,6 +4,7 @@
       <Value>auth</Value>
       <Value>automapping</Value>
       <Value>deserializing</Value>
+      <Value>Guid</Value>
       <Value>Nexmo</Value>
       <Value>Sms</Value>
     </CollectionProperty>

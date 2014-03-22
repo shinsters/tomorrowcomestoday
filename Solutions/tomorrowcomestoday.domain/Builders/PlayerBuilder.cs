@@ -25,6 +25,10 @@
 
         public Player Create()
         {
+            // sets a globally unique identifer, because the id from sharparch is a little funny
+            // with when it gets assigned. It needs to get it from nhibernate, which might not
+            // be the case with things in memory.
+            this.entity.Guid = Guid.NewGuid();
             return this.entity;
         }
     }

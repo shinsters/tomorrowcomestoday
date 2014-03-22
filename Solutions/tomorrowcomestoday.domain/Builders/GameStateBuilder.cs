@@ -19,12 +19,7 @@
         /// <returns>The game state builder</returns>
         public GameStateBuilder AddPlayer(Player player)
         {
-            if (this.entity.ActivePlayers == null)
-            {
-                this.entity.ActivePlayers = new List<Player>();
-            }
-
-            return this;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -34,14 +29,19 @@
         /// <returns>The game state builder</returns>
         public GameStateBuilder AddPlayers(IList<Player> players)
         {
-            if (this.entity.ActivePlayers == null)
+            if (this.entity.GamePlayerStates == null)
             {
-                this.entity.ActivePlayers = new List<Player>();
+                this.entity.GamePlayerStates = new List<GamePlayerState>();
             }
 
             foreach (var player in players)
             {
-                this.entity.ActivePlayers.Add(player);
+                this.entity.GamePlayerStates.Add(new GamePlayerState
+                                                     {
+                                                         CardsInHand = new List<Card>(),
+                                                         Player = player,
+                                                         Points = 0
+                                                     });
             }
 
             return this;
@@ -71,6 +71,8 @@
             {
                 this.entity.GameGuid = Guid.NewGuid();
             }
+
+            this.entity.IsActive = true;
 
             return this.entity;
         }

@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="SpecflowTests\StepDefinitions\GameRoundSteps.cs" />
     <Compile Include="SpecflowTests\StepDefinitions\GameTestSetup.cs" />
+    <Compile Include="TestImplementations\Repositories\TestGameStateRepository.cs" />
     <Compile Include="TestImplementations\Repositories\TestPlayerRepository.cs" />
     <Compile Include="TestImplementations\Repositories\RepositoryFactory.cs" />
     <Compile Include="TestImplementations\Repositories\TestCardRepository.cs" />
