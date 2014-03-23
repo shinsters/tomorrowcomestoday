@@ -1,10 +1,11 @@
 ﻿namespace TomorrowComesToday.Tests.TestImplementations.Repositories
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+
+    using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
     using SharpArch.Domain.PersistenceSupport;
 
@@ -21,7 +22,7 @@
         /// <summary>
         /// Path to the black cards for loading resources
         /// </summary>
-        private const string BlackCardsResourceLocation = "TomorrowComesToday.Domain.Resources.bcards.txt";
+        private const string BlackCardsResourceLocation = "TomorrowComesToday.Domain.Resources.wcards.txt";
 
         /// <summary>
         /// Path to the white cards for loading resources
@@ -29,7 +30,7 @@
         private const string WhiteCardsResourceLocation = "";
 
         /// <summary>
-        /// Constructs 
+        /// Constructs a test card repository
         /// </summary>
         public TestCardRepository()
         {
@@ -39,20 +40,20 @@
         public IDbContext DbContext { get; set; }
 
         /// <summary>
+        /// Domain object
+        /// </summary>
+        private IList<Card> Cards { get; set; }
+
+        /// <summary>
         /// Get a number of cards from the deck
         /// </summary> 
         /// <param name="numberRequired">The number Required</param>
         /// <param name="cardsToExclude">The cards to exclude, so already dealt</param>
         /// <returns>The <see cref="System.Collections.IList"/> of cards</returns>
-        public IList<Card> GetBlackFromDeck(int numberRequired, IList<Card> cardsToExclude)
+        public IList<Card> GetCardFromDeck(int numberRequired, IList<Card> cardsToExclude)
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// Domain object
-        /// </summary>
-        private IList<Card> Cards { get; set; }
 
         public Card Get(int id)
         {
@@ -66,12 +67,31 @@
 
         public Card SaveOrUpdate(Card entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Delete(Card entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public IList<Card> GetCardFromDeck(int numberRequired, CardType cardType, IList<Card> cardsToExclude)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get a collection of cards from the repository
+        /// </summary>
+        /// <param name="cardType"></param>
+        /// <param name="cardsToExclude"></param>
+        /// <returns></returns>
+        public IList<Card> GetCardFromDeck(CardType cardType, IList<Card> cardsToExclude)
+        {
+            return this.Cards
+                .Where(o => o.CardType == cardType)
+                .Where(card => cardsToExclude.All(o => o.CardGuid != card.CardGuid))
+                .ToList();
         }
 
         private IList<Card> GetCardsFromResource()
@@ -109,13 +129,13 @@
             {
                 var card = new CardBuilder()
                     .Text(cardText)
-                    .Type(CardType.Black)
+                    .Type(CardType.White)
                     .Create();
 
                 cards.Add(card);
             }
 
             return cards;
-        } 
+        }
     }
 }

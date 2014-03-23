@@ -109,12 +109,14 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Helpers\CardResourceParserHelper.cs" />
+    <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Implementations\Repositories\CardRepository.cs" />
+    <Compile Include="Implementations\Services\GameService.cs" />
     <Compile Include="Interfaces\Repositories\ICardRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGameStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPlayerRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryFactory.cs" />
-    <Compile Include="Interfaces\Services\IGameStartService.cs" />
+    <Compile Include="Interfaces\Services\IGameService.cs" />
     <Compile Include="NHibernateMaps\AutomappingConfiguration.cs" />
     <Compile Include="NHibernateMaps\Conventions\CustomForeignKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\HasManyConvention.cs" />
@@ -152,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
-    <Folder Include="Implementations\Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

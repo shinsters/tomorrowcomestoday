@@ -12,6 +12,7 @@
     using TomorrowComesToday.Domain.Builders;
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
+    using TomorrowComesToday.Infrastructure.Interfaces.Services;
 
     using Table = TechTalk.SpecFlow.Table;
 
@@ -64,8 +65,26 @@
 
             Assert.IsNotNull(game, string.Format("Game with guid {0} was not found", gameGuidAsString));
 
-            Assert.IsTrue(game.IsActive == gameActivityState, "The state of the game {0} was not {1}", gameGuidAsString, stateAsString);
+            Assert.IsTrue(
+                game.IsActive == gameActivityState,
+                "The state of the game {0} was not {1}",
+                gameGuidAsString, 
+                stateAsString);
         }
+
+        [Then(@"I see the game '(.*)' has a deck of cards")]
+        public void ThenISeeTheGameHasADeckOfCards(string gameGuidAsString)
+        {
+            var gameService = InitaliseTests.Container.Resolve<IGameService>();
+            var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
+
+            gameService.DealGame(gameGuid);
+
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+            var game = gameStateRepository.GetByGuid(gameGuid);
+
+        }
+
 
         [Then(@"I see the game '(.*)' players are in the following state:")]
         public void ThenISeeTheGamePlayersAreInTheFollowingState(string gameGuidAsString, Table table)
@@ -79,12 +98,34 @@
             // first get the players we're going to be using
             foreach (var row in table.Rows)
             {
+                // first check the player is in the game as expected
                 var playerName = row.GetString("Name");
                 var player = playerRepository.GetByName(playerName);
 
                 Assert.IsTrue(player != null, string.Format("No player by name {0} was found", playerName));
                 Assert.IsTrue(gameState.GamePlayerStates.Any(o => o.Player.Guid == player.Guid));
+
+                // check the players state is as expected 
+                var playerState = gameState.GamePlayerStates.First(o => o.Player.Guid == player.Guid);
+
+                var pointsExpected = row.GetInt32("Points");
+
+                Assert.IsTrue(
+                    playerState.Points == pointsExpected,
+                    "Expected player {0} to have {1} points but actually had {2}",
+                    playerName,
+                    pointsExpected, 
+                    playerState.Points);
+
+                var cardsInHandExpected = row.GetInt32("Cards in hand");
+
+                Assert.IsTrue(
+                    playerState.CardsInHand.Count == cardsInHandExpected,
+                    "Expected player {0} to have {1} cards in hand but actually had {2}",
+                    playerName,
+                    cardsInHandExpected,
+                    playerState.CardsInHand.Count);
             }
-        }
+        }   
     }
 }

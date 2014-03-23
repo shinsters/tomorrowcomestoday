@@ -1,7 +1,7 @@
 ﻿namespace TomorrowComesToday.Domain.Builders
 {
     using System;
-
+    
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
 
@@ -40,13 +40,15 @@
         /// <summary>
         /// Finalise and return constructed object
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A built card object</returns>
         public Card Create()
         {
             if (string.IsNullOrEmpty(this.entity.Text))
             {
                 throw new Exception("Card requires text to be set");
             }
+
+            this.entity.CardGuid = Guid.NewGuid();
 
             return this.entity;
         }

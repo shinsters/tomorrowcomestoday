@@ -107,6 +107,8 @@ this.FeatureBackground();
                     "ng following players:", ((string)(null)), table2, "Given ");
 #line 20
  testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 21
+ testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' has a deck of cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
@@ -120,7 +122,7 @@ this.FeatureBackground();
                         "Benjamin",
                         "0",
                         "10"});
-#line 21
+#line 22
  testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' players are in the followin" +
                     "g state:", ((string)(null)), table3, "And ");
 #line hidden

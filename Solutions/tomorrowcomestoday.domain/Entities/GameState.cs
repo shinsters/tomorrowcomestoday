@@ -26,9 +26,9 @@
         public IList<GamePlayerState> GamePlayerStates { get; set; }
 
         /// <summary>
-        /// Cards that have been dealt so shouldn't be reused
+        /// Cards that are in the game
         /// </summary>
-        public IList<Card> DealtCards { get; set; }
+        public IList<DeckCard> CardsInTheDeck { get; set; } 
 
         /// <summary>
         /// When was the last in game action performed

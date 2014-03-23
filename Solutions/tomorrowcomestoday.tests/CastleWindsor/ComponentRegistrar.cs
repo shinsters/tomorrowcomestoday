@@ -8,7 +8,9 @@
     using SharpArch.NHibernate;
     using SharpArch.NHibernate.Contracts.Repositories;
 
+    using TomorrowComesToday.Infrastructure.Implementations.Services;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
+    using TomorrowComesToday.Infrastructure.Interfaces.Services;
     using TomorrowComesToday.Tests.TestImplementations.Repositories;
 
     public class ComponentRegistrar
@@ -37,6 +39,11 @@
               Component.For(typeof(ICardRepository))
                   .ImplementedBy(typeof(TestCardRepository))
                   .Named("CardRepository"));
+
+            container.Register(
+              Component.For(typeof(IGameService))
+                  .ImplementedBy(typeof(GameService))
+                  .Named("GameService"));
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)

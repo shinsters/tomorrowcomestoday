@@ -18,6 +18,7 @@ Scenario: When a game starts users are handed
 	| Jean Luc |
 	| Benjamin |
 	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
+	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' has a deck of cards 
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' players are in the following state:
 	| Name     | Points | Cards in hand |
 	| Jean Luc | 0      | 10            |
