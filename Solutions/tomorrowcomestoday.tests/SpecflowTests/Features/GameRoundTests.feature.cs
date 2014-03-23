@@ -87,10 +87,10 @@ namespace TomorrowComesToday.Tests.SpecflowTests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("When a game starts users are handed")]
-        public virtual void WhenAGameStartsUsersAreHanded()
+        [NUnit.Framework.DescriptionAttribute("When a game starts users are handed their cards")]
+        public virtual void WhenAGameStartsUsersAreHandedTheirCards()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When a game starts users are handed", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When a game starts users are handed their cards", ((string[])(null)));
 #line 15
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -106,9 +106,9 @@ this.FeatureBackground();
  testRunner.Given("I have a started game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containi" +
                     "ng following players:", ((string)(null)), table2, "Given ");
 #line 20
- testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("the game \'F4909379-AF76-418E-873D-E575A8BA3233\' has a white deck of \'50\' cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 21
- testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' has a deck of cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
@@ -125,6 +125,49 @@ this.FeatureBackground();
 #line 22
  testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' players are in the followin" +
                     "g state:", ((string)(null)), table3, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Cards in deck when not enough left are properly shared among players")]
+        public virtual void CardsInDeckWhenNotEnoughLeftAreProperlySharedAmongPlayers()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Cards in deck when not enough left are properly shared among players", ((string[])(null)));
+#line 28
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table4.AddRow(new string[] {
+                        "Jean Luc"});
+            table4.AddRow(new string[] {
+                        "Benjamin"});
+#line 29
+ testRunner.Given("I have a started game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containi" +
+                    "ng following players:", ((string)(null)), table4, "Given ");
+#line 33
+ testRunner.And("the game \'F4909379-AF76-418E-873D-E575A8BA3233\' has a white deck of \'11\' cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 34
+ testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Points",
+                        "Cards in hand"});
+            table5.AddRow(new string[] {
+                        "Jean Luc",
+                        "0",
+                        "6"});
+            table5.AddRow(new string[] {
+                        "Benjamin",
+                        "0",
+                        "5"});
+#line 35
+ testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' players are in the followin" +
+                    "g state:", ((string)(null)), table5, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

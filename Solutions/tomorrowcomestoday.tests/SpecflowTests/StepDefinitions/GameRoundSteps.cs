@@ -72,19 +72,14 @@
                 stateAsString);
         }
 
-        [Then(@"I see the game '(.*)' has a deck of cards")]
-        public void ThenISeeTheGameHasADeckOfCards(string gameGuidAsString)
+        [Given(@"the game '(.*)' has a white deck of '(.*)' cards")]
+        public void GivenTheGameHasAWhiteDeckOfCards(string gameGuidAsString, int cardsInWhiteDeck)
         {
             var gameService = InitaliseTests.Container.Resolve<IGameService>();
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
 
-            gameService.DealGame(gameGuid);
-
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
-            var game = gameStateRepository.GetByGuid(gameGuid);
-
+            gameService.DealGame(cardsInWhiteDeck, gameGuid);
         }
-
 
         [Then(@"I see the game '(.*)' players are in the following state:")]
         public void ThenISeeTheGamePlayersAreInTheFollowingState(string gameGuidAsString, Table table)

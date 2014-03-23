@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Policy;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Entities;
@@ -44,20 +45,17 @@
         /// <param name="gameGuid">The game guid</param>
         public void DealGame(Guid gameGuid)
         {
-            var gameState = this.gameStateRepository.GetByGuid(gameGuid);
+            this.DealGame(gameGuid, null);
+        }
 
-            if (gameState == null)
-            {
-                return;
-            }
-
-            // first generate a deck
-            var cardsAlreadyPlayedInGame = this.CardsAlreadyPlayedInGame(gameState);
-            var deck = this.cardRepository.GetCardFromDeck(CardType.White, cardsAlreadyPlayedInGame);
-            gameState.CardsInTheDeck = this.GenerateCardsInDeck(deck);
-
-            // then assign a selection to a user
-            this.DealToPlayers(gameState);
+        /// <summary>
+        /// Get a deck then deal to players
+        /// </summary>
+        /// <param name="deckSize">The deck Size</param>
+        /// <param name="gameGuid">The game guid</param>
+        public void DealGame(int deckSize, Guid gameGuid)
+        {
+            this.DealGame(gameGuid, deckSize);
         }
 
         /// <summary>
@@ -77,35 +75,62 @@
         }
 
         /// <summary>
+        /// Get a deck then deal to players
+        /// </summary>
+        /// <param name="deckSize">The deck size</param>
+        /// <param name="gameGuid">The game guid</param>
+        private void DealGame(Guid gameGuid, int? deckSize)
+        {
+            var gameState = this.gameStateRepository.GetByGuid(gameGuid);
+
+            if (gameState == null)
+            {
+                return;
+            }
+
+            // first generate a deck
+            var cardsAlreadyPlayedInGame = this.CardsAlreadyPlayedInGame(gameState);
+            var deck = this.cardRepository.GetCardFromDeck(CardType.White, cardsAlreadyPlayedInGame);
+            var cardsInDeck = this.GenerateCardsInDeck(deck);
+
+            gameState.CardsInTheDeck = deckSize.HasValue ? cardsInDeck.Take(deckSize.Value).ToList() : cardsInDeck;
+
+            // then assign a selection to a user
+            this.DealToPlayers(gameState);
+        }
+
+        /// <summary>
         /// Deal from deck to players
         /// </summary>
         /// <param name="gameState"></param>
         private void DealToPlayers(GameState gameState)
         {
-            foreach (var gamePlayerState in gameState.GamePlayerStates)
+            // work out how many cards we need
+            var numberOfCardsRequired =
+                gameState.GamePlayerStates.Sum(
+                    gamePlayerState => CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count);
+
+            // get either the number of required cards, of if there aren't enough - every card that's left
+            var cardToDeal = gameState.CardsInTheDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 
+                ? gameState.CardsInTheDeck.Take(numberOfCardsRequired).ToList() 
+                : gameState.CardsInTheDeck.Where(o => !o.HasBeenDealt).ToList();
+
+
+            var playerCounter = 0;
+
+            foreach (var card in cardToDeal)
             {
-                // this condition might happen at any point, so we'll need to keep checking for it
-                if (gameState.CardsInTheDeck.All(o => o.HasBeenDealt))
+                card.HasBeenDealt = true;
+
+                if (playerCounter > gameState.GamePlayerStates.Count - 1)
                 {
-                    return;
+                    playerCounter = 0;
                 }
 
-                var cardsNeeded = CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count;
-
-                for (var i = 0; i < cardsNeeded; i++)
-                {
-                    var card = gameState.CardsInTheDeck.FirstOrDefault(o => !o.HasBeenDealt);
-                    if (card == null)
-                    {
-                        // then we've dealt the last card, fall out of this whole method
-                        return;
-                    }
-
-                    gamePlayerState.CardsInHand.Add(card.Card);
-
-                    card.HasBeenDealt = true;
-                }
+                gameState.GamePlayerStates[playerCounter].CardsInHand.Add(card.Card);
+                playerCounter++;
             }
+
         }
 
         /// <summary>
