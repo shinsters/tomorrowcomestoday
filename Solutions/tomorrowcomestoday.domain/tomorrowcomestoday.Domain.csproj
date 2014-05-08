@@ -95,7 +95,7 @@
     <Compile Include="CommonConcepts.cs" />
     <Compile Include="Entities\Card.cs" />
     <Compile Include="Builders\CardBuilder.cs" />
-    <Compile Include="Entities\DeckCard.cs" />
+    <Compile Include="Entities\InGameCard.cs" />
     <Compile Include="Entities\GamePlayerState.cs" />
     <Compile Include="Entities\GameState.cs" />
     <Compile Include="Entities\Player.cs" />

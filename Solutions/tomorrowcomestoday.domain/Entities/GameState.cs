@@ -28,12 +28,12 @@
         /// <summary>
         /// White cards that are in the active game
         /// </summary>
-        public IList<WhiteCard> WhiteCardsInDeck { get; set; }
+        public IList<InGameCard> WhiteCardsInDeck { get; set; }
 
         /// <summary>
         /// Black cards that are in the active game
         /// </summary>
-        public IList<BlackCard> BlackCardsInDeck { get; set; }
+        public IList<InGameCard> BlackCardsInDeck { get; set; }
 
         /// <summary>
         /// When was the last in game action performed

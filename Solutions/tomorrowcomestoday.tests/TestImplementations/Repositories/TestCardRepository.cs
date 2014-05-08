@@ -18,21 +18,24 @@
     public class TestCardRepository : ICardRepository
     {
         /// <summary>
-        /// Path to the black cards for loading resources
-        /// </summary>
-        private const string BlackCardsResourceLocation = "TomorrowComesToday.Domain.Resources.wcards.txt";
-
-        /// <summary>
         /// Path to the white cards for loading resources
         /// </summary>
-        private const string WhiteCardsResourceLocation = "";
+        private const string WhiteCardsResourceLocation = "TomorrowComesToday.Domain.Resources.wcards.txt";
+
+        /// <summary>
+        /// Path to the black cards for loading resources
+        /// </summary>
+        private const string BlackCardsResourceLocation = "TomorrowComesToday.Domain.Resources.bcards.txt";
 
         /// <summary>
         /// Constructs a test card repository
         /// </summary>
         public TestCardRepository()
         {
-            this.Cards = this.GetCardsFromResource();
+            var whiteCards = this.GetCardsFromResource(CardType.White);
+            var blackCards = this.GetCardsFromResource(CardType.Black);
+
+            Cards = whiteCards.Union(blackCards).ToList();
         }  
 
         public IDbContext DbContext { get; set; }
@@ -92,20 +95,33 @@
                 .ToList();
         }
 
-        private IList<Card> GetCardsFromResource()
+        private IList<Card> GetCardsFromResource(CardType cardType)
         {
             var cards = new List<Card>();
+            
+            // First deal with white cards
             
             // we need to get the list of cards from a resource in this situation.
             // in the full game this'll persisted entities inside the database.
             // these are stored in the domain assembly
             var assembly = typeof(Card).Assembly;
+            
+            Stream resourceStream;
 
-            var resourceStream = assembly.GetManifestResourceStream(BlackCardsResourceLocation);
+            switch (cardType)
+            {
+                case CardType.Black:
+                    resourceStream = assembly.GetManifestResourceStream(BlackCardsResourceLocation);
+                    break;
+
+                default:
+                    resourceStream = assembly.GetManifestResourceStream(WhiteCardsResourceLocation);
+                    break;
+            }
 
             if (resourceStream == null)
             {
-                throw new Exception(string.Format("Unable to load resource {0}", BlackCardsResourceLocation));
+                throw new Exception(string.Format("Unable to load {0} card resource", cardType));
             }
 
             string filesAsString;
@@ -127,7 +143,7 @@
             {
                 var card = new CardBuilder()
                     .Text(cardText)
-                    .Type(CardType.White)
+                    .Type(cardType)
                     .Create();
 
                 cards.Add(card);

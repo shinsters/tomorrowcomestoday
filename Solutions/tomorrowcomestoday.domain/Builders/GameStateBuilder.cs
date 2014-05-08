@@ -73,7 +73,8 @@
             }
 
             this.entity.IsActive = true;
-            this.entity.WhiteCardsInDeck = new List<WhiteCard>();
+            this.entity.WhiteCardsInDeck = new List<InGameCard>();
+            this.entity.BlackCardsInDeck = new List<InGameCard>();
 
             return this.entity;
         }

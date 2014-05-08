@@ -131,7 +131,6 @@
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
 
-            var numberOfActiveCards = gameState.
 
 
            

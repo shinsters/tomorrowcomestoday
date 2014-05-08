@@ -3,9 +3,9 @@
     using System;
 
     /// <summary>
-    /// These are the answer cards dealt to all players 
+    /// These are the cards dealt to all players 
     /// </summary>
-    public class WhiteCard
+    public class InGameCard 
     {
         /// <summary>
         /// The card 
@@ -21,5 +21,10 @@
         /// Has this card been dealt to a player
         /// </summary>
         public bool HasBeenDealt { get; set; }
+
+        /// <summary>
+        /// Is the the current card that's being played?
+        /// </summary>
+        public bool IsCurrentCard { get; set; }
     }
 }
