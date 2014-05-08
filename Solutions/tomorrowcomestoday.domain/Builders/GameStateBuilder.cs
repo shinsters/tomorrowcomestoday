@@ -73,7 +73,7 @@
             }
 
             this.entity.IsActive = true;
-            this.entity.CardsInTheDeck = new List<WhiteCard>();
+            this.entity.WhiteCardsInDeck = new List<WhiteCard>();
 
             return this.entity;
         }

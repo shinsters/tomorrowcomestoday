@@ -55,6 +55,7 @@
         public void DealGame(int deckSize, Guid gameGuid)
         {
             this.DealGame(gameGuid, deckSize);
+            this.StartRound(gameGuid);
         }
 
         /// <summary>
@@ -92,10 +93,11 @@
             var deck = this.cardRepository.GetCardFromDeck(CardType.White, cardsAlreadyPlayedInGame);
             var cardsInDeck = this.GenerateCardsInDeck(deck);
 
-            gameState.CardsInTheDeck = deckSize.HasValue ? cardsInDeck.Take(deckSize.Value).ToList() : cardsInDeck;
+            gameState.WhiteCardsInDeck = deckSize.HasValue ? cardsInDeck.Take(deckSize.Value).ToList() : cardsInDeck;
 
             // then assign a selection to a user
             this.DealToPlayers(gameState);
+            this.StartRound(gameGuid);
         }
 
         /// <summary>
@@ -110,9 +112,9 @@
                     gamePlayerState => CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count);
 
             // get either the number of required cards, of if there aren't enough - every card that's left
-            var cardToDeal = gameState.CardsInTheDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 
-                ? gameState.CardsInTheDeck.Take(numberOfCardsRequired).ToList() 
-                : gameState.CardsInTheDeck.Where(o => !o.HasBeenDealt).ToList();
+            var cardToDeal = gameState.WhiteCardsInDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 
+                ? gameState.WhiteCardsInDeck.Take(numberOfCardsRequired).ToList() 
+                : gameState.WhiteCardsInDeck.Where(o => !o.HasBeenDealt).ToList();
 
             var playerCounter = 0;
 
@@ -137,7 +139,7 @@
         /// <returns>A list of cards already dealt in game</returns>
         private IList<Card> CardsAlreadyPlayedInGame(GameState gameState)
         {
-            return gameState.CardsInTheDeck.Select(o => o.Card).ToList();
+            return gameState.WhiteCardsInDeck.Select(o => o.Card).ToList();
         }
 
         /// <summary>
@@ -161,6 +163,33 @@
 
             // und shuffle bitte
             return deckCards.OrderBy(o => o.CardGuid).ToList();
+        }
+
+        /// <summary>
+        /// Begin a new round in a game
+        /// </summary>
+        /// <param name="gameGuid"></param>
+        private void StartRound(Guid gameGuid)
+        {
+            var gameState = this.gameStateRepository.GetByGuid(gameGuid);
+
+            // first mark any old cards as inactive
+            foreach (var blackCard in gameState.BlackCardsInDeck.Where(o => o.IsCurrentCard))
+            {
+                blackCard.IsCurrentCard = false;
+                blackCard.HasBeenDealt = true;
+            }
+
+            // now play the next one
+            var gameCard = gameState.BlackCardsInDeck.FirstOrDefault(o => !o.HasBeenDealt);
+
+            // we'll run out of cards eventually
+            if (gameCard != null)
+            {
+                gameCard.IsCurrentCard = true;
+            }
+
+            // todo, deal with running out of cards
         }
     }
 }

@@ -131,13 +131,9 @@
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
 
-            var countOfActivePlayers = gameState.GamePlayerStates.Count(o => o.IsActivePlayer);
-            var hasCorrectAmountOfActivePlayers = countOfActivePlayers == 1;
+            var numberOfActiveCards = gameState.
 
-            Assert.IsTrue(
-                hasCorrectAmountOfActivePlayers,
-                "Expected only one active player, but instead there were {0}",
-                countOfActivePlayers);
+
            
         }
 

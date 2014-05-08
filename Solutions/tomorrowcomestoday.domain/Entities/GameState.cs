@@ -26,9 +26,14 @@
         public IList<GamePlayerState> GamePlayerStates { get; set; }
 
         /// <summary>
-        /// Cards that are in the game
+        /// White cards that are in the active game
         /// </summary>
-        public IList<DeckCard> CardsInTheDeck { get; set; } 
+        public IList<WhiteCard> WhiteCardsInDeck { get; set; }
+
+        /// <summary>
+        /// Black cards that are in the active game
+        /// </summary>
+        public IList<BlackCard> BlackCardsInDeck { get; set; }
 
         /// <summary>
         /// When was the last in game action performed

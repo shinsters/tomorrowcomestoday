@@ -5,7 +5,7 @@
     /// <summary>
     /// The cards with the questions that are played one a turn
     /// </summary>
-    class BlackCard
+    public class BlackCard
     {
         /// <summary>
         /// The card 
@@ -21,5 +21,10 @@
         /// Has this card been dealt 
         /// </summary>
         public bool HasBeenDealt { get; set; }
+
+        /// <summary>
+        /// Is the the current card that's being played?
+        /// </summary>
+        public bool IsCurrentCard { get; set; }
     }
 }
