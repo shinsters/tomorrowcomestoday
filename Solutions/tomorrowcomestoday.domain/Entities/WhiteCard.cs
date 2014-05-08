@@ -3,9 +3,9 @@
     using System;
 
     /// <summary>
-    /// These are cards that have been 
+    /// These are the answer cards dealt to all players 
     /// </summary>
-    public class DeckCard
+    public class WhiteCard
     {
         /// <summary>
         /// The card 

@@ -1,7 +1,5 @@
 ﻿namespace TomorrowComesToday.Domain
 {
-    using System.ComponentModel;
-
     /// <summary>
     /// Global constants for the application. 
     /// </summary>

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Policy;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Entities;
@@ -115,7 +114,6 @@
                 ? gameState.CardsInTheDeck.Take(numberOfCardsRequired).ToList() 
                 : gameState.CardsInTheDeck.Where(o => !o.HasBeenDealt).ToList();
 
-
             var playerCounter = 0;
 
             foreach (var card in cardToDeal)
@@ -130,7 +128,6 @@
                 gameState.GamePlayerStates[playerCounter].CardsInHand.Add(card.Card);
                 playerCounter++;
             }
-
         }
 
         /// <summary>
@@ -148,13 +145,13 @@
         /// </summary>
         /// <param name="cardsInDeck"></param>
         /// <returns></returns>
-        private IList<DeckCard> GenerateCardsInDeck(IEnumerable<Card> cardsInDeck)
+        private IList<WhiteCard> GenerateCardsInDeck(IEnumerable<Card> cardsInDeck)
         {
-            var deckCards = new List<DeckCard>();
+            var deckCards = new List<WhiteCard>();
 
             foreach (var card in cardsInDeck)
             {
-                deckCards.Add(new DeckCard
+                deckCards.Add(new WhiteCard
                                   {
                                       Card = card,
                                       CardGuid = Guid.NewGuid(),

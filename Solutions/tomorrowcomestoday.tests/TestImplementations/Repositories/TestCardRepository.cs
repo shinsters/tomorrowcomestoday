@@ -5,8 +5,6 @@
     using System.IO;
     using System.Linq;
 
-    using Remotion.Linq.Parsing.Structure.IntermediateModel;
-
     using SharpArch.Domain.PersistenceSupport;
 
     using TomorrowComesToday.Domain.Builders;
@@ -35,7 +33,7 @@
         public TestCardRepository()
         {
             this.Cards = this.GetCardsFromResource();
-        }
+        }  
 
         public IDbContext DbContext { get; set; }
 

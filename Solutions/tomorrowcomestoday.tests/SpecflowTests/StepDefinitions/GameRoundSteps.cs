@@ -121,6 +121,43 @@
                     cardsInHandExpected,
                     playerState.CardsInHand.Count);
             }
-        }   
+        }
+
+        [Then(@"I see the game '(.*)' has an active black card")]
+        public void ThenISeeTheGameHasAnActiveBlackCard(string gameGuidAsString)
+        {
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+
+            var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
+            var gameState = gameStateRepository.GetByGuid(gameGuid);
+
+            var countOfActivePlayers = gameState.GamePlayerStates.Count(o => o.IsActivePlayer);
+            var hasCorrectAmountOfActivePlayers = countOfActivePlayers == 1;
+
+            Assert.IsTrue(
+                hasCorrectAmountOfActivePlayers,
+                "Expected only one active player, but instead there were {0}",
+                countOfActivePlayers);
+           
+        }
+
+        [Then(@"I see the game '(.*)' has an active player")]
+        public void ThenISeeTheGameHasAnActivePlayer(string gameGuidAsString)
+        {
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+
+            var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
+            var gameState = gameStateRepository.GetByGuid(gameGuid);
+
+            var countOfActivePlayers = gameState.GamePlayerStates.Count(o => o.IsActivePlayer);
+            var hasCorrectAmountOfActivePlayers = countOfActivePlayers == 1;
+
+            Assert.IsTrue(
+                hasCorrectAmountOfActivePlayers,
+                "Expected only one active player, but instead there were {0}",
+                countOfActivePlayers);
+        }
+
+
     }
 }
