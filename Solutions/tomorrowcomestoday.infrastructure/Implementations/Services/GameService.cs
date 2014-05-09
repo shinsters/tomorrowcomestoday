@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Newtonsoft.Json.Schema;
-
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
@@ -44,9 +42,9 @@
         /// Get a deck then deal to players
         /// </summary>
         /// <param name="gameGuid">The game guid</param>
-        public void DealGame(Guid gameGuid)
+        public void DealWhiteStart(Guid gameGuid)
         {
-            this.DealGame(gameGuid, null);
+            this.DealWhiteStart(gameGuid, null);
         }
 
         /// <summary>
@@ -54,17 +52,16 @@
         /// </summary>
         /// <param name="deckSize">The deck Size</param>
         /// <param name="gameGuid">The game guid</param>
-        public void DealGame(int deckSize, Guid gameGuid)
+        public void DealWhiteStart(int deckSize, Guid gameGuid)
         {
-            this.DealGame(gameGuid, deckSize);
-            this.StartRound(gameGuid);
+            this.DealWhiteStart(gameGuid, deckSize);
         }
 
         /// <summary>
         /// Deal to players from existing deck
         /// </summary>
         /// <param name="gameGuid">The game Guid</param>
-        public void DealToPlayers(Guid gameGuid)
+        public void DealWhiteTurn(Guid gameGuid)
         {
             var gameState = this.gameStateRepository.GetByGuid(gameGuid);
 
@@ -73,7 +70,7 @@
                 return;
             }
 
-            this.DealToPlayers(gameState);
+            this.DealWhiteTurn(gameState);
         }
 
         /// <summary>
@@ -81,7 +78,7 @@
         /// </summary>
         /// <param name="deckSize">The deck size</param>
         /// <param name="gameGuid">The game guid</param>
-        private void DealGame(Guid gameGuid, int? deckSize)
+        private void DealWhiteStart(Guid gameGuid, int? deckSize)
         {
             var gameState = this.gameStateRepository.GetByGuid(gameGuid);
 
@@ -99,7 +96,7 @@
             gameState.WhiteCardsInDeck = deckSize.HasValue ? cardsInDeck.Take(deckSize.Value).ToList() : cardsInDeck;
 
             // then assign a selection to a user
-            this.DealToPlayers(gameState);
+            this.DealWhiteTurn(gameState);
 
         }
 
@@ -107,7 +104,7 @@
         /// Deal from deck to players
         /// </summary>
         /// <param name="gameState"></param>
-        private void DealToPlayers(GameState gameState)
+        private void DealWhiteTurn(GameState gameState)
         {
             // work out how many cards we need
             var numberOfCardsRequired =
@@ -181,9 +178,12 @@
         /// Begin a new round in a game
         /// </summary>
         /// <param name="gameGuid"></param>
-        private void StartRound(Guid gameGuid)
+        private void DealBlacks(Guid gameGuid)
         {
             var gameState = this.gameStateRepository.GetByGuid(gameGuid);
+
+            var blackCardsAlreadyPlayed = this.CardsAlreadyPlayedInGame(gameState, CardType.Black);
+            var blackDeck = this.cardRepository.GetCardFromDeck(CardType.Black, blackCardsAlreadyPlayed);
 
             // first mark any old cards as inactive
             foreach (var blackCard in gameState.BlackCardsInDeck.Where(o => o.IsCurrentCard))
@@ -200,8 +200,6 @@
             {
                 gameCard.IsCurrentCard = true;
             }
-
-            // todo, deal with running out of cards
         }
     }
 }

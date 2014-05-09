@@ -78,7 +78,7 @@
             var gameService = InitaliseTests.Container.Resolve<IGameService>();
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
 
-            gameService.DealGame(cardsInWhiteDeck, gameGuid);
+            gameService.DealWhiteStart(cardsInWhiteDeck, gameGuid);
         }
 
         [Then(@"I see the game '(.*)' players are in the following state:")]
