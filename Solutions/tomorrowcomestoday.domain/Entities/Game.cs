@@ -25,7 +25,7 @@
         /// <summary>
         /// The state of active players
         /// </summary>
-        public IList<GamePlayerState> GamePlayerStates { get; set; }
+        public IList<GamePlayer> GamePlayers { get; set; }
 
         /// <summary>
         /// White cards that are in the active game

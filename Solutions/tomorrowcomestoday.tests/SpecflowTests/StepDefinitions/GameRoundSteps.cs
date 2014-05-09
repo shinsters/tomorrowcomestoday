@@ -43,7 +43,7 @@
 
             var guid = Guid.ParseExact(gameGuid, "D");
 
-            var game = new GameStateBuilder()
+            var game = new GameBuilder()
                 .AddPlayers(playersToAdd)
                 .WithGuid(guid)
                 .Create();
@@ -106,10 +106,10 @@
                 var player = playerRepository.GetByName(playerName);
 
                 Assert.IsTrue(player != null, string.Format("No player by name {0} was found", playerName));
-                Assert.IsTrue(gameState.GamePlayerStates.Any(o => o.Player.Guid == player.Guid));
+                Assert.IsTrue(gameState.GamePlayers.Any(o => o.Player.Guid == player.Guid));
 
                 // check the players state is as expected 
-                var playerState = gameState.GamePlayerStates.First(o => o.Player.Guid == player.Guid);
+                var playerState = gameState.GamePlayers.First(o => o.Player.Guid == player.Guid);
 
                 var pointsExpected = row.GetInt32("Points");
 
@@ -156,7 +156,7 @@
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
 
-            var countOfActivePlayers = gameState.GamePlayerStates.Count(o => o.IsActivePlayer);
+            var countOfActivePlayers = gameState.GamePlayers.Count(o => o.IsActivePlayer);
             var hasCorrectAmountOfActivePlayers = countOfActivePlayers == 1;
 
             Assert.IsTrue(

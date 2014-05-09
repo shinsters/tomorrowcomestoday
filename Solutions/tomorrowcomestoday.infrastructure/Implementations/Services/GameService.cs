@@ -28,7 +28,7 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="GameService"/> class.
         /// </summary>
-        /// <param name="gameRepository">The game state repository.</param>
+        /// <param name="gameRepository">The game repository.</param>
         /// <param name="cardRepository">The card repository</param>
         public GameService(
             IGameRepository gameRepository,
@@ -86,7 +86,7 @@
         private void DealWhiteTurn(Game game)
         {
             // work out how many cards we need
-            var numberOfCardsRequired = game.GamePlayerStates.Sum(gamePlayerState => CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count);
+            var numberOfCardsRequired = game.GamePlayers.Sum(gamePlayerState => CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count);
 
             // get either the number of required cards, of if there aren't enough - every card that's left
             var cardToDeal = game.WhiteCardsInDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 
@@ -99,12 +99,12 @@
             {
                 card.HasBeenDealt = true;
 
-                if (playerCounter > game.GamePlayerStates.Count - 1)
+                if (playerCounter > game.GamePlayers.Count - 1)
                 {
                     playerCounter = 0;
                 }
 
-                game.GamePlayerStates[playerCounter].CardsInHand.Add(card.Card);
+                game.GamePlayers[playerCounter].CardsInHand.Add(card.Card);
                 playerCounter++;
             }
         }

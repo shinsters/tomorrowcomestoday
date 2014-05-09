@@ -2,23 +2,26 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
 
     /// <summary>
-    /// Creates a game state
+    /// Creates a game
     /// </summary>
-    public class GameStateBuilder
+    public class GameBuilder
     {
         private readonly Game entity = new Game();
+
+        static Random random = new Random();
 
         /// <summary>
         /// Adds a single player to the game
         /// </summary>
         /// <param name="player"></param>
         /// <returns>The game state builder</returns>
-        public GameStateBuilder AddPlayer(Player player)
+        public GameBuilder AddPlayer(Player player)
         {
             throw new NotImplementedException();
         }
@@ -28,22 +31,33 @@
         /// </summary>
         /// <param name="players"></param>
         /// <returns>The game state builder</returns>
-        public GameStateBuilder AddPlayers(IList<Player> players)
+        public GameBuilder AddPlayers(IList<Player> players)
         {
-            if (this.entity.GamePlayerStates == null)
+            if (this.entity.GamePlayers == null)
             {
-                this.entity.GamePlayerStates = new List<GamePlayerState>();
+                this.entity.GamePlayers = new List<GamePlayer>();
             }
 
+            var playerCounter = 1;
             foreach (var player in players)
             {
-                this.entity.GamePlayerStates.Add(new GamePlayerState
+
+                this.entity.GamePlayers.Add(new GamePlayer
                                                      {
+                                                         GamePlayerId = playerCounter,
                                                          CardsInHand = new List<Card>(),
                                                          Player = player,
                                                          Points = 0
                                                      });
+
+                playerCounter++;
             }
+
+            // a first player now needs to be randomly selected
+            var randomPlayerId = random.Next(players.Count) + 1;
+            var randomFirstPlayer = this.entity.GamePlayers.First(o => o.GamePlayerId == randomPlayerId);
+
+            randomFirstPlayer.IsActivePlayer = true;
 
             return this;
         }
@@ -54,7 +68,7 @@
         /// </summary>
         /// <param name="id">The GUID to use as the Id</param>
         /// <returns>The game state builder</returns>
-        public GameStateBuilder WithGuid(Guid id)
+        public GameBuilder WithGuid(Guid id)
         {
             this.entity.GameGuid = id;
             return this;

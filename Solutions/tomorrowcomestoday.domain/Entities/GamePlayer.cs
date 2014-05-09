@@ -6,8 +6,13 @@
     /// <summary>
     /// The state of a player in a specific game
     /// </summary>
-    public class GamePlayerState
+    public class GamePlayer
     {
+        /// <summary>
+        /// The numerical ID of the player in the game
+        /// </summary>
+        public int GamePlayerId { get; set; }
+
         /// <summary>
         /// The player this represents
         /// </summary>

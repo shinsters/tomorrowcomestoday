@@ -90,13 +90,13 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Builders\GameStateBuilder.cs" />
+    <Compile Include="Builders\GameBuilder.cs" />
     <Compile Include="Builders\PlayerBuilder.cs" />
     <Compile Include="CommonConcepts.cs" />
     <Compile Include="Entities\Card.cs" />
     <Compile Include="Builders\CardBuilder.cs" />
     <Compile Include="Entities\InGameCard.cs" />
-    <Compile Include="Entities\GamePlayerState.cs" />
+    <Compile Include="Entities\GamePlayer.cs" />
     <Compile Include="Entities\Game.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Enums\CardType.cs" />
