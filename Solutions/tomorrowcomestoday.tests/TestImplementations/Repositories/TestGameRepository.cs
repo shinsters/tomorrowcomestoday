@@ -12,34 +12,34 @@
     /// <summary>
     /// Game state repository for tests. This might end up being moved into live if we don't persist them.
     /// </summary>
-    public class TestGameStateRepository : IGameStateRepository
+    public class TestGameRepository : IGameRepository
     {
-        private readonly List<GameState> gameStates = new List<GameState>();
+        private readonly List<Game> gameStates = new List<Game>();
 
         public IDbContext DbContext { get; private set; }
 
-        public GameState Get(int id)
+        public Game Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IList<GameState> GetAll()
+        public IList<Game> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public GameState SaveOrUpdate(GameState entity)
+        public Game SaveOrUpdate(Game entity)
         {
             this.gameStates.Add(entity);
             return entity;
         }
 
-        public void Delete(GameState entity)
+        public void Delete(Game entity)
         {
             throw new NotImplementedException();
         }
 
-        public GameState GetByGuid(Guid id)
+        public Game GetByGuid(Guid id)
         {
             return this.gameStates.FirstOrDefault(o => o.GameGuid == id);
         }

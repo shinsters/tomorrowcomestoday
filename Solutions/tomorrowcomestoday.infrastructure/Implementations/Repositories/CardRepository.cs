@@ -13,12 +13,17 @@
     /// </summary>
     public class CardRepository : LinqRepository<Card>, ICardRepository
     {
-        public IList<Card> GetCardFromDeck(int numberRequired, CardType cardType, IList<Card> cardsToExclude)
+        public IList<Card> GetCardFromDeck(int numberRequired, CardType cardType)
         {
             throw new System.NotImplementedException();
         }
 
-        public IList<Card> GetCardFromDeck(CardType cardType, IList<Card> cardsToExclude)
+        public IList<Card> GetCardFromDeck(CardType cardType)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetCustomDeckSize(int customDeckSize)
         {
             throw new System.NotImplementedException();
         }

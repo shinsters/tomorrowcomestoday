@@ -7,15 +7,15 @@
     using TomorrowComesToday.Domain.Entities;
 
     /// <summary>
-    /// Holds game states
+    /// Holds games
     /// </summary>
-    public interface IGameStateRepository : IRepository<GameState>
+    public interface IGameRepository : IRepository<Game>
     {
         /// <summary>
         /// The get by guid.
         /// </summary>
         /// <param name="id">The guid of a game</param>
-        /// <returns>The <see cref="GameState"/>.</returns>
-        GameState GetByGuid(Guid id);
+        /// <returns>The <see cref="Game"/>.</returns>
+        Game GetByGuid(Guid id);
     }
 }

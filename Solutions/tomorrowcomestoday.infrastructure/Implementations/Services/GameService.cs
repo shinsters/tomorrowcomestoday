@@ -18,7 +18,7 @@
         /// <summary>
         /// The game state repository.
         /// </summary>
-        private readonly IGameStateRepository gameStateRepository;
+        private readonly IGameRepository gameRepository;
 
         /// <summary>
         /// The card repository.
@@ -28,93 +28,70 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="GameService"/> class.
         /// </summary>
-        /// <param name="gameStateRepository">The game state repository.</param>
+        /// <param name="gameRepository">The game state repository.</param>
         /// <param name="cardRepository">The card repository</param>
         public GameService(
-            IGameStateRepository gameStateRepository,
+            IGameRepository gameRepository,
             ICardRepository cardRepository)
         {
-            this.gameStateRepository = gameStateRepository;
+            this.gameRepository = gameRepository;
             this.cardRepository = cardRepository;
         }
 
         /// <summary>
-        /// Get a deck then deal to players
+        /// Deal a round
         /// </summary>
         /// <param name="gameGuid">The game guid</param>
-        public void DealWhiteStart(Guid gameGuid)
+        public void DealRound(Guid gameGuid)
         {
-            this.DealWhiteStart(gameGuid, null);
-        }
+            var game = this.gameRepository.GetByGuid(gameGuid);
 
-        /// <summary>
-        /// Get a deck then deal to players
-        /// </summary>
-        /// <param name="deckSize">The deck Size</param>
-        /// <param name="gameGuid">The game guid</param>
-        public void DealRound(int deckSize, Guid gameGuid)
-        {
-            this.DealWhiteStart(gameGuid, deckSize);
-        }
-
-        /// <summary>
-        /// Deal to players from existing deck
-        /// </summary>
-        /// <param name="gameGuid">The game Guid</param>
-        public void DealWhiteTurn(Guid gameGuid)
-        {
-            var gameState = this.gameStateRepository.GetByGuid(gameGuid);
-
-            if (gameState == null)
+            if (game == null)
             {
                 return;
             }
 
-            this.DealWhiteTurn(gameState);
-        }
-
-        /// <summary>
-        /// Get a deck then deal to players
-        /// </summary>
-        /// <param name="deckSize">The deck size</param>
-        /// <param name="gameGuid">The game guid</param>
-        private void DealWhiteStart(Guid gameGuid, int? deckSize)
-        {
-            var gameState = this.gameStateRepository.GetByGuid(gameGuid);
-
-            if (gameState == null)
-            {
-                return;
+            // if the game is just starting we need to create decks of cards
+            if (game.GameState == GameState.Beginning){
+                
+                this.CreateDeck(game);
+                game.GameState = GameState.BeingPlayed;
             }
-
-            // first generate a bunch of cards to deal
-            var whiteCardsAlreadyPlayed = this.CardsAlreadyPlayedInGame(gameState, CardType.White);
-            var whiteDeck = this.cardRepository.GetCardFromDeck(CardType.White, whiteCardsAlreadyPlayed);
-
-            var cardsInDeck = this.GenerateCardsInDeck(whiteDeck);
-
-            gameState.WhiteCardsInDeck = deckSize.HasValue ? cardsInDeck.Take(deckSize.Value).ToList() : cardsInDeck;
 
             // then assign a selection to a user
-            this.DealWhiteTurn(gameState);
+            this.DealWhiteTurn(game);
+            this.DealBlackTurn(game);
+        }
 
+        /// <summary>
+        /// Create the decks at the beginning of the game
+        /// </summary>
+        /// <param name="game">The active game</param>
+        private void CreateDeck(Game game)
+        {
+            // just get them all for the moment
+            var whiteCards = cardRepository.GetCardFromDeck(CardType.White);
+            var whiteCardsInDeck = this.GenerateCardsInDeck(whiteCards);
+            game.WhiteCardsInDeck = whiteCardsInDeck;
+
+            var blackCards = cardRepository.GetCardFromDeck(CardType.Black);
+            var blackCardsInDeck = this.GenerateCardsInDeck(blackCards);
+            game.BlackCardsInDeck = blackCardsInDeck;
         }
 
         /// <summary>
         /// Deal from deck to players
         /// </summary>
-        /// <param name="gameState"></param>
-        private void DealWhiteTurn(GameState gameState)
+        /// <param name="game"></param>
+        private void DealWhiteTurn(Game game)
         {
             // work out how many cards we need
-            var numberOfCardsRequired =
-                gameState.GamePlayerStates.Sum(
-                    gamePlayerState => CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count);
+            var numberOfCardsRequired = game.GamePlayerStates.Sum(gamePlayerState => CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count);
 
             // get either the number of required cards, of if there aren't enough - every card that's left
-            var cardToDeal = gameState.WhiteCardsInDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 
-                ? gameState.WhiteCardsInDeck.Take(numberOfCardsRequired).ToList() 
-                : gameState.WhiteCardsInDeck.Where(o => !o.HasBeenDealt).ToList();
+            var cardToDeal = game.WhiteCardsInDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 
+                ? game.WhiteCardsInDeck.Take(numberOfCardsRequired).ToList() 
+                : game.WhiteCardsInDeck.Where(o => !o.HasBeenDealt).ToList();
 
             var playerCounter = 0;
 
@@ -122,31 +99,13 @@
             {
                 card.HasBeenDealt = true;
 
-                if (playerCounter > gameState.GamePlayerStates.Count - 1)
+                if (playerCounter > game.GamePlayerStates.Count - 1)
                 {
                     playerCounter = 0;
                 }
 
-                gameState.GamePlayerStates[playerCounter].CardsInHand.Add(card.Card);
+                game.GamePlayerStates[playerCounter].CardsInHand.Add(card.Card);
                 playerCounter++;
-            }
-        }
-
-        /// <summary>
-        /// Returns a list of cards already been dealt in a game
-        /// </summary>
-        /// <param name="gameState">The game</param>
-        /// <param name="type">The type of card</param>
-        /// <returns>A list of cards already dealt in game</returns>
-        private IList<Card> CardsAlreadyPlayedInGame(GameState gameState, CardType type)
-        {
-            switch (type)
-            {
-                case CardType.Black:
-                    return gameState.BlackCardsInDeck.Select(o => o.Card).ToList();
-
-                default:
-                    return gameState.WhiteCardsInDeck.Select(o => o.Card).ToList();
             }
         }
 
@@ -154,7 +113,7 @@
         /// Generate an in game card type, containing game specific data
         /// </summary>
         /// <param name="cardsInDeck">Collection of cards to use</param>
-        /// <returns></returns>
+        /// <returns>A shuffled deck of cards</returns>
         private IList<InGameCard> GenerateCardsInDeck(IEnumerable<Card> cardsInDeck)
         {
             var deckCards = new List<InGameCard>();
@@ -170,30 +129,26 @@
                 });
             }
 
-            // und shuffle bitte
+            // shuffling by the card guid should give us some kind of shuffle for the deck.
+            // if it's crap then i'll make a better shuffle.
             return deckCards.OrderBy(o => o.CardGuid).ToList();
         }
 
         /// <summary>
-        /// Begin a new round in a game
+        /// Deal a new black card
         /// </summary>
-        /// <param name="gameGuid"></param>
-        private void DealBlacks(Guid gameGuid)
+        /// <param name="game">The active game</param> 
+        private void DealBlackTurn(Game game)
         {
-            var gameState = this.gameStateRepository.GetByGuid(gameGuid);
-
-            var blackCardsAlreadyPlayed = this.CardsAlreadyPlayedInGame(gameState, CardType.Black);
-            var blackDeck = this.cardRepository.GetCardFromDeck(CardType.Black, blackCardsAlreadyPlayed);
-
             // first mark any old cards as inactive
-            foreach (var blackCard in gameState.BlackCardsInDeck.Where(o => o.IsCurrentCard))
+            foreach (var blackCard in game.BlackCardsInDeck.Where(o => o.IsCurrentCard))
             {
                 blackCard.IsCurrentCard = false;
                 blackCard.HasBeenDealt = true;
             }
 
             // now play the next one
-            var gameCard = gameState.BlackCardsInDeck.FirstOrDefault(o => !o.HasBeenDealt);
+            var gameCard = game.BlackCardsInDeck.FirstOrDefault(o => !o.HasBeenDealt);
 
             // we'll run out of cards eventually
             if (gameCard != null)

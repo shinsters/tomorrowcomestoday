@@ -18,16 +18,20 @@
         /// </summary>
         /// <param name="numberRequired">The number Required</param>
         /// <param name="cardType">The card Type</param>
-        /// <param name="cardsToExclude">The cards to exclude, so already dealt</param>
         /// <returns>The <see cref="IList"/> of cards</returns>
-        IList<Card> GetCardFromDeck(int numberRequired, CardType cardType, IList<Card> cardsToExclude);
+        IList<Card> GetCardFromDeck(int numberRequired, CardType cardType);
 
         /// <summary>
         /// Get a number of cards from the deck
         /// </summary>
         /// <param name="cardType">The card Type</param>
-        /// <param name="cardsToExclude">The cards to exclude, so already dealt</param>
         /// <returns>The <see cref="IList"/> of cards</returns>
-        IList<Card> GetCardFromDeck(CardType cardType, IList<Card> cardsToExclude);
+        IList<Card> GetCardFromDeck(CardType cardType);
+
+        /// <summary>
+        /// Set a custom deck size, mostly for testing purposes
+        /// </summary>
+        /// <param name="customDeckSize">New size of deck</param>
+        void SetCustomDeckSize(int customDeckSize);
     }
 }

@@ -114,7 +114,7 @@
     <Compile Include="Implementations\Repositories\CardRepository.cs" />
     <Compile Include="Implementations\Services\GameService.cs" />
     <Compile Include="Interfaces\Repositories\ICardRepository.cs" />
-    <Compile Include="Interfaces\Repositories\IGameStateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IGameRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPlayerRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\Services\IGameService.cs" />

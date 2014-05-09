@@ -5,10 +5,12 @@
 
     using SharpArch.Domain.DomainModel;
 
+    using TomorrowComesToday.Domain.Enums;
+
     /// <summary>
-    /// A game state
+    /// A game
     /// </summary>
-    public class GameState : Entity
+    public class Game : Entity
     {
         /// <summary>
         /// Is the game currently active
@@ -39,5 +41,10 @@
         /// When was the last in game action performed
         /// </summary>
         public DateTime LastAction { get; set; }
+
+        /// <summary>
+        /// What is the state of this game
+        /// </summary>
+        public GameState GameState { get; set; }
     }
 }

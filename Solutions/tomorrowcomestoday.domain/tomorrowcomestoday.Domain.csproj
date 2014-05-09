@@ -97,9 +97,10 @@
     <Compile Include="Builders\CardBuilder.cs" />
     <Compile Include="Entities\InGameCard.cs" />
     <Compile Include="Entities\GamePlayerState.cs" />
-    <Compile Include="Entities\GameState.cs" />
+    <Compile Include="Entities\Game.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Enums\CardType.cs" />
+    <Compile Include="Enums\GameState.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

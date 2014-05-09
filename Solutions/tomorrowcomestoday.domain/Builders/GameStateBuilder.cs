@@ -4,13 +4,14 @@
     using System.Collections.Generic;
 
     using TomorrowComesToday.Domain.Entities;
+    using TomorrowComesToday.Domain.Enums;
 
     /// <summary>
     /// Creates a game state
     /// </summary>
     public class GameStateBuilder
     {
-        private readonly GameState entity = new GameState();
+        private readonly Game entity = new Game();
 
         /// <summary>
         /// Adds a single player to the game
@@ -63,7 +64,7 @@
         /// Returns a completed game state object
         /// </summary>
         /// <returns>A completed game state object</returns>
-        public GameState Create()
+        public Game Create()
         {
             // GUIDs are only manually set if in a testing environment and the id of the game is needed. Otherwise this
             // should be done automatically
@@ -75,6 +76,7 @@
             this.entity.IsActive = true;
             this.entity.WhiteCardsInDeck = new List<InGameCard>();
             this.entity.BlackCardsInDeck = new List<InGameCard>();
+            this.entity.GameState = GameState.Beginning;
 
             return this.entity;
         }

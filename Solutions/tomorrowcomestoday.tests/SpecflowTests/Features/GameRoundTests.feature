@@ -15,11 +15,11 @@ Background: I have a fully configured back end
 # Card dealing
 
 Scenario: When a game starts users are handed their cards
-	Given I have a started game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
+	Given I have a game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started with a white deck of '50' cards 
+	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started 
 	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' players are in the following state:
 	| Name     | Points | Cards in hand |
@@ -28,11 +28,12 @@ Scenario: When a game starts users are handed their cards
 
 
 Scenario: Cards in deck when not enough left are properly shared among players
-	Given I have a started game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
+	Given I have a game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started with a white deck of '11' cards 
+	And I have a limited white deck size of '11' cards
+	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started
 	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' players are in the following state:
 	| Name     | Points | Cards in hand |
@@ -42,11 +43,11 @@ Scenario: Cards in deck when not enough left are properly shared among players
 # Player assignment 
 
 Scenario: A card tsar is assigned and a black card is played as the game starts
-	Given I have a started game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
+	Given I have a game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started with a white deck of '50' cards 
+	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started 
 	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' has an active black card
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' has an active player

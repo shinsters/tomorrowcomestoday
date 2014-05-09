@@ -49,9 +49,8 @@
         /// Get a number of cards from the deck
         /// </summary> 
         /// <param name="numberRequired">The number Required</param>
-        /// <param name="cardsToExclude">The cards to exclude, so already dealt</param>
         /// <returns>The <see cref="System.Collections.IList"/> of cards</returns>
-        public IList<Card> GetCardFromDeck(int numberRequired, IList<Card> cardsToExclude)
+        public IList<Card> GetCardFromDeck(int numberRequired)
         {
             throw new NotImplementedException();
         }
@@ -76,7 +75,7 @@
             throw new NotImplementedException();
         }
 
-        public IList<Card> GetCardFromDeck(int numberRequired, CardType cardType, IList<Card> cardsToExclude)
+        public IList<Card> GetCardFromDeck(int numberRequired, CardType cardType)
         {
             throw new NotImplementedException();
         }
@@ -87,12 +86,20 @@
         /// <param name="cardType"></param>
         /// <param name="cardsToExclude"></param>
         /// <returns></returns>
-        public IList<Card> GetCardFromDeck(CardType cardType, IList<Card> cardsToExclude)
+        public IList<Card> GetCardFromDeck(CardType cardType)
         {
             return this.Cards
                 .Where(o => o.CardType == cardType)
-                .Where(card => cardsToExclude.All(o => o.CardGuid != card.CardGuid))
                 .ToList();
+        }
+
+        /// <summary>
+        /// Set a custom deck size, mostly for testing purposes
+        /// </summary>
+        /// <param name="customDeckSize">New size of deck</param>
+        public void SetCustomDeckSize(int customDeckSize)
+        {
+            this.Cards = this.Cards.Take(customDeckSize).ToList();
         }
 
         private IList<Card> GetCardsFromResource(CardType cardType)

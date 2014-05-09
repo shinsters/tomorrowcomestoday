@@ -22,11 +22,11 @@
     [Binding]
     public class GameRoundSteps
     {
-        [Given(@"I have a started game with the id '(.*)' containing following players:")]
+        [Given(@"I have a game with the id '(.*)' containing following players:")]
         public void GivenIHaveAStartedGameWithTheIdContainingFollowingPlayers(string gameGuid, Table table)
         {
             var playerRepository = InitaliseTests.Container.Resolve<IPlayerRepository>();
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
 
             var playersToAdd = new List<Player>();
 
@@ -54,7 +54,7 @@
         [Then(@"I see the game '(.*)' is in state '(.*)'")]
         public void ThenISeeTheGameIsInState(string gameGuidAsString, string stateAsString)
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
 
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
 
@@ -72,20 +72,27 @@
                 stateAsString);
         }
 
+        [Given(@"I have a limited white deck size of '(.*)' cards")]
+        public void GivenIHaveALimitedWhiteDeckSizeOfCards(int limitedDeckSize)
+        {
+            var cardRepository = InitaliseTests.Container.Resolve<ICardRepository>();
+            cardRepository.SetCustomDeckSize(limitedDeckSize);
+        }
 
-        [Given(@"the game '(.*)' is started with a white deck of '(.*)' cards")]
-        public void GivenTheGameHasAWhiteDeckOfCards(string gameGuidAsString, int cardsInWhiteDeck)
+
+        [Given(@"the game '(.*)' is started")]
+        public void GivenTheGameHasAWhiteDeckOfCards(string gameGuidAsString)
         {
             var gameService = InitaliseTests.Container.Resolve<IGameService>();
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
 
-            gameService.DealRound(cardsInWhiteDeck, gameGuid);
+            gameService.DealRound(gameGuid);
         }
 
         [Then(@"I see the game '(.*)' players are in the following state:")]
         public void ThenISeeTheGamePlayersAreInTheFollowingState(string gameGuidAsString, Table table)
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
             var playerRepository = InitaliseTests.Container.Resolve<IPlayerRepository>();
 
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
@@ -127,7 +134,7 @@
         [Then(@"I see the game '(.*)' has an active black card")]
         public void ThenISeeTheGameHasAnActiveBlackCard(string gameGuidAsString)
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
 
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
@@ -144,7 +151,7 @@
         [Then(@"I see the game '(.*)' has an active player")]
         public void ThenISeeTheGameHasAnActivePlayer(string gameGuidAsString)
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameStateRepository>();
+            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
 
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
