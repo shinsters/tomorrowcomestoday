@@ -104,7 +104,8 @@
                     playerCounter = 0;
                 }
 
-                game.GamePlayers[playerCounter].CardsInHand.Add(card.Card);
+                // players already have a player counter 
+                game.GamePlayers.First(o => o.GamePlayerId == playerCounter + 1).CardsInHand.Add(card);
                 playerCounter++;
             }
         }
@@ -114,13 +115,13 @@
         /// </summary>
         /// <param name="cardsInDeck">Collection of cards to use</param>
         /// <returns>A shuffled deck of cards</returns>
-        private IList<InGameCard> GenerateCardsInDeck(IEnumerable<Card> cardsInDeck)
+        private IList<GameCard> GenerateCardsInDeck(IEnumerable<Card> cardsInDeck)
         {
-            var deckCards = new List<InGameCard>();
+            var deckCards = new List<GameCard>();
 
             foreach (var card in cardsInDeck)
             {
-                deckCards.Add(new InGameCard
+                deckCards.Add(new GameCard
                 {
                     Card = card,
                     CardGuid = Guid.NewGuid(),

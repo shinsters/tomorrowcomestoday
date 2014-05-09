@@ -8,6 +8,7 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
     using TechTalk.SpecFlow.Assist;
 
     using TomorrowComesToday.Domain;
+    using TomorrowComesToday.Domain.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
 
     [Binding]
@@ -23,11 +24,11 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
             var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
             // an active player is created when a game is, just un set it and set the needed one
-            var disablingActivePlayer = game.GamePlayers.First(o => o.IsActivePlayer);
-            disablingActivePlayer.IsActivePlayer = false;
+            var disablingActivePlayer = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerWaiting);
+            disablingActivePlayer.PlayerState = PlayerState.IsNormalPlayerSelecting;
 
             var newActivePlayer = game.GamePlayers.First(o => o.Player.Guid == player.Guid);
-            newActivePlayer.IsActivePlayer = true;
+            newActivePlayer.PlayerState = PlayerState.IsActivePlayerSelecting;
         }
 
         [Given(@"the following players have played an answer card:")]
@@ -41,6 +42,9 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
             {
                 var name = row.GetString("Name");
                 var player = playerRepository.GetByName(name);
+
+                var gamePlayer = game.GamePlayers.First(o => o.Player.Guid == player.Guid);
+                
             }
         }
 

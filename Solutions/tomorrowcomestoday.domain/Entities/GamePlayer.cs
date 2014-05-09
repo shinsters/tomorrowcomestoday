@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using TomorrowComesToday.Domain.Enums;
+
     /// <summary>
     /// The state of a player in a specific game
     /// </summary>
@@ -26,12 +28,12 @@
         /// <summary>
         /// The cards the player current has in their hand
         /// </summary>
-        public IList<Card> CardsInHand { get; set; }
+        public IList<GameCard> CardsInHand { get; set; }
 
         /// <summary>
-        /// Is the player the active card tzar?
+        /// What is the current state of the player in the game
         /// </summary>
-        public bool IsActivePlayer { get; set; }
+        public PlayerState PlayerState { get; set; }
 
         /// <summary>
         /// The last time the player interacted with the game. 

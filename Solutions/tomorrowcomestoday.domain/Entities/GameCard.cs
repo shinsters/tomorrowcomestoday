@@ -5,7 +5,7 @@
     /// <summary>
     /// These are the cards dealt to all players 
     /// </summary>
-    public class InGameCard 
+    public class GameCard 
     {
         /// <summary>
         /// The card 

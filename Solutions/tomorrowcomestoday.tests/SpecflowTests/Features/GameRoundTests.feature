@@ -52,7 +52,4 @@ Scenario: A card tsar is assigned and a black card is played as the game starts
 	And I see the game has an active black card
 	And I see the game has an active player
 
-# Turn 
-
-
 

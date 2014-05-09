@@ -35,9 +35,10 @@
                 this.entity.GamePlayers.Add(new GamePlayer
                                                      {
                                                          GamePlayerId = playerCounter,
-                                                         CardsInHand = new List<Card>(),
+                                                         CardsInHand = new List<GameCard>(),
                                                          Player = player,
-                                                         Points = 0
+                                                         Points = 0,
+                                                         PlayerState = PlayerState.IsNormalPlayerSelecting
                                                      });
 
                 playerCounter++;
@@ -47,7 +48,7 @@
             var randomPlayerId = Random.Next(players.Count) + 1;
             var randomFirstPlayer = this.entity.GamePlayers.First(o => o.GamePlayerId == randomPlayerId);
 
-            randomFirstPlayer.IsActivePlayer = true;
+            randomFirstPlayer.PlayerState = PlayerState.IsActivePlayerWaiting;
 
             return this;
         }
@@ -78,8 +79,8 @@
             }
 
             this.entity.IsActive = true;
-            this.entity.WhiteCardsInDeck = new List<InGameCard>();
-            this.entity.BlackCardsInDeck = new List<InGameCard>();
+            this.entity.WhiteCardsInDeck = new List<GameCard>();
+            this.entity.BlackCardsInDeck = new List<GameCard>();
             this.entity.GameState = GameState.Beginning;
 
             return this.entity;

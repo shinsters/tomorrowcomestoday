@@ -12,6 +12,7 @@
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Builders;
     using TomorrowComesToday.Domain.Entities;
+    using TomorrowComesToday.Domain.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
 
@@ -94,7 +95,6 @@
             var playerRepository = TestKernel.Container.Resolve<IPlayerRepository>();
             var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
-
             // first get the players we're going to be using
             foreach (var row in table.Rows)
             {
@@ -149,7 +149,7 @@
             var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
             var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
-            var countOfActivePlayers = game.GamePlayers.Count(o => o.IsActivePlayer);
+            var countOfActivePlayers = game.GamePlayers.Count(o => o.PlayerState == PlayerState.IsActivePlayerWaiting || o.PlayerState == PlayerState.IsActivePlayerSelecting);
             var hasCorrectAmountOfActivePlayers = countOfActivePlayers == 1;
             
             Assert.IsTrue(
