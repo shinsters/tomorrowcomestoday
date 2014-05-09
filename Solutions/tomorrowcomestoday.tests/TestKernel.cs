@@ -11,7 +11,7 @@
     using TomorrowComesToday.Tests.CastleWindsor;
 
     /// <summary>
-    /// Initalise dependencies for tests
+    /// Initialise dependencies for tests
     /// </summary>
     public class TestKernel
     {
@@ -23,7 +23,7 @@
         /// <summary>
         /// Set up background dependencies
         /// </summary>
-        public static void Initalise()
+        public static void Initialise()
         {
             InitaliseServiceLocator();
         }

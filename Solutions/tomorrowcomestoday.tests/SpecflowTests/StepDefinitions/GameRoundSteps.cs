@@ -23,7 +23,6 @@
     [Binding]
     public class GameRoundSteps
     {
-
         [Given(@"I have a game with following players:")]
         public void GivenIHaveAStartedGameWithTheIdContainingFollowingPlayers(Table table)
         {
@@ -56,14 +55,11 @@
         [Then(@"I see the game is in state '(.*)'")]
         public void ThenISeeTheGameIsInState( string stateAsString)
         {
-            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
-
-            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
+            var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
             // maybe this shouldn't be a bool on the game state, but an enum with more options.
             var gameActivityState = stateAsString == "Active";
-
-            var game = gameStateRepository.GetByGuid(gameGuid);
 
             Assert.IsNotNull(game, string.Format("Game with guid {0} was not found", CommonConcepts.TEST_GAME_GUID));
 
@@ -94,11 +90,10 @@
         [Then(@"I see the game players are in the following state:")]
         public void ThenISeeTheGamePlayersAreInTheFollowingState(Table table)
         {
-            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
             var playerRepository = TestKernel.Container.Resolve<IPlayerRepository>();
+            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
-            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
-            var gameState = gameStateRepository.GetByGuid(gameGuid);
 
             // first get the players we're going to be using
             foreach (var row in table.Rows)
@@ -108,10 +103,10 @@
                 var player = playerRepository.GetByName(playerName);
 
                 Assert.IsTrue(player != null, string.Format("No player by name {0} was found", playerName));
-                Assert.IsTrue(gameState.GamePlayers.Any(o => o.Player.Guid == player.Guid));
+                Assert.IsTrue(game.GamePlayers.Any(o => o.Player.Guid == player.Guid));
 
                 // check the players state is as expected 
-                var playerState = gameState.GamePlayers.First(o => o.Player.Guid == player.Guid);
+                var playerState = game.GamePlayers.First(o => o.Player.Guid == player.Guid);
 
                 var pointsExpected = row.GetInt32("Points");
 
@@ -136,12 +131,10 @@
         [Then(@"I see the game has an active black card")]
         public void ThenISeeTheGameHasAnActiveBlackCard()
         {
-            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
-            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
-            var gameState = gameStateRepository.GetByGuid(gameGuid);
-
-            var amountofActiveBlackCards = gameState.BlackCardsInDeck.Count(o => o.IsCurrentCard);
+            var amountofActiveBlackCards = game.BlackCardsInDeck.Count(o => o.IsCurrentCard);
             var expectedAmountOfBlackCards = amountofActiveBlackCards == 1;
 
             Assert.IsTrue(
@@ -153,14 +146,12 @@
         [Then(@"I see the game has an active player")]
         public void ThenISeeTheGameHasAnActivePlayer()
         {
-            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
-            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
-            var gameState = gameStateRepository.GetByGuid(gameGuid);
-
-            var countOfActivePlayers = gameState.GamePlayers.Count(o => o.IsActivePlayer);
+            var countOfActivePlayers = game.GamePlayers.Count(o => o.IsActivePlayer);
             var hasCorrectAmountOfActivePlayers = countOfActivePlayers == 1;
-
+            
             Assert.IsTrue(
                 hasCorrectAmountOfActivePlayers,
                 "Expected only one active player, but instead there were {0}",

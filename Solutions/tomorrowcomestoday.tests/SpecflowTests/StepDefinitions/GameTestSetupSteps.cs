@@ -15,7 +15,7 @@
         [Given(@"I have an initalised back end")]
         public void GivenIHaveAnInitalisedBackEnd()
         {
-            TestKernel.Initalise();
+            TestKernel.Initialise();
         }
 
         [Given(@"I have the following players:")]

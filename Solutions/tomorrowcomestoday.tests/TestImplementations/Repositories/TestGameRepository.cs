@@ -39,9 +39,25 @@
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The get by guid.
+        /// </summary>
+        /// <param name="id">The guid of a game</param>
+        /// <returns>The <see cref="Game"/>.</returns>
         public Game GetByGuid(Guid id)
         {
             return this.gameStates.FirstOrDefault(o => o.GameGuid == id);
+        }
+
+        /// <summary>
+        /// The get by guid.
+        /// </summary>
+        /// <param name="id">The guid of a game</param>
+        /// <returns>The <see cref="Game"/>.</returns>
+        public Game GetByGuid(string id)
+        {
+            var guid = Guid.ParseExact(id, "D");
+            return this.GetByGuid(guid);
         }
     }
 }
