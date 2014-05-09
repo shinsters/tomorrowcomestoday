@@ -72,13 +72,14 @@
                 stateAsString);
         }
 
-        [Given(@"the game '(.*)' has a white deck of '(.*)' cards")]
+
+        [Given(@"the game '(.*)' is started with a white deck of '(.*)' cards")]
         public void GivenTheGameHasAWhiteDeckOfCards(string gameGuidAsString, int cardsInWhiteDeck)
         {
             var gameService = InitaliseTests.Container.Resolve<IGameService>();
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
 
-            gameService.DealWhiteStart(cardsInWhiteDeck, gameGuid);
+            gameService.DealRound(cardsInWhiteDeck, gameGuid);
         }
 
         [Then(@"I see the game '(.*)' players are in the following state:")]
@@ -131,9 +132,13 @@
             var gameGuid = Guid.ParseExact(gameGuidAsString, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
 
+            var amountofActiveBlackCards = gameState.BlackCardsInDeck.Count(o => o.IsCurrentCard);
+            var expectedAmountOfBlackCards = amountofActiveBlackCards == 1;
 
-
-           
+            Assert.IsTrue(
+                expectedAmountOfBlackCards,
+                "Expected just one black card delt, but actually saw {0}",
+                amountofActiveBlackCards);
         }
 
         [Then(@"I see the game '(.*)' has an active player")]
@@ -152,7 +157,5 @@
                 "Expected only one active player, but instead there were {0}",
                 countOfActivePlayers);
         }
-
-
     }
 }

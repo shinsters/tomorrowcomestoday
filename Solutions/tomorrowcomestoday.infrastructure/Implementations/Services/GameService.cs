@@ -52,7 +52,7 @@
         /// </summary>
         /// <param name="deckSize">The deck Size</param>
         /// <param name="gameGuid">The game guid</param>
-        public void DealWhiteStart(int deckSize, Guid gameGuid)
+        public void DealRound(int deckSize, Guid gameGuid)
         {
             this.DealWhiteStart(gameGuid, deckSize);
         }

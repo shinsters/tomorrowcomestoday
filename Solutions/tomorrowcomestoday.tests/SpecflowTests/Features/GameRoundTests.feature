@@ -19,7 +19,7 @@ Scenario: When a game starts users are handed their cards
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' has a white deck of '50' cards 
+	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started with a white deck of '50' cards 
 	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' players are in the following state:
 	| Name     | Points | Cards in hand |
@@ -32,7 +32,7 @@ Scenario: Cards in deck when not enough left are properly shared among players
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' has a white deck of '11' cards 
+	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started with a white deck of '11' cards 
 	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' players are in the following state:
 	| Name     | Points | Cards in hand |
@@ -46,13 +46,10 @@ Scenario: A card tsar is assigned and a black card is played as the game starts
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' has a white deck of '50' cards 
+	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started with a white deck of '50' cards 
 	Then I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' is in state 'Active'
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' has an active black card
 	And I see the game 'F4909379-AF76-418E-873D-E575A8BA3233' has an active player
-
-
-
 
 
 #Scenario: Available cards are dealt to players one by one, so one one player gets extra cards 
