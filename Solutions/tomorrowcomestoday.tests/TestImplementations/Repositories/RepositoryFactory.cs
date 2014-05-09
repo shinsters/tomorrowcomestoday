@@ -18,7 +18,7 @@
         /// <returns>The <see cref="T"/>.</returns>
         public T For<T>() where T : class
         {
-            return InitaliseTests.Container.Resolve<T>();
+            return TestKernel.Container.Resolve<T>();
         }
     }
 }

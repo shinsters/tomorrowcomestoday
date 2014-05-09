@@ -102,7 +102,13 @@
   <ItemGroup>
     <Compile Include="CastleWindsor\ComponentRegistrar.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
-    <Compile Include="InitaliseTests.cs" />
+    <Compile Include="SpecflowTests\Features\TurnLogic.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TurnLogic.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SpecflowTests\StepDefinitions\TurnLogicSteps.cs" />
+    <Compile Include="TestKernel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecflowTests\Features\GameRoundTests.feature.cs">
       <AutoGen>True</AutoGen>
@@ -110,7 +116,7 @@
       <DependentUpon>GameRoundTests.feature</DependentUpon>
     </Compile>
     <Compile Include="SpecflowTests\StepDefinitions\GameRoundSteps.cs" />
-    <Compile Include="SpecflowTests\StepDefinitions\GameTestSetup.cs" />
+    <Compile Include="SpecflowTests\StepDefinitions\GameTestSetupSteps.cs" />
     <Compile Include="TestImplementations\Repositories\TestGameRepository.cs" />
     <Compile Include="TestImplementations\Repositories\TestPlayerRepository.cs" />
     <Compile Include="TestImplementations\Repositories\RepositoryFactory.cs" />
@@ -122,6 +128,10 @@
     <None Include="SpecflowTests\Features\GameRoundTests.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GameRoundTests.feature.cs</LastGenOutput>
+    </None>
+    <None Include="SpecflowTests\Features\TurnLogic.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>TurnLogic.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -86,7 +86,7 @@
         private void DealWhiteTurn(Game game)
         {
             // work out how many cards we need
-            var numberOfCardsRequired = game.GamePlayers.Sum(gamePlayerState => CommonConcepts.HandSize - gamePlayerState.CardsInHand.Count);
+            var numberOfCardsRequired = game.GamePlayers.Sum(gamePlayerState => CommonConcepts.HAND_SIZE - gamePlayerState.CardsInHand.Count);
 
             // get either the number of required cards, of if there aren't enough - every card that's left
             var cardToDeal = game.WhiteCardsInDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 

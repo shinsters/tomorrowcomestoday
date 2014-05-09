@@ -13,7 +13,7 @@
     /// <summary>
     /// Initalise dependencies for tests
     /// </summary>
-    public class InitaliseTests
+    public class TestKernel
     {
         /// <summary>
         /// Castle windsor container

@@ -199,31 +199,6 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("After all players have played their white cards, the cards are shown")]
-        public virtual void AfterAllPlayersHavePlayedTheirWhiteCardsTheCardsAreShown()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After all players have played their white cards, the cards are shown", ((string[])(null)));
-#line 57
-this.ScenarioSetup(scenarioInfo);
-#line 6
-this.FeatureBackground();
-#line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Name"});
-            table7.AddRow(new string[] {
-                        "Jean Luc"});
-            table7.AddRow(new string[] {
-                        "Benjamin"});
-#line 58
- testRunner.Given("I have a game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containing follo" +
-                    "wing players:", ((string)(null)), table7, "Given ");
-#line 62
- testRunner.And("the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
     }
 }
 #pragma warning restore

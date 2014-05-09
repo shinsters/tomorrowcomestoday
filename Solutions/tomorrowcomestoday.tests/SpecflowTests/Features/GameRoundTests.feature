@@ -54,10 +54,5 @@ Scenario: A card tsar is assigned and a black card is played as the game starts
 
 # Turn 
 
-Scenario: After all players have played their white cards, the cards are shown 
-	Given I have a game with the id 'F4909379-AF76-418E-873D-E575A8BA3233' containing following players:
-	| Name     |
-	| Jean Luc |
-	| Benjamin |
-	And the game 'F4909379-AF76-418E-873D-E575A8BA3233' is started 
+
 

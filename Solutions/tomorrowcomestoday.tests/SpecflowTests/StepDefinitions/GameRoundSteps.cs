@@ -9,6 +9,7 @@
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
 
+    using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Builders;
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
@@ -23,17 +24,11 @@
     public class GameRoundSteps
     {
 
-        /// <summary>
-        /// The GUID for our test games as their identifier
-        /// </summary>
-        public const string TEST_GAME_GUID = "F4909379-AF76-418E-873D-E575A8BA3233";
-
-
         [Given(@"I have a game with following players:")]
         public void GivenIHaveAStartedGameWithTheIdContainingFollowingPlayers(Table table)
         {
-            var playerRepository = InitaliseTests.Container.Resolve<IPlayerRepository>();
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
+            var playerRepository = TestKernel.Container.Resolve<IPlayerRepository>();
+            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
 
             var playersToAdd = new List<Player>();
 
@@ -48,7 +43,7 @@
                 playersToAdd.Add(player);
             }
 
-            var guid = Guid.ParseExact(TEST_GAME_GUID, "D");
+            var guid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
 
             var game = new GameBuilder()
                 .AddPlayers(playersToAdd)
@@ -61,28 +56,28 @@
         [Then(@"I see the game is in state '(.*)'")]
         public void ThenISeeTheGameIsInState( string stateAsString)
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
+            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
 
-            var gameGuid = Guid.ParseExact(TEST_GAME_GUID, "D");
+            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
 
             // maybe this shouldn't be a bool on the game state, but an enum with more options.
             var gameActivityState = stateAsString == "Active";
 
             var game = gameStateRepository.GetByGuid(gameGuid);
 
-            Assert.IsNotNull(game, string.Format("Game with guid {0} was not found", TEST_GAME_GUID));
+            Assert.IsNotNull(game, string.Format("Game with guid {0} was not found", CommonConcepts.TEST_GAME_GUID));
 
             Assert.IsTrue(
                 game.IsActive == gameActivityState,
                 "The state of the game {0} was not {1}",
-                TEST_GAME_GUID, 
+                CommonConcepts.TEST_GAME_GUID, 
                 stateAsString);
         }
 
         [Given(@"I have a limited white deck size of '(.*)' cards")]
         public void GivenIHaveALimitedWhiteDeckSizeOfCards(int limitedDeckSize)
         {
-            var cardRepository = InitaliseTests.Container.Resolve<ICardRepository>();
+            var cardRepository = TestKernel.Container.Resolve<ICardRepository>();
             cardRepository.SetCustomDeckSize(limitedDeckSize);
         }
 
@@ -90,8 +85,8 @@
         [Given(@"the game is started")]
         public void GivenTheGameHasAWhiteDeckOfCards()
         {
-            var gameService = InitaliseTests.Container.Resolve<IGameService>();
-            var gameGuid = Guid.ParseExact(TEST_GAME_GUID, "D");
+            var gameService = TestKernel.Container.Resolve<IGameService>();
+            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
 
             gameService.DealRound(gameGuid);
         }
@@ -99,10 +94,10 @@
         [Then(@"I see the game players are in the following state:")]
         public void ThenISeeTheGamePlayersAreInTheFollowingState(Table table)
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
-            var playerRepository = InitaliseTests.Container.Resolve<IPlayerRepository>();
+            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var playerRepository = TestKernel.Container.Resolve<IPlayerRepository>();
 
-            var gameGuid = Guid.ParseExact(TEST_GAME_GUID, "D");
+            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
 
             // first get the players we're going to be using
@@ -141,9 +136,9 @@
         [Then(@"I see the game has an active black card")]
         public void ThenISeeTheGameHasAnActiveBlackCard()
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
+            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
 
-            var gameGuid = Guid.ParseExact(TEST_GAME_GUID, "D");
+            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
 
             var amountofActiveBlackCards = gameState.BlackCardsInDeck.Count(o => o.IsCurrentCard);
@@ -158,9 +153,9 @@
         [Then(@"I see the game has an active player")]
         public void ThenISeeTheGameHasAnActivePlayer()
         {
-            var gameStateRepository = InitaliseTests.Container.Resolve<IGameRepository>();
+            var gameStateRepository = TestKernel.Container.Resolve<IGameRepository>();
 
-            var gameGuid = Guid.ParseExact(TEST_GAME_GUID, "D");
+            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
             var gameState = gameStateRepository.GetByGuid(gameGuid);
 
             var countOfActivePlayers = gameState.GamePlayers.Count(o => o.IsActivePlayer);

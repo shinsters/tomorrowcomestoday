@@ -10,18 +10,18 @@
     /// Sets up basic components for tests
     /// </summary>
     [Binding]
-    public class GameTestSetup
+    public class GameTestSetupSteps
     {
         [Given(@"I have an initalised back end")]
         public void GivenIHaveAnInitalisedBackEnd()
         {
-            InitaliseTests.Initalise();
+            TestKernel.Initalise();
         }
 
         [Given(@"I have the following players:")]
         public void GivenIHaveTheFollowingPlayers(Table table)
         {
-            var playerRepository = InitaliseTests.Container.Resolve<IPlayerRepository>();
+            var playerRepository = TestKernel.Container.Resolve<IPlayerRepository>();
 
             foreach (var row in table.Rows)
             {
