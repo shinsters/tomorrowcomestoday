@@ -103,12 +103,11 @@ this.FeatureBackground();
             table2.AddRow(new string[] {
                         "Benjamin"});
 #line 18
- testRunner.Given("I have a game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containing follo" +
-                    "wing players:", ((string)(null)), table2, "Given ");
+ testRunner.Given("I have a game with following players:", ((string)(null)), table2, "Given ");
 #line 22
- testRunner.And("the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 23
- testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I see the game is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
@@ -123,8 +122,7 @@ this.FeatureBackground();
                         "0",
                         "10"});
 #line 24
- testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' players are in the followin" +
-                    "g state:", ((string)(null)), table3, "And ");
+ testRunner.And("I see the game players are in the following state:", ((string)(null)), table3, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -146,14 +144,13 @@ this.FeatureBackground();
             table4.AddRow(new string[] {
                         "Benjamin"});
 #line 31
- testRunner.Given("I have a game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containing follo" +
-                    "wing players:", ((string)(null)), table4, "Given ");
+ testRunner.Given("I have a game with following players:", ((string)(null)), table4, "Given ");
 #line 35
  testRunner.And("I have a limited white deck size of \'11\' cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
- testRunner.And("the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
- testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I see the game is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
@@ -168,8 +165,7 @@ this.FeatureBackground();
                         "0",
                         "5"});
 #line 38
- testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' players are in the followin" +
-                    "g state:", ((string)(null)), table5, "And ");
+ testRunner.And("I see the game players are in the following state:", ((string)(null)), table5, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -191,16 +187,40 @@ this.FeatureBackground();
             table6.AddRow(new string[] {
                         "Benjamin"});
 #line 46
- testRunner.Given("I have a game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containing follo" +
-                    "wing players:", ((string)(null)), table6, "Given ");
+ testRunner.Given("I have a game with following players:", ((string)(null)), table6, "Given ");
 #line 50
- testRunner.And("the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 51
- testRunner.Then("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I see the game is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 52
- testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' has an active black card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I see the game has an active black card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 53
- testRunner.And("I see the game \'F4909379-AF76-418E-873D-E575A8BA3233\' has an active player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I see the game has an active player", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("After all players have played their white cards, the cards are shown")]
+        public virtual void AfterAllPlayersHavePlayedTheirWhiteCardsTheCardsAreShown()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After all players have played their white cards, the cards are shown", ((string[])(null)));
+#line 57
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table7.AddRow(new string[] {
+                        "Jean Luc"});
+            table7.AddRow(new string[] {
+                        "Benjamin"});
+#line 58
+ testRunner.Given("I have a game with the id \'F4909379-AF76-418E-873D-E575A8BA3233\' containing follo" +
+                    "wing players:", ((string)(null)), table7, "Given ");
+#line 62
+ testRunner.And("the game \'F4909379-AF76-418E-873D-E575A8BA3233\' is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -14,17 +14,7 @@
     {
         private readonly Game entity = new Game();
 
-        static Random random = new Random();
-
-        /// <summary>
-        /// Adds a single player to the game
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns>The game state builder</returns>
-        public GameBuilder AddPlayer(Player player)
-        {
-            throw new NotImplementedException();
-        }
+        static readonly Random Random = new Random();
 
         /// <summary>
         /// Adds a collection of players to the game
@@ -54,7 +44,7 @@
             }
 
             // a first player now needs to be randomly selected
-            var randomPlayerId = random.Next(players.Count) + 1;
+            var randomPlayerId = Random.Next(players.Count) + 1;
             var randomFirstPlayer = this.entity.GamePlayers.First(o => o.GamePlayerId == randomPlayerId);
 
             randomFirstPlayer.IsActivePlayer = true;
