@@ -5,11 +5,15 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
     using System;
     using System.Linq;
 
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using TechTalk.SpecFlow.Assist;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
+    using TomorrowComesToday.Infrastructure.Interfaces.Services;
+    using TomorrowComesToday.Tests.Helpers;
 
     [Binding]
     public class TurnLogicSteps
@@ -28,7 +32,7 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
             disablingActivePlayer.PlayerState = PlayerState.IsNormalPlayerSelecting;
 
             var newActivePlayer = game.GamePlayers.First(o => o.Player.Guid == player.Guid);
-            newActivePlayer.PlayerState = PlayerState.IsActivePlayerSelecting;
+            newActivePlayer.PlayerState = PlayerState.IsActivePlayerWaiting;
         }
 
         [Given(@"the following players have played an answer card:")]
@@ -36,7 +40,10 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
         {
             var playerRepository = TestKernel.Container.Resolve<IPlayerRepository>();
             var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
-            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
+            var gameService = TestKernel.Container.Resolve<IGameService>();
+
+            var gameGuid = Guid.ParseExact(CommonConcepts.TEST_GAME_GUID, "D");
+            var game = gameRepository.GetByGuid(gameGuid);
 
             foreach (var row in table.Rows)
             {
@@ -44,15 +51,33 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
                 var player = playerRepository.GetByName(name);
 
                 var gamePlayer = game.GamePlayers.First(o => o.Player.Guid == player.Guid);
-                
+                var randomWhiteCard = gamePlayer.WhiteCardsInHand.ToList().GetRandomItem();
+
+                gameService.PlayWhiteCard(gameGuid, gamePlayer.GamePlayerGuid, randomWhiteCard.GameCardGuid);
             }
         }
 
-
-        [Then(@"I see the card tsar is unable to see the answer cards")]
-        public void ThenISeeTheCardTsarIsUnableToSeeTheAnswerCards()
+        [Then(@"I see the card tsar is able to see the answer cards")]
+        public void ThenISeeTheCardTsarIsAbleToSeeTheAnswerCards()
         {
-            ScenarioContext.Current.Pending();
+            var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
+
+            var activePlayer = game.GamePlayers.Where(o => o.PlayerState == PlayerState.IsActivePlayerSelecting).ToList();
+            var activePlayerExpectedAmount = activePlayer.Count() == 1;
+            Assert.IsTrue(activePlayerExpectedAmount, "Expected 1 active selecting player, but instead found {0}", activePlayer.Count());
+        }
+
+
+        [Then(@"I see the card tsar is able to not see the answer cards")]
+        public void ThenISeeTheCardTsarIsAbleToNotSeeTheAnswerCards()
+        {
+            var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
+
+            var activePlayer = game.GamePlayers.Where(o => o.PlayerState == PlayerState.IsActivePlayerWaiting).ToList();
+            var activePlayerExpectedAmount = activePlayer.Count() == 1;
+            Assert.IsTrue(activePlayerExpectedAmount, "Expected 1 active selecting player, but instead found {0}", activePlayer.Count());
         }
 
     }

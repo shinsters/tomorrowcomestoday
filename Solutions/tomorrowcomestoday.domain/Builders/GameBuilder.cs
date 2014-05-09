@@ -35,10 +35,11 @@
                 this.entity.GamePlayers.Add(new GamePlayer
                                                      {
                                                          GamePlayerId = playerCounter,
-                                                         CardsInHand = new List<GameCard>(),
+                                                         WhiteCardsInHand = new List<GameCard>(),
                                                          Player = player,
                                                          Points = 0,
-                                                         PlayerState = PlayerState.IsNormalPlayerSelecting
+                                                         PlayerState = PlayerState.IsNormalPlayerSelecting,
+                                                         GamePlayerGuid = Guid.NewGuid()
                                                      });
 
                 playerCounter++;

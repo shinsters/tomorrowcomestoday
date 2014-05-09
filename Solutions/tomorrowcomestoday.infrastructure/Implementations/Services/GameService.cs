@@ -52,8 +52,8 @@
             }
 
             // if the game is just starting we need to create decks of cards
-            if (game.GameState == GameState.Beginning){
-                
+            if (game.GameState == GameState.Beginning)
+            {
                 this.CreateDeck(game);
                 game.GameState = GameState.BeingPlayed;
             }
@@ -61,6 +61,55 @@
             // then assign a selection to a user
             this.DealWhiteTurn(game);
             this.DealBlackTurn(game);
+        }
+
+        /// <summary>
+        /// Plays a white card from a player
+        /// </summary>
+        /// <param name="gameGuid">The GUID of the game</param>
+        /// <param name="gamePlayerGuid">The GUID of the in game player attempting to play the card</param>
+        /// <param name="gameCardGuid">The GUID of the in game card attempting to be played</param>
+        public void PlayWhiteCard(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid)
+        {
+            // I guess technically we don't need the guid of the game, but doesn't seem nice 
+            // to get that out of lists. Maybe smarten this up later.
+            var game = this.gameRepository.GetByGuid(gameGuid);
+
+            // first check to see the card exists in the game
+            var cardInGame = game.WhiteCardsInDeck.FirstOrDefault(o => o.GameCardGuid == gameCardGuid);
+
+            if (cardInGame == null)
+            {
+                return;
+            }
+
+            // now check card is currently in the game
+            var playerOwningCard = game.GamePlayers.FirstOrDefault(o => o.WhiteCardsInHand.Any(c => c.GameCardGuid == gameCardGuid));
+
+            if (playerOwningCard == null)
+            {
+                return;
+            }
+
+            // and check the owner is as expected
+            var correctPlayerPlayingCard = playerOwningCard.GamePlayerGuid == gamePlayerGuid;
+
+            if (!correctPlayerPlayingCard)
+            {
+                return;
+            }
+
+            // otherwise mark the card as played, and the player as having played it
+            cardInGame.GameCardState = GameCardState.IsInPlay;
+            playerOwningCard.PlayerState = PlayerState.IsNormalPlayerWaiting;
+
+            // now check if all players have played their card
+            if (game.GamePlayers.Where(o => o.PlayerState != PlayerState.IsActivePlayerWaiting).All(o => o.PlayerState == PlayerState.IsNormalPlayerWaiting))
+            {
+                // so change the card tsars game state
+                var activePlayer = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerWaiting);
+                activePlayer.PlayerState = PlayerState.IsActivePlayerSelecting;
+            }
         }
 
         /// <summary>
@@ -86,26 +135,27 @@
         private void DealWhiteTurn(Game game)
         {
             // work out how many cards we need
-            var numberOfCardsRequired = game.GamePlayers.Sum(gamePlayerState => CommonConcepts.HAND_SIZE - gamePlayerState.CardsInHand.Count);
+            var numberOfCardsRequired = game.GamePlayers.Sum(gamePlayerState => CommonConcepts.HAND_SIZE - gamePlayerState.WhiteCardsInHand.Count);
 
             // get either the number of required cards, of if there aren't enough - every card that's left
-            var cardToDeal = game.WhiteCardsInDeck.Count(o => !o.HasBeenDealt) > numberOfCardsRequired 
-                ? game.WhiteCardsInDeck.Take(numberOfCardsRequired).ToList() 
-                : game.WhiteCardsInDeck.Where(o => !o.HasBeenDealt).ToList();
+            var gameCardsToDeal = game.WhiteCardsInDeck.Count(o => o.GameCardState == GameCardState.IsAwaitingPlay)
+                             > numberOfCardsRequired
+                                 ? game.WhiteCardsInDeck.Take(numberOfCardsRequired).ToList()
+                                 : game.WhiteCardsInDeck;
 
             var playerCounter = 0;
 
-            foreach (var card in cardToDeal)
+            foreach (var gameCard in gameCardsToDeal)
             {
-                card.HasBeenDealt = true;
-
                 if (playerCounter > game.GamePlayers.Count - 1)
                 {
                     playerCounter = 0;
                 }
 
                 // players already have a player counter 
-                game.GamePlayers.First(o => o.GamePlayerId == playerCounter + 1).CardsInHand.Add(card);
+                game.GamePlayers.First(o => o.GamePlayerId == playerCounter + 1).WhiteCardsInHand.Add(gameCard);
+                gameCard.GameCardState = GameCardState.IsInHand;
+
                 playerCounter++;
             }
         }
@@ -124,15 +174,15 @@
                 deckCards.Add(new GameCard
                 {
                     Card = card,
-                    CardGuid = Guid.NewGuid(),
-                    HasBeenDealt = false
+                    GameCardGuid = Guid.NewGuid(),
+                    GameCardState = GameCardState.IsAwaitingPlay
 
                 });
             }
 
             // shuffling by the card guid should give us some kind of shuffle for the deck.
             // if it's crap then i'll make a better shuffle.
-            return deckCards.OrderBy(o => o.CardGuid).ToList();
+            return deckCards.OrderBy(o => o.GameCardGuid).ToList();
         }
 
         /// <summary>
@@ -142,19 +192,18 @@
         private void DealBlackTurn(Game game)
         {
             // first mark any old cards as inactive
-            foreach (var blackCard in game.BlackCardsInDeck.Where(o => o.IsCurrentCard))
+            foreach (var blackCard in game.BlackCardsInDeck.Where(o => o.GameCardState == GameCardState.IsInPlay))
             {
-                blackCard.IsCurrentCard = false;
-                blackCard.HasBeenDealt = true;
+                blackCard.GameCardState = GameCardState.HasBeenPlayed;
             }
 
             // now play the next one
-            var gameCard = game.BlackCardsInDeck.FirstOrDefault(o => !o.HasBeenDealt);
+            var gameCard = game.BlackCardsInDeck.FirstOrDefault(o => o.GameCardState == GameCardState.IsAwaitingPlay);
 
             // we'll run out of cards eventually
             if (gameCard != null)
             {
-                gameCard.IsCurrentCard = true;
+                gameCard.GameCardState = GameCardState.IsInPlay;
             }
         }
     }

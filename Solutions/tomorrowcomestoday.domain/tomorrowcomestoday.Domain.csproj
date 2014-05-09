@@ -100,6 +100,7 @@
     <Compile Include="Entities\Game.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Enums\CardType.cs" />
+    <Compile Include="Enums\GameCardState.cs" />
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\PlayerState.cs" />
   </ItemGroup>

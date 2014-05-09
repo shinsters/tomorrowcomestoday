@@ -2,6 +2,8 @@
 {
     using System;
 
+    using TomorrowComesToday.Domain.Enums;
+
     /// <summary>
     /// These are the cards dealt to all players 
     /// </summary>
@@ -15,16 +17,11 @@
         /// <summary>
         /// Game specific card id. This is regenerated each time to obfuscate the ids for external post backs.
         /// </summary>
-        public Guid CardGuid { get; set; }
+        public Guid GameCardGuid { get; set; }
 
         /// <summary>
-        /// Has this card been dealt to a player
+        /// What is the current play state of this card
         /// </summary>
-        public bool HasBeenDealt { get; set; }
-
-        /// <summary>
-        /// Is the the current card that's being played?
-        /// </summary>
-        public bool IsCurrentCard { get; set; }
+        public GameCardState GameCardState { get; set; }
     }
 }

@@ -120,11 +120,11 @@
                 var cardsInHandExpected = row.GetInt32("Cards in hand");
 
                 Assert.IsTrue(
-                    playerState.CardsInHand.Count == cardsInHandExpected,
+                    playerState.WhiteCardsInHand.Count == cardsInHandExpected,
                     "Expected player {0} to have {1} cards in hand but actually had {2}",
                     playerName,
                     cardsInHandExpected,
-                    playerState.CardsInHand.Count);
+                    playerState.WhiteCardsInHand.Count);
             }
         }
 
@@ -134,7 +134,7 @@
             var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
             var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
-            var amountofActiveBlackCards = game.BlackCardsInDeck.Count(o => o.IsCurrentCard);
+            var amountofActiveBlackCards = game.BlackCardsInDeck.Count(o => o.GameCardState == GameCardState.IsInPlay);
             var expectedAmountOfBlackCards = amountofActiveBlackCards == 1;
 
             Assert.IsTrue(

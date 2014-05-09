@@ -1,5 +1,31 @@
-﻿Feature: TurnLogic
+﻿Feature: Turn Logic
 
+Background: I have a fully configured back end
+	Given I have an initalised back end
+	And I have the following players:
+	| Name     |
+	| James    |
+	| Jean Luc |
+	| Benjamin |
+	| Kathryn  | 
+
+
+Scenario: When all players have played their white card, the card tsar is able to see them
+	Given I have a game with following players:
+	| Name     |
+	| James    |
+	| Jean Luc |
+	| Benjamin |
+	| Kathryn  |
+	And the game is started 
+	And the card tsar is currently 'Jean Luc'
+	And the following players have played an answer card:
+	| Name     |
+	| James    |
+	| Benjamin |
+	| Kathryn  |
+	Then I see the card tsar is able to see the answer cards
+	
 Scenario: When not all players have played their white card, the card tsar is unable to see them
 	Given I have a game with following players:
 	| Name     |
@@ -13,5 +39,5 @@ Scenario: When not all players have played their white card, the card tsar is un
 	| Name     |
 	| James    |
 	| Benjamin |
-	Then I see the card tsar is unable to see the answer cards
+	Then I see the card tsar is able to not see the answer cards
 	

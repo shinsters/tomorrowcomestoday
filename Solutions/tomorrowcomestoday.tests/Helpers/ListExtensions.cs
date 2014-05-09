@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TomorrowComesToday.Infrastructure.Helpers.ExtensionMethods
+﻿namespace TomorrowComesToday.Tests.Helpers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -18,9 +17,8 @@ namespace TomorrowComesToday.Infrastructure.Helpers.ExtensionMethods
         /// </summary>
         /// <typeparam name="T">The list</typeparam>
         /// <param name="list">The other list</param>
-        /// <param name="item">The list item</param>
         /// <returns>A single list item</returns>
-        public static T GetRandomItem<T>(this List<T> list, T item)
+        public static T GetRandomItem<T>(this List<T> list)
         {
             return !list.Any() ? default(T) : list.ElementAt(Random.Next(list.Count()));
         }

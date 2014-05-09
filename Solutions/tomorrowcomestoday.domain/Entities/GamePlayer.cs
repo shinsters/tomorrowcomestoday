@@ -16,6 +16,11 @@
         public int GamePlayerId { get; set; }
 
         /// <summary>
+        /// The GUID of the player in the current game
+        /// </summary>
+        public Guid GamePlayerGuid { get; set; }
+
+        /// <summary>
         /// The player this represents
         /// </summary>
         public Player Player { get; set; }
@@ -28,7 +33,7 @@
         /// <summary>
         /// The cards the player current has in their hand
         /// </summary>
-        public IList<GameCard> CardsInHand { get; set; }
+        public IList<GameCard> WhiteCardsInHand { get; set; }
 
         /// <summary>
         /// What is the current state of the player in the game
