@@ -17,14 +17,16 @@ app.controller('GameController', function ($scope) {
 
 // signalr hub
 $(function () {
+
         // Reference the auto-generated proxy for the hub.  
         var gameHub = $.connection.gameHub;
 
-        gameHub.client.broadcastMessage = function (name, message) {
-            alert(name + message);
+        gameHub.client.broadcastMessage = function (message) {
+            alert(message);
         }
 
         $.connection.hub.start().done(function () {
-            gameHub.server.send("name", "message");
+            //gameHub.server.send("name", "message");
+            gameHub.server.joinServer("hank");
         });
 });

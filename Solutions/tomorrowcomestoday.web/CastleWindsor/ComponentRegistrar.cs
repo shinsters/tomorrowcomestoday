@@ -9,7 +9,6 @@
     using SharpArch.NHibernate.Contracts.Repositories;
     using SharpArch.Web.Mvc.Castle;
 
-    using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Infrastructure.Implementations.Repositories;
     using TomorrowComesToday.Infrastructure.Implementations.Services;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
@@ -47,6 +46,17 @@
                     Component.For(typeof(ICardRepository))
                         .ImplementedBy(typeof(CardRepository))
                         .Named("CardRepository"));
+
+            container.Register(
+                    Component.For(typeof(IPlayerRepository))
+                        .ImplementedBy(typeof(PlayerRepository))
+                        .Named("PlayerRepository"));
+
+            container.Register(
+                    Component.For(typeof(IUserContextService))
+                        .ImplementedBy(typeof(UserContextService))
+                        .Named("UserContextService")
+                        .LifestylePerWebRequest());
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)
