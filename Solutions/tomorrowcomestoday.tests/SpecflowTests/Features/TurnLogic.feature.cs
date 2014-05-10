@@ -170,6 +170,53 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("When all users have played a hand, the card tsar can select a winner and points a" +
+            "re allocated")]
+        public virtual void WhenAllUsersHavePlayedAHandTheCardTsarCanSelectAWinnerAndPointsAreAllocated()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When all users have played a hand, the card tsar can select a winner and points a" +
+                    "re allocated", ((string[])(null)));
+#line 44
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table6.AddRow(new string[] {
+                        "James"});
+            table6.AddRow(new string[] {
+                        "Jean Luc"});
+            table6.AddRow(new string[] {
+                        "Benjamin"});
+            table6.AddRow(new string[] {
+                        "Kathryn"});
+#line 45
+ testRunner.Given("I have a game with following players:", ((string)(null)), table6, "Given ");
+#line 51
+ testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 52
+ testRunner.And("the card tsar is currently \'Jean Luc\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table7.AddRow(new string[] {
+                        "James"});
+            table7.AddRow(new string[] {
+                        "Benjamin"});
+            table7.AddRow(new string[] {
+                        "Kathryn"});
+#line 53
+ testRunner.And("the following players have played an answer card:", ((string)(null)), table7, "And ");
+#line 58
+ testRunner.And("the card tsar selects an answer card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 59
+ testRunner.Then("I see the player who played the winning card has a point", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
