@@ -9,6 +9,11 @@
     using SharpArch.NHibernate.Contracts.Repositories;
     using SharpArch.Web.Mvc.Castle;
 
+    using TomorrowComesToday.Domain.Entities;
+    using TomorrowComesToday.Infrastructure.Implementations.Repositories;
+    using TomorrowComesToday.Infrastructure.Implementations.Services;
+    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
+    using TomorrowComesToday.Infrastructure.Interfaces.Services;
     using TomorrowComesToday.Web.Controllers;
 
     public class ComponentRegistrar
@@ -27,6 +32,21 @@
                     .FromAssemblyNamed("TomorrowComesToday.Infrastructure")
                     .BasedOn(typeof(IRepositoryWithTypedId<,>))
                     .WithService.FirstNonGenericCoreInterface("TomorrowComesToday.Domain"));
+
+            container.Register(
+                  Component.For(typeof(IGameService))
+                      .ImplementedBy(typeof(GameService))
+                      .Named("GameService"));
+
+            container.Register(
+                    Component.For(typeof(IGameRepository))
+                        .ImplementedBy(typeof(GameRepository))
+                        .Named("GameRepository"));
+
+            container.Register(
+                    Component.For(typeof(ICardRepository))
+                        .ImplementedBy(typeof(CardRepository))
+                        .Named("CardRepository"));
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)

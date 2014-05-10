@@ -112,6 +112,7 @@
     <Compile Include="Helpers\CardResourceParserHelper.cs" />
     <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Implementations\Repositories\CardRepository.cs" />
+    <Compile Include="Implementations\Repositories\GameRepository.cs" />
     <Compile Include="Implementations\Services\GameService.cs" />
     <Compile Include="Interfaces\Repositories\ICardRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGameRepository.cs" />

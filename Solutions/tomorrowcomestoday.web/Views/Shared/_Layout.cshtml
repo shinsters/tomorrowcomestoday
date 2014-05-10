@@ -51,6 +51,31 @@
     <script type="text/javascript" src="@Url.Content("/Scripts/bootstrap.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("/Scripts/jquery.signalR-1.0.0.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+    @*<script type="text/javascript" src="@Url.Content("/Scripts/gamehub.js")"></script>*@
+    
+    <script type="text/javascript">
+        
+        $(function () {
+            // Reference the auto-generated proxy for the hub.  
+            var gameHub = $.connection.gameHub;
+
+            gameHub.client.broadcastMessage = function (name, message) {
+                alert(name + message);
+            }
+
+            $.connection.hub.start().done(function () {
+                gameHub.server.send("name", "message");
+            });
+
+        });
+
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+
+    </script>
 
 </body>
 </html>

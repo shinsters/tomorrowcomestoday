@@ -14,7 +14,7 @@
     /// <summary>
     /// The hub that handles communications to and from clients 
     /// </summary>
-    [HubName("GameHub")]
+    [HubName("gameHub")]
     public class GameHub : Hub
     {
         /// <summary>
@@ -38,6 +38,11 @@
         public void JoinServer()
         {
             Clients.All.getServiceMessage("New user has joined the server.");
+        }
+
+        public void Send(string name, string message)
+        {
+            Clients.All.broadcastMessage(name, message);
         }
     }
 }
