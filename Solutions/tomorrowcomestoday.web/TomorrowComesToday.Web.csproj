@@ -501,14 +501,11 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Game\Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
-    <Content Include="Views\Game\Index.cshtml" />
-    <Content Include="Views\Game\Partials\_WhiteGameCard.cshtml" />
-    <Content Include="Views\Game\Partials\_BlackGameCard.cshtml" />
-    <Content Include="Views\Game\Partials\_Chat.cshtml" />
-    <Content Include="Views\Game\Partials\_Players.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Game\Index.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TomorrowComesToday.Domain\TomorrowComesToday.Domain.csproj">
@@ -529,8 +526,8 @@
     <Folder Include="Content\img\" />
     <Folder Include="Controllers\Queries\" />
     <Folder Include="Controllers\ViewModels\" />
+    <Folder Include="Game\NewFolder1\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

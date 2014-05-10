@@ -6,7 +6,6 @@ var app = angular.module("app", ['ngRoute']).config(function ($routeProvider) {
         controller : 'GameController'
     });
 
-
     $routeProvider.otherwise({
         redirectTo: '/game'
     });
@@ -37,7 +36,6 @@ app.controller('GameController', function ($scope) {
         var rowCounter = 1;
         angular.forEach(gameInitialStateViewModel.DealtCards, function (item) {
             $scope.cardsInHand.push(item);
-
             if (rowCounter <= 5) {
                 $scope.cardsInTopRow.push(item);
             } else {
