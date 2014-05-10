@@ -46,8 +46,6 @@
         {
             NHibernateSession.ConfigurationCache = new NHibernateConfigurationFileCache();
 
-            // lots to do before I get close to nhibernate
-
             //NHibernateSession.Init(
             //    this.webSessionStorage,
             //    new[] { this.Server.MapPath("~/bin/TomorrowComesToday.Infrastructure.dll") },

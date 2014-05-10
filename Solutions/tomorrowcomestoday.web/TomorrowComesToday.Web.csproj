@@ -188,19 +188,7 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\img\banner-leeds.png" />
-    <Content Include="Content\img\favicon.ico" />
-    <Content Include="Content\img\header.jpg" />
-    <Content Include="Content\img\paw.png" />
-    <Content Include="Content\img\squairy_light.png" />
     <Content Include="Content\js\bootstrap-mvc-validation.js" />
-    <Content Include="Content\js\widgets\Dashboard.js" />
-    <Content Include="Content\js\widgets\homepagemap-widget.js" />
-    <Content Include="Content\js\widgets\locations-widget.js" />
-    <Content Include="Content\js\oauth-twitter-init.js" />
-    <Content Include="Content\js\oauth.js" />
-    <Content Include="Content\js\widgets\map-widget.js" />
-    <Content Include="Content\js\widgets\mvc-to-bootstrap3-validation-errors.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\js\modernizr-2.0.6-development-only.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -248,6 +236,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\img\" />
     <Folder Include="Controllers\Queries\" />
     <Folder Include="Controllers\ViewModels\" />
     <Folder Include="Helpers\" />
