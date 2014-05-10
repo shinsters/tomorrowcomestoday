@@ -43,6 +43,8 @@ app.controller('GameController', function ($scope) {
 
         alert("Black card: " + $scope.blackCardText);
         alert("Player Guid: " + $scope.playerGameGuid);
+
+        $scope.$apply();
     }
 
     $.connection.hub.start().done(function () {
