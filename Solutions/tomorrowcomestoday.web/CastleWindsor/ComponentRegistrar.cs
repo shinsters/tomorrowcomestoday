@@ -57,6 +57,12 @@
                         .ImplementedBy(typeof(UserContextService))
                         .Named("UserContextService")
                         .LifestylePerWebRequest());
+
+            container.Register(
+                Component.For(typeof(IGameLobbyService))
+                    .ImplementedBy(typeof(GameLobbyService))
+                    .Named("GameLobbyService")
+                    .LifestyleSingleton());
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)

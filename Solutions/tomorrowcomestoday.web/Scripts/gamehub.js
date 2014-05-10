@@ -20,7 +20,7 @@ app.controller('GameController', function ($scope) {
     }
 
     $.connection.hub.start().done(function () {
-        gameHub.server.joinServer("hank");
+        gameHub.server.joinServer("hank" + Math.floor(Math.random() * 100));
     });
 
-});
+}); 

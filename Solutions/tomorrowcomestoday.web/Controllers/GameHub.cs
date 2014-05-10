@@ -1,11 +1,15 @@
 ﻿namespace TomorrowComesToday.Web.Controllers
 {
     using System;
+    using System.Linq;
 
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
 
+    using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Builders;
+    using TomorrowComesToday.Domain.Entities;
+    using TomorrowComesToday.Domain.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
 
@@ -35,16 +39,23 @@
         /// </summary>
         private readonly IPlayerRepository playerRepository;
 
+        /// <summary>
+        /// Contains active application state
+        /// </summary>
+        private readonly IGameLobbyService gameLobbyService;
+
         public GameHub(
             IGameService gameService,
             IGameRepository gameRepository,
             IUserContextService userContextService,
-            IPlayerRepository playerRepository)
+            IPlayerRepository playerRepository,
+            IGameLobbyService gameLobbyService)
         {
             this.gameService = gameService;
             this.gameRepository = gameRepository;
             this.userContextService = userContextService;
             this.playerRepository = playerRepository;
+            this.gameLobbyService = gameLobbyService;
         }
 
         /// <summary>
@@ -54,8 +65,18 @@
         public void JoinServer(string name)
         {
             this.SetUserIdInContext(name);
-            Clients.All.broadcastMessage(name);
+            Clients.All.broadcastMessage(string.Format("{0} has joined the server", name));
+
+            // if we have enough people in the lobby then start a game
+            var amountOfWaitingUsers = gameLobbyService.ConnectedPlayers.Count(o => o.ConnectedPlayerState == ConnectedPlayerState.IsWaitingInLobby);
+            var hasEnoughPlayersToStartGame = amountOfWaitingUsers == CommonConcepts.GAME_PLAYER_LIMIT;
+
+            if (hasEnoughPlayersToStartGame)
+            {
+                this.StartGame();
+            }
         }
+
 
 
         public void Send(string name, string message)
@@ -84,7 +105,30 @@
                 .Named(playerName)
                 .Create();
 
+            // get signalr connection guid
+
             this.playerRepository.SaveOrUpdate(player);
+            userContextService.Player = player;
+
+            var connectedPlayer = new ConnectedPlayer
+                                      {
+                                          Player = player,
+                                          ConnectedPlayerState = ConnectedPlayerState.IsWaitingInLobby,
+                                          SessionId = currentActiveSessionId
+                                      };
+
+            gameLobbyService.ConnectedPlayers.Add(connectedPlayer);
+        }
+
+        /// <summary>
+        /// Start a game 
+        /// </summary>
+        private void StartGame()
+        {
+            //foreach (var player in gameLobbyService)
+            //{
+            //    var 
+            //}
         }
 
         #endregion
