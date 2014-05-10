@@ -17,6 +17,9 @@ app.controller('GameController', function ($scope) {
     var gameHub = $.connection.gameHub;
 
     $scope.cardsInHand = [];
+    $scope.cardsInTopRow = [];
+    $scope.cardsInBottomRow = [];
+
     $scope.playerNames = [];
     $scope.blackCardText = "";
     $scope.players = [];
@@ -29,8 +32,18 @@ app.controller('GameController', function ($scope) {
     gameHub.client.sendInitialState = function (gameInitialStateViewModel) {
 
         // grab out the cards in hand
+
+        // to split cards in hand in two for view
+        var rowCounter = 1;
         angular.forEach(gameInitialStateViewModel.DealtCards, function (item) {
             $scope.cardsInHand.push(item);
+
+            if (rowCounter <= 5) {
+                $scope.cardsInTopRow.push(item);
+            } else {
+                $scope.cardsInBottomRow.push(item);
+            }
+            rowCounter++;
         });
 
         // grab out the players
