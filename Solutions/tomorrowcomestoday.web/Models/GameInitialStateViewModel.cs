@@ -26,5 +26,10 @@
         /// The guid of the player in the current game
         /// </summary>
         public string PlayerInGameGuid { get; set; }
+
+        /// <summary>
+        /// The text of the active black card
+        /// </summary>
+        public string BlackCardText { get; set; }
     }
 }

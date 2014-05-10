@@ -17,7 +17,11 @@ app.controller('GameController', function ($scope) {
     var gameHub = $.connection.gameHub;
 
     gameHub.client.broadcastMessage = function (message) {
-        alert(message);
+    }
+
+    gameHub.client.sendInitialState = function (gameInitialStateViewModel) {
+        var viewModelAsString = JSON.stringify(gameInitialStateViewModel);
+        alert(viewModelAsString);
     }
 
     $.connection.hub.start().done(function () {

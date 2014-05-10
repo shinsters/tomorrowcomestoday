@@ -3,11 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Script.Serialization;
 
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
-
-    using NHibernate.Hql.Ast.ANTLR;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Builders;
@@ -75,9 +74,19 @@
             var amountOfWaitingUsers = gameLobbyService.ConnectedPlayers.Count(o => o.ConnectedPlayerState == ConnectedPlayerState.IsWaitingInLobby);
             var hasEnoughPlayersToStartGame = amountOfWaitingUsers == CommonConcepts.GAME_PLAYER_LIMIT;
 
-            if (hasEnoughPlayersToStartGame)
+            if (!hasEnoughPlayersToStartGame)
             {
-                this.StartGame();
+                return;
+            }
+
+            // gets a player to view model dictionary
+            var viewModels = this.StartGame();
+
+            foreach (var playerAndModel in viewModels)
+            {
+                var connectedPlayer = playerAndModel.Key;
+                var viewModel = playerAndModel.Value;
+                this.Clients.Client(connectedPlayer.SessionId).sendInitialState(viewModel);
             }
         }
 
@@ -127,7 +136,7 @@
         /// <summary>
         /// Start a game 
         /// </summary>
-        private IList<GameInitialStateViewModel> StartGame()
+        private Dictionary<ConnectedPlayer, GameInitialStateViewModel> StartGame()
         {
             // grab the first n players who're ready to join the game
             var players =
@@ -137,7 +146,7 @@
 
             if (players.Count() < 2)
             {
-                return new List<GameInitialStateViewModel>();
+                return new Dictionary<ConnectedPlayer, GameInitialStateViewModel>();
             }
 
             var game = new GameBuilder()
@@ -152,7 +161,7 @@
 
             // generate view model to send back to users
 
-            var modelsToSendToClients = new List<GameInitialStateViewModel>();
+            var modelsToSendToClients = new Dictionary<ConnectedPlayer, GameInitialStateViewModel>();
 
             foreach (var connectedPlayer in players)
             {
@@ -163,10 +172,12 @@
                                     DealtCards = playerInGame.WhiteCardsInHand.Select(this.GenerateInitialCardDealtViewModel).ToList(),
                                     IsActivePlayer = playerInGame.PlayerState == PlayerState.IsActivePlayerWaiting,
                                     PlayerInGameGuid = playerInGame.GamePlayerGuid.ToString(),
-                                    PlayerNames = game.GamePlayers.Select(this.GameInitialPlayerViewModel).ToList()
+                                    PlayerNames = game.GamePlayers.Select(this.GameInitialPlayerViewModel).ToList(),
+                                    BlackCardText = game.BlackCardsInDeck.First(o => o.GameCardState == GameCardState.IsInPlay).Card.Text
                                 };
+                modelsToSendToClients.Add(connectedPlayer, model);
 
-                modelsToSendToClients.Add(model);
+                connectedPlayer.ConnectedPlayerState = ConnectedPlayerState.IsPlayingGame;
             }
 
             return modelsToSendToClients;
