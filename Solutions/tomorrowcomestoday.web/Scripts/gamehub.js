@@ -2,7 +2,7 @@
 var app = angular.module("app", ['ngRoute']).config(function($routeProvider) {
 
     $routeProvider.when('/game', {
-        templateUrl : '/templates/game/',
+        templateUrl : '/Content/templates/game/game.html',
         controller : 'GameController'
     });
 
@@ -22,7 +22,7 @@ $(function () {
         var gameHub = $.connection.gameHub;
 
         gameHub.client.broadcastMessage = function (message) {
-            alert(message);
+            //alert(message);
         }
 
         $.connection.hub.start().done(function () {

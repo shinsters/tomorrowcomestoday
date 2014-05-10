@@ -1,0 +1,53 @@
+﻿<div id="wrap">
+    
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span1"></div>
+            <div class="span3 text-center">
+                @RenderPage("Partials/_Players.cshtml")
+            </div>
+            <div class="span1"></div>
+            <div class="span2 text-center">
+                <h3>Active Black Card</h3>
+                @RenderPage("Partials/_BlackGameCard.cshtml")
+            </div>
+            <div class="span1"></div>
+            <div class="span3 text-center">
+                @RenderPage("Partials/_Chat.cshtml")
+            </div>
+            <div class="span1"></div>
+        </div>
+    </div>
+     
+    <div class="navbar-fixed-bottom">
+        <div class="container-fluid">
+        
+            <div class="row-fluid">
+                <div class="span5"></div>
+                <div class="span2 text-center">
+                    <h3>Your White Cards</h3>
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span1"></div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span2">@RenderPage("Partials/_WhiteGameCard.cshtml")</div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+</div>
