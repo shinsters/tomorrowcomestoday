@@ -46,11 +46,13 @@
         {
             NHibernateSession.ConfigurationCache = new NHibernateConfigurationFileCache();
 
-            NHibernateSession.Init(
-                this.webSessionStorage,
-                new[] { this.Server.MapPath("~/bin/TomorrowComesToday.Infrastructure.dll") },
-                new AutoPersistenceModelGenerator().Generate(),
-                this.Server.MapPath("~/NHibernate.config"));
+            // lots to do before I get close to nhibernate
+
+            //NHibernateSession.Init(
+            //    this.webSessionStorage,
+            //    new[] { this.Server.MapPath("~/bin/TomorrowComesToday.Infrastructure.dll") },
+            //    new AutoPersistenceModelGenerator().Generate(),
+            //    this.Server.MapPath("~/NHibernate.config"));
         }
 
         /// <summary>
@@ -102,7 +104,7 @@
 
             ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container));
 
-            container.RegisterControllers(typeof(HomeController).Assembly);
+            container.RegisterControllers(typeof(GameController).Assembly);
             ComponentRegistrar.AddComponentsTo(container);
 
             var windsorServiceLocator = new WindsorServiceLocator(container);

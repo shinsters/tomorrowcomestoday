@@ -15,7 +15,7 @@
                 "{controller}/{action}/{id}",                           // URL with parameters
                 new
                     {
-                        controller = "Home", 
+                        controller = "Game", 
                         action = "Index", 
                         id = UrlParameter.Optional
                     },

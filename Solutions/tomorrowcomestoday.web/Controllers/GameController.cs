@@ -2,14 +2,12 @@
 {
     using System.Web.Mvc;
 
-    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
-
-    public class HomeController : Controller
+    public class GameController : Controller
     {
         /// <summary>
         /// The home controller is for the front login page, shouldn't be used for anything outside of that
         /// </summary>
-        public HomeController()
+        public GameController()
         {
         }
 
