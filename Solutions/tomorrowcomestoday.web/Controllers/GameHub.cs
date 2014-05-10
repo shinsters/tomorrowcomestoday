@@ -125,10 +125,25 @@
         /// </summary>
         private void StartGame()
         {
-            //foreach (var player in gameLobbyService)
-            //{
-            //    var 
-            //}
+            // grab the first n players who're ready to join the game
+            var players =
+                this.gameLobbyService.ConnectedPlayers.Where(
+                    o => o.ConnectedPlayerState == ConnectedPlayerState.IsWaitingInLobby)
+                    .Take(CommonConcepts.GAME_PLAYER_LIMIT).ToList();
+
+            if (players.Count() < 2)
+            {
+                return;
+            }
+
+            var game = new GameBuilder()
+                .AddPlayers(players.Select(o => o.Player)
+                .ToList())
+                .Create();
+
+            gameRepository.SaveOrUpdate(game);
+
+            gameService.DealRound(game.GameGuid);
         }
 
         #endregion

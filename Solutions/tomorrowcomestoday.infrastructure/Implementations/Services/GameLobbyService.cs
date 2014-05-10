@@ -14,6 +14,14 @@ namespace TomorrowComesToday.Infrastructure.Implementations.Services
     public class GameLobbyService : IGameLobbyService
     {
         /// <summary>
+        /// Constructs a game lobby service
+        /// </summary>
+        public GameLobbyService()
+        {
+            this.ConnectedPlayers = new List<ConnectedPlayer>();   
+        }
+
+        /// <summary>
         /// The players connected to the server
         /// </summary>
         public IList<ConnectedPlayer> ConnectedPlayers { get; set; }
