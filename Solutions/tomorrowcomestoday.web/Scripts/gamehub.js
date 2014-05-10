@@ -6,6 +6,7 @@ var app = angular.module("app", ['ngRoute']).config(function ($routeProvider) {
         controller : 'GameController'
     });
 
+
     $routeProvider.otherwise({
         redirectTo: '/game'
     });

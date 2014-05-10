@@ -1,10 +1,13 @@
 ﻿namespace TomorrowComesToday.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
+
+    using NHibernate.Hql.Ast.ANTLR;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Builders;
@@ -12,6 +15,7 @@
     using TomorrowComesToday.Domain.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
+    using TomorrowComesToday.Web.Models;
 
     /// <summary>
     /// The hub that handles communications to and from clients 
@@ -123,7 +127,7 @@
         /// <summary>
         /// Start a game 
         /// </summary>
-        private void StartGame()
+        private IList<GameInitialStateViewModel> StartGame()
         {
             // grab the first n players who're ready to join the game
             var players =
@@ -133,7 +137,7 @@
 
             if (players.Count() < 2)
             {
-                return;
+                return new List<GameInitialStateViewModel>();
             }
 
             var game = new GameBuilder()
@@ -141,11 +145,62 @@
                 .ToList())
                 .Create();
 
+
             gameRepository.SaveOrUpdate(game);
 
             gameService.DealRound(game.GameGuid);
+
+            // generate view model to send back to users
+
+            var modelsToSendToClients = new List<GameInitialStateViewModel>();
+
+            foreach (var connectedPlayer in players)
+            {
+                var playerInGame = game.GamePlayers.First(o => o.Player.Guid == connectedPlayer.Player.Guid);
+
+                var model = new GameInitialStateViewModel
+                                {
+                                    DealtCards = playerInGame.WhiteCardsInHand.Select(this.GenerateInitialCardDealtViewModel).ToList(),
+                                    IsActivePlayer = playerInGame.PlayerState == PlayerState.IsActivePlayerWaiting,
+                                    PlayerInGameGuid = playerInGame.GamePlayerGuid.ToString(),
+                                    PlayerNames = game.GamePlayers.Select(this.GameInitialPlayerViewModel).ToList()
+                                };
+
+                modelsToSendToClients.Add(model);
+            }
+
+            return modelsToSendToClients;
         }
 
+        /// <summary>
+        /// Generate a initial player view model
+        /// </summary>
+        /// <param name="gamePlayer"></param>
+        /// <returns></returns>
+        private GameInitialPlayerViewModel GameInitialPlayerViewModel(GamePlayer gamePlayer)
+        {
+           return new GameInitialPlayerViewModel
+                      {
+                          Guid = gamePlayer.GamePlayerGuid.ToString(),
+                          Name = gamePlayer.Player.Name
+                      };
+        }
+
+        /// <summary>
+        /// Generate an initial card dealt view model 
+        /// </summary>
+        /// <param name="gameCard"></param>
+        /// <returns></returns>
+        private GameInitialCardDealtViewModel GenerateInitialCardDealtViewModel(GameCard gameCard)
+        {
+            return new GameInitialCardDealtViewModel
+                                                    {
+                                                        Guid =
+                                                            gameCard.GameCardGuid.ToString
+                                                            (),
+                                                        Text = gameCard.Card.Text
+                                                    };
+        }
         #endregion
     }
 }
