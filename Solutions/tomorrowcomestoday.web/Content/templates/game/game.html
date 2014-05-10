@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span1"></div>
+
             <div class="span3 text-center">
                 
                 <h3>Players</h3>
 
                 <div class="row-fluid">
-                    
                     <div class="span4" ng-repeat="player in playerNames">
                         <div class="card">
                             <div class="card-heading">
@@ -20,19 +20,27 @@
                             </div>
                         </div>
                     </div>
-
+                    
+                    <div class="span4"></div>
                 </div>
+
             </div>
-            
-            
 
             <div class="span1"></div>
             <div class="span2 text-center">
                 <h3>Active Black Card</h3>
+                <div class="card dark">
+                    <div class="card-body text-center dark">
+                        {{ blackCardText }}
+                    </div>
+                    <div class="card-actions  text-center dark">
+                        &nbsp;
+                    </div>
+                </div>
             </div>
             <div class="span1"></div>
             <div class="span3 text-center">
-
+               
             </div>
             <div class="span1"></div>
         </div>

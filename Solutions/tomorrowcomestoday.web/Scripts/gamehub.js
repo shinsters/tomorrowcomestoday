@@ -41,9 +41,6 @@ app.controller('GameController', function ($scope) {
         $scope.blackCardText = gameInitialStateViewModel.BlackCardText;
         $scope.playerGameGuid = gameInitialStateViewModel.PlayerInGameGuid;
 
-        alert("Black card: " + $scope.blackCardText);
-        alert("Player Guid: " + $scope.playerGameGuid);
-
         $scope.$apply();
     }
 
