@@ -1,13 +1,10 @@
 ﻿namespace TomorrowComesToday.Web.Controllers
 {
     using System;
-    using System.Diagnostics;
-    using System.Linq;
 
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
 
-    using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Builders;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;

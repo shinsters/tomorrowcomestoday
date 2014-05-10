@@ -194,6 +194,7 @@
     <Content Include="Content\css\bootplus.min.css" />
     <Content Include="Content\css\tomorrowcomestoday.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\templates\game\game.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-cookies.js" />
@@ -217,6 +218,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\callr.angular.js" />
+    <Content Include="Scripts\callr.js" />
     <Content Include="Scripts\gamehub.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -523,18 +526,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\img\" />
-    <Folder Include="Content\templates\game\" />
     <Folder Include="Controllers\Queries\" />
     <Folder Include="Controllers\ViewModels\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
