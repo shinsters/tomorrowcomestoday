@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="utf-8">
     <title>tomorrowcomestoday</title>
@@ -29,7 +29,7 @@
                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> 
                 </button>
                 <a class="brand" href="#">tomorrowcomestoday</a>
                 <div class="nav-collapse collapse">
@@ -43,39 +43,12 @@
         </div>
     </div>
 
-
     @RenderBody()
 
-    
     <script type="text/javascript" src="@Url.Content("/Scripts/jquery-2.0.3.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("/Scripts/bootstrap.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("/Scripts/jquery.signalR-1.0.0.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
-    @*<script type="text/javascript" src="@Url.Content("/Scripts/gamehub.js")"></script>*@
-    
-    <script type="text/javascript">
-        
-        $(function () {
-            // Reference the auto-generated proxy for the hub.  
-            var gameHub = $.connection.gameHub;
-
-            gameHub.client.broadcastMessage = function (name, message) {
-                alert(name + message);
-            }
-
-            $.connection.hub.start().done(function () {
-                gameHub.server.send("name", "message");
-            });
-
-        });
-
-        // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
-
-    </script>
-
+    <script type="text/javascript" src="@Url.Content("/Scripts/gamehub.js")"></script>
 </body>
 </html>
