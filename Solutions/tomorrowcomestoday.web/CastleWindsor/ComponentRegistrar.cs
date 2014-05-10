@@ -9,6 +9,7 @@
     using SharpArch.NHibernate.Contracts.Repositories;
     using SharpArch.Web.Mvc.Castle;
 
+    using TomorrowComesToday.Web.Controllers;
 
     public class ComponentRegistrar
     {
@@ -17,12 +18,6 @@
             AddGenericRepositoriesTo(container);
             AddCustomRepositoriesTo(container);
             AddQueryObjectsTo(container);
-            AddTasksTo(container);
-            AddHandlersTo(container);
-        }
-
-        private static void AddTasksTo(IWindsorContainer container)
-        {
         }
 
         private static void AddCustomRepositoriesTo(IWindsorContainer container) 
@@ -32,13 +27,6 @@
                     .FromAssemblyNamed("TomorrowComesToday.Infrastructure")
                     .BasedOn(typeof(IRepositoryWithTypedId<,>))
                     .WithService.FirstNonGenericCoreInterface("TomorrowComesToday.Domain"));
-
-            // todo, automatically do these based on namespace.
-            //  container.Register(
-            //    Component.For(typeof(IUserRepository))
-            //        .ImplementedBy(typeof(UserRepository))
-            //        .Named("UserRepository"));
-
         }
 
         private static void AddGenericRepositoriesTo(IWindsorContainer container)
@@ -75,7 +63,7 @@
         {
             container.Register(
                 AllTypes.FromAssemblyNamed("TomorrowComesToday.Web")
-                    .BasedOn<NHibernateQuery>()
+                    .BasedOn<NHibernateQuery>() 
                     .WithService.DefaultInterfaces());
 
             container.Register(
@@ -83,10 +71,10 @@
                     .BasedOn(typeof(NHibernateQuery))
                     .WithService.DefaultInterfaces());
 
-        }
+            container.Register(
+                Classes.FromThisAssembly()
+                .InSameNamespaceAs<GameHub>());
 
-        private static void AddHandlersTo(IWindsorContainer container)
-        {
         }
     }
 }

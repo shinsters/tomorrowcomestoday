@@ -109,6 +109,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Packages\MvcContrib.Mvc3.FluentHtml-ci.3.0.100.0\lib\MvcContrib.FluentHtml.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
@@ -177,7 +180,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CastleWindsor\ComponentRegistrar.cs" />
-    <Compile Include="Controllers\MeetHub.cs" />
+    <Compile Include="Controllers\GameHub.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\RouteRegistrar.cs" />
     <Compile Include="Global.asax.cs">
@@ -189,11 +192,13 @@
     <Content Include="Content\css\bootplus-responsive.min.css" />
     <Content Include="Content\css\bootplus.css" />
     <Content Include="Content\css\bootplus.min.css" />
+    <Content Include="Content\css\tomorrowcomestoday.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\bootstrap-mvc-validation.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\gamehub.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -222,6 +227,10 @@
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Game\Partials\_WhiteGameCard.cshtml" />
+    <Content Include="Views\Game\Partials\_BlackGameCard.cshtml" />
+    <Content Include="Views\Game\Partials\_Chat.cshtml" />
+    <Content Include="Views\Game\Partials\_Players.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TomorrowComesToday.Domain\TomorrowComesToday.Domain.csproj">
