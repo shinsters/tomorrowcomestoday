@@ -1,21 +1,30 @@
-﻿$(function () {
-    // Reference the auto-generated proxy for the hub.  
-    var gameHub = $.connection.gameHub;
+﻿// angular app
+var app = angular.module("app", ['ngRoute']).config(function($routeProvider) {
 
-    gameHub.client.GetServiceMessage(function(message) {
-        alert(message);
+    $routeProvider.when('/game', {
+        templateUrl : '/templates/game/',
+        controller : 'GameController'
     });
 
-
-    $.connection.hub.start().done(function () {
-
-        gameHub.server.JoinServer();
-
+    $routeProvider.otherwise({
+        redirectTo: '/game'
     });
 });
 
-// This optional function html-encodes messages for display in the page.
-function htmlEncode(value) {
-    var encodedValue = $('<div />').text(value).html();
-    return encodedValue;
-}
+app.controller('GameController', function ($scope) {
+    $scope.message = 'hi';
+});
+
+// signalr hub
+$(function () {
+        // Reference the auto-generated proxy for the hub.  
+        var gameHub = $.connection.gameHub;
+
+        gameHub.client.broadcastMessage = function (name, message) {
+            alert(name + message);
+        }
+
+        $.connection.hub.start().done(function () {
+            gameHub.server.send("name", "message");
+        });
+});
