@@ -8,8 +8,6 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using NHibernate.Mapping;
-
     using TechTalk.SpecFlow.Assist;
 
     using TomorrowComesToday.Domain;
@@ -110,7 +108,6 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
         [Then(@"I see the player who played the winning card has a point")]
         public void ThenISeeThePlayerWhoPlayedTheWinningCardHasAPoint()
         {
-            var gameService = TestKernel.Container.Resolve<IGameService>();
             var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
             var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
 
@@ -121,6 +118,38 @@ namespace TomorrowComesToday.Tests.SpecflowTests.StepDefinitions
                 expectedAmountOfPlayersWithPoint, 
                 "Expected 1 player to have a point, actually had {0}", 
                 playersWithAPoint);
+        }
+
+        [Then(@"I see a new card tsar has been selected as the person sat next to '(.*)'")]
+        public void ThenISeeANewCardTsarHasBeenSelectedAsThePersonSatNextToPrevious(string lastActivePlayerName)
+        {
+            var gameRepository = TestKernel.Container.Resolve<IGameRepository>();
+            var game = gameRepository.GetByGuid(CommonConcepts.TEST_GAME_GUID);
+
+            var currentActivePlayers = game.GamePlayers.Where(o => o.PlayerState == PlayerState.IsActivePlayerWaiting).ToList();
+            var countOfActivePlayers = currentActivePlayers.Count();
+            var expectedCountOfActivePlayers = countOfActivePlayers == 1;
+
+            // first check one and only one actually exists
+            Assert.IsTrue(
+                expectedCountOfActivePlayers,
+                "Expected 1 active player, but instead had {0}",
+                countOfActivePlayers);
+
+            // now check that their ID is one higher than the previous players
+            var lastPlayer = game.GamePlayers.First(o => o.Player.Name == lastActivePlayerName);
+            var currentPlayer = currentActivePlayers.First();
+            var expectedCurrentPlayer = game.GamePlayers.First(o => o.GamePlayerId == lastPlayer.GamePlayerId + 1);
+            
+            var isCorrectCurrentPlayer = expectedCurrentPlayer.GamePlayerId == currentPlayer.GamePlayerId;
+
+            Assert.IsTrue(
+                isCorrectCurrentPlayer,
+                "Expected {0} with id {1} to be active player, but actually it was {2} with id {3}",
+                expectedCurrentPlayer.Player.Name,
+                expectedCurrentPlayer.GamePlayerId,
+                currentPlayer.Player.Name,
+                currentPlayer.GamePlayerId);
         }
     }
 }

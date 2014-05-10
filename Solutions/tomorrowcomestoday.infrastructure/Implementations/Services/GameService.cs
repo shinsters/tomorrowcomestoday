@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Policy;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Entities;
@@ -56,6 +57,16 @@
             {
                 this.CreateDeck(game);
                 game.GameState = GameState.BeingPlayed;
+            }
+            // assign the next active player if it's not the first turn  
+            else
+            {
+                var activePlayer = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerSelecting);
+                var nextActivePlayer = game.GamePlayers.FirstOrDefault(o => o.GamePlayerId == activePlayer.GamePlayerId + 1)
+                                       ?? game.GamePlayers.OrderBy(o => o.GamePlayerId).First();
+
+                activePlayer.PlayerState = PlayerState.IsNormalPlayerSelecting;
+                nextActivePlayer.PlayerState = PlayerState.IsActivePlayerWaiting;
             }
 
             // then assign a selection to a user

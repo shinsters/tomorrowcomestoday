@@ -105,7 +105,7 @@ this.FeatureBackground();
 #line 18
  testRunner.Given("I have a game with following players:", ((string)(null)), table2, "Given ");
 #line 22
- testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 23
  testRunner.Then("I see the game is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -148,7 +148,7 @@ this.FeatureBackground();
 #line 35
  testRunner.And("I have a limited white deck size of \'11\' cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
- testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
  testRunner.Then("I see the game is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -189,7 +189,7 @@ this.FeatureBackground();
 #line 46
  testRunner.Given("I have a game with following players:", ((string)(null)), table6, "Given ");
 #line 50
- testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 51
  testRunner.Then("I see the game is in state \'Active\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 52

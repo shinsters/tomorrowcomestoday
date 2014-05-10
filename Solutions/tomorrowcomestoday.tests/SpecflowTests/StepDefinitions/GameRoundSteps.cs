@@ -79,7 +79,7 @@
         }
 
 
-        [Given(@"the game is started")]
+        [Given(@"a round is started")]
         public void GivenTheGameHasAWhiteDeckOfCards()
         {
             var gameService = TestKernel.Container.Resolve<IGameService>();

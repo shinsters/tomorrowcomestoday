@@ -90,7 +90,7 @@ namespace TomorrowComesToday.Tests.SpecflowTests.Features
         public virtual void WhenAllPlayersHavePlayedTheirWhiteCardTheCardTsarIsAbleToSeeThem()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When all players have played their white card, the card tsar is able to see them", ((string[])(null)));
-#line 13
+#line 12
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
@@ -105,11 +105,11 @@ this.FeatureBackground();
                         "Benjamin"});
             table2.AddRow(new string[] {
                         "Kathryn"});
-#line 14
+#line 13
  testRunner.Given("I have a game with following players:", ((string)(null)), table2, "Given ");
+#line 19
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
- testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 21
  testRunner.And("the card tsar is currently \'Jean Luc\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -120,9 +120,9 @@ this.FeatureBackground();
                         "Benjamin"});
             table3.AddRow(new string[] {
                         "Kathryn"});
-#line 22
+#line 21
  testRunner.And("the following players have played an answer card:", ((string)(null)), table3, "And ");
-#line 27
+#line 26
  testRunner.Then("I see the card tsar is able to see the answer cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -135,7 +135,7 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When not all players have played their white card, the card tsar is unable to see" +
                     " them", ((string[])(null)));
-#line 29
+#line 28
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
@@ -150,11 +150,11 @@ this.FeatureBackground();
                         "Benjamin"});
             table4.AddRow(new string[] {
                         "Kathryn"});
-#line 30
+#line 29
  testRunner.Given("I have a game with following players:", ((string)(null)), table4, "Given ");
+#line 35
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
- testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 37
  testRunner.And("the card tsar is currently \'Jean Luc\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -163,9 +163,9 @@ this.FeatureBackground();
                         "James"});
             table5.AddRow(new string[] {
                         "Benjamin"});
-#line 38
+#line 37
  testRunner.And("the following players have played an answer card:", ((string)(null)), table5, "And ");
-#line 42
+#line 41
  testRunner.Then("I see the card tsar is able to not see the answer cards", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -178,7 +178,7 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When all users have played a hand, the card tsar can select a winner and points a" +
                     "re allocated", ((string[])(null)));
-#line 44
+#line 43
 this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
@@ -193,11 +193,11 @@ this.FeatureBackground();
                         "Benjamin"});
             table6.AddRow(new string[] {
                         "Kathryn"});
-#line 45
+#line 44
  testRunner.Given("I have a game with following players:", ((string)(null)), table6, "Given ");
+#line 50
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 51
- testRunner.And("the game is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 52
  testRunner.And("the card tsar is currently \'Jean Luc\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -208,12 +208,59 @@ this.FeatureBackground();
                         "Benjamin"});
             table7.AddRow(new string[] {
                         "Kathryn"});
-#line 53
+#line 52
  testRunner.And("the following players have played an answer card:", ((string)(null)), table7, "And ");
-#line 58
+#line 57
  testRunner.And("the card tsar selects an answer card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 59
+#line 58
  testRunner.Then("I see the player who played the winning card has a point", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("After one round has been played, another card tsar is selected")]
+        public virtual void AfterOneRoundHasBeenPlayedAnotherCardTsarIsSelected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("After one round has been played, another card tsar is selected", ((string[])(null)));
+#line 60
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table8.AddRow(new string[] {
+                        "James"});
+            table8.AddRow(new string[] {
+                        "Jean Luc"});
+            table8.AddRow(new string[] {
+                        "Benjamin"});
+            table8.AddRow(new string[] {
+                        "Kathryn"});
+#line 61
+ testRunner.Given("I have a game with following players:", ((string)(null)), table8, "Given ");
+#line 67
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 68
+ testRunner.And("the card tsar is currently \'Jean Luc\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name"});
+            table9.AddRow(new string[] {
+                        "James"});
+            table9.AddRow(new string[] {
+                        "Benjamin"});
+            table9.AddRow(new string[] {
+                        "Kathryn"});
+#line 69
+ testRunner.And("the following players have played an answer card:", ((string)(null)), table9, "And ");
+#line 74
+ testRunner.And("the card tsar selects an answer card", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 75
+ testRunner.And("a round is started", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 76
+ testRunner.Then("I see a new card tsar has been selected as the person sat next to \'Jean Luc\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

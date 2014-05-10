@@ -19,7 +19,7 @@ Scenario: When a game starts users are handed their cards
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game is started 
+	And a round is started
 	Then I see the game is in state 'Active'
 	And I see the game players are in the following state:
 	| Name     | Points | Cards in hand |
@@ -33,7 +33,7 @@ Scenario: Cards in deck when not enough left are properly shared among players
 	| Jean Luc |
 	| Benjamin |
 	And I have a limited white deck size of '11' cards
-	And the game is started
+	And a round is started
 	Then I see the game is in state 'Active'
 	And I see the game players are in the following state:
 	| Name     | Points | Cards in hand |
@@ -47,7 +47,7 @@ Scenario: A card tsar is assigned and a black card is played as the game starts
 	| Name     |
 	| Jean Luc |
 	| Benjamin |
-	And the game is started 
+	And a round is started
 	Then I see the game is in state 'Active'
 	And I see the game has an active black card
 	And I see the game has an active player

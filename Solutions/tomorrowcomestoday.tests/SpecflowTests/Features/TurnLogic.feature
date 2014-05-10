@@ -9,7 +9,6 @@ Background: I have a fully configured back end
 	| Benjamin |
 	| Kathryn  | 
 
-
 Scenario: When all players have played their white card, the card tsar is able to see them
 	Given I have a game with following players:
 	| Name     |
@@ -17,7 +16,7 @@ Scenario: When all players have played their white card, the card tsar is able t
 	| Jean Luc |
 	| Benjamin |
 	| Kathryn  |
-	And the game is started 
+	And a round is started
 	And the card tsar is currently 'Jean Luc'
 	And the following players have played an answer card:
 	| Name     |
@@ -33,7 +32,7 @@ Scenario: When not all players have played their white card, the card tsar is un
 	| Jean Luc |
 	| Benjamin |
 	| Kathryn  |
-	And the game is started 
+	And a round is started
 	And the card tsar is currently 'Jean Luc'
 	And the following players have played an answer card:
 	| Name     |
@@ -48,7 +47,7 @@ Scenario: When all users have played a hand, the card tsar can select a winner a
 	| Jean Luc |
 	| Benjamin |
 	| Kathryn  |
-	And the game is started 
+	And a round is started
 	And the card tsar is currently 'Jean Luc'
 	And the following players have played an answer card:
 	| Name     |
@@ -57,3 +56,21 @@ Scenario: When all users have played a hand, the card tsar can select a winner a
 	| Kathryn  |
 	And the card tsar selects an answer card
 	Then I see the player who played the winning card has a point
+
+Scenario: After one round has been played, another card tsar is selected
+	Given I have a game with following players:
+	| Name     |
+	| James    |
+	| Jean Luc |
+	| Benjamin |
+	| Kathryn  |
+	And a round is started
+	And the card tsar is currently 'Jean Luc'
+	And the following players have played an answer card:
+	| Name     |
+	| James    |
+	| Benjamin |
+	| Kathryn  |
+	And the card tsar selects an answer card
+	And a round is started
+	Then I see a new card tsar has been selected as the person sat next to 'Jean Luc' 
