@@ -14,6 +14,7 @@ angular.module("app").controller('GameController', function ($scope, $location, 
     $scope.blackCardText = "";
     $scope.players = [];
     $scope.playerGameGuid = "";
+    $scope.activePlayerGuid = "";
 
     // bind to local dom events
     $scope.sendChatMessage = function () {
@@ -57,6 +58,11 @@ angular.module("app").controller('GameController', function ($scope, $location, 
 
         $scope.blackCardText = gameInitialStateViewModel.BlackCardText;
         $scope.playerGameGuid = gameInitialStateViewModel.PlayerInGameGuid;
+        $scope.activePlayerGuid = gameInitialStateViewModel.ActivePlayerGuid;
+
+        // set the active player display
+        var activePlayerDisplay = angular.element(document.getElementById('player_' + $scope.activePlayerGuid));
+
 
         $scope.$apply();
     }

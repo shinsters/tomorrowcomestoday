@@ -16,6 +16,10 @@
     width: 100%;
 }
 
+.active-player-card {
+    background: #b3a9a9;
+}
+
     /* Game Cards, modified from game-card Card inside BootPlus*/
 
 .card.game-card {

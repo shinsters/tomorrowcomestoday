@@ -197,7 +197,7 @@
                 var model = new GameInitialStateViewModel
                                 {
                                     DealtCards = playerInGame.WhiteCardsInHand.Select(this.GenerateInitialCardDealtViewModel).ToList(),
-                                    IsActivePlayer = playerInGame.PlayerState == PlayerState.IsActivePlayerWaiting,
+                                    ActivePlayerGuid = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerWaiting).GamePlayerGuid.ToString(),
                                     PlayerInGameGuid = playerInGame.GamePlayerGuid.ToString(),
                                     PlayerNames = game.GamePlayers.Select(this.GameInitialPlayerViewModel).ToList(),
                                     BlackCardText = game.BlackCardsInDeck.First(o => o.GameCardState == GameCardState.IsInPlay).Card.Text

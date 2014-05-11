@@ -13,9 +13,9 @@
         public IList<GameInitialPlayerViewModel> PlayerNames { get; set; }
 
         /// <summary>
-        /// Is this player the current card tsar
+        /// Guid of the current card tsar
         /// </summary>
-        public bool IsActivePlayer { get; set; }
+        public string ActivePlayerGuid { get; set; }
 
         /// <summary>
         /// The cards being delt to the player at the beginning of the game

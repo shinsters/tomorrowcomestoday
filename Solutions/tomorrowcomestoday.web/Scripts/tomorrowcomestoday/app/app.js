@@ -26,4 +26,3 @@ app.directive("sendsAnswerWhenClicked", function() {
         }
     }
 });
-
