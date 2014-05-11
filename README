@@ -1,7 +1,11 @@
 ﻿tomorrowcomestoday
 ------------------
 
-A C# .NET cards against humanity clone.  Still very early in development.
+A Cards Against Humanity web application, developed in SignalR, AngularJS and C#.
+
+Currently still under heavy development.
+
+
 
 This is licenced under the GPL v3.
 

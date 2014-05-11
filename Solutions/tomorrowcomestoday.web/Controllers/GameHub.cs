@@ -72,8 +72,6 @@
             }
         }
 
-
-
         public void Send(string name, string message)
         {
             Clients.All.broadcastMessage(message);

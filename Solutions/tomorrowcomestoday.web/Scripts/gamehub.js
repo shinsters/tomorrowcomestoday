@@ -59,4 +59,19 @@ app.controller('GameController', function ($scope) {
         gameHub.server.joinServer("hank" + Math.floor(Math.random() * 100));
     });
 
-}); 
+});
+
+// directives
+
+app.directive("sendsAnswerWhenClicked", function() {
+    return {
+        restrict: "A",
+        link: function(scope, element, attributes) {
+            //var originalMessage = scope.message;
+            element.bind("mousedown", function() {
+                alert("clicked" + attributes.guid);
+                scope.$apply();
+            });
+        }
+    }
+});
