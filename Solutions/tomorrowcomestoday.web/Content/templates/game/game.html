@@ -1,156 +1,159 @@
-﻿
-<div class="row-fluid">
-            
-    <div class="span3"></div>
+﻿<div class="wrap">
+    <div class="fluid-container">
+        <div class="row-fluid">
 
-    <div class="span6  text-center hero-unit">
+            <div class="span3">
 
-        <!--<div class="row-fluid">
-            <div class="span1"></div>
+                <div class="sidebar-content">
+                    <section>
+                        <div class="container-fluid">
 
-            <div class="span10 text-center">
+                            <div class="text-center">
+                                <h3>Players</h3>
+                            </div>
 
-                <div class="card user-card" ng-repeat="player in players">
-                    <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="img-circle user-card-image" />
-                    <h4>{{ player.Name }}</h4>
+
+                            <div class="card user-card" ng-repeat="player in players">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="player-image" />
+                                    </div>
+                                    <div class="span9">
+                                        <h4>{{ player.Name }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card user-card" ng-repeat="player in players">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="player-image" />
+                                    </div>
+                                    <div class="span9">
+                                        <h4>{{ player.Name }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card user-card" ng-repeat="player in players">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="player-image" />
+                                    </div>
+                                    <div class="span9">
+                                        <h4>{{ player.Name }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
 
-                <div class="card user-card" ng-repeat="player in players">
-                    <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="img-circle user-card-image" />
-                    <h4>{{ player.Name }}</h4>
-                </div>
-
-                <div class="card user-card" ng-repeat="player in players">
-                    <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="img-circle user-card-image" />
-                    <h4>{{ player.Name }}</h4>
-                </div>
             </div>
 
-            <div class="span1"></div>
-        </div>-->
+            <div class="span6">
 
-
-        <h3>"{{ blackCardText }}"</h3>
-        <p>asks Shinaku</p>
-
-
-        <div class="navbar-fixed-bottom">
-            <div class="container-fluid">
-                <div class="span3"></div>
-                <div class="span6">
-                    <div class="row-fluid">
-                        <div class="span1"></div>
-
-
-                        <div class="span2 text-center" ng-repeat="gameCard in cardsInTopRow">
-
-                            <div class="card game-card">
-                                <div class="card-info">
-                                    <div class="desc">{{ gameCard.Text }}</div>
-                                </div>
-                                <div class="card-bottom">
-                                    <button class="btn btn-block" sends-answer-when-clicked guid="{{ gameCard.Guid }}">Play</button>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="span1"></div>
-                    </div>
-
-                    <div class="row-fluid">
-                        <div class="span1"></div>
-
-                        <div class="span2 text-center" ng-repeat="gameCard in cardsInBottomRow">
-
-                            <div class="card game-card">
-                                <div class="card-info">
-                                    <div class="desc">{{ gameCard.Text }}</div>
-                                </div>
-                                <div class="card-bottom">
-                                    <button class="btn btn-block" sends-answer-when-clicked guid="{{ gameCard.Guid }}">Play</button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="span1"></div>
-                    </div>
-
+                <div id="blackCard" class="text-center">
+                    <h2>"{{ blackCardText }}"</h2>
+                    <p>asks Shinaku</p>
                 </div>
-                <div id="col3"></div>
 
+            </div>
+
+            <div class="span3">
+
+                <div class="sidebar-content">
+                    <section>
+                        <div class="container-fluid">
+
+                            <div class="text-center">
+                                <h3>Chat</h3>
+                            </div>
+
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <div class="panel-body" id="chat-body">
+                                        <ul class="chat">
+
+                                            <li class="left clearfix">
+                                                <div class="row-fluid">
+                                                    <div class="span2">Shinaku<br />15:32</div>
+                                                    <div class="span9 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div id="chat-box-bottom"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <input type="text" />
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
+        <div id="push"></div>
     </div>
-    
 
-    <div class="span3">
+</div>
 
-        <div class="sidebar-content">
-            <section>
+<div class="navbar navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3"></div>
+            <div class="span6">
                 <div class="container-fluid">
                     <div class="row-fluid">
-                        <div class="span12">
-                            <div class="panel-body" id="chat-body">
-                                <ul class="chat">
+                        
+                        <div class="text-center"><h3>Your Cards</h3></div>
 
-                                    <li class="left clearfix">
-                                        <div class="row-fluid">
-                                            <div class="span2">Shinaku<br />15:32</div>
-                                            <div class="span9 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
-                                        </div>
-                                    </li>
-
-                                    <li class="left clearfix">
-                                        <div class="row-fluid">
-                                            <div class="span2">Shinaku<br />15:32</div>
-                                            <div class="span9 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
-                                        </div>
-                                    </li>
+                        <div class="row-fluid">
+                            <div class="span1"></div>
 
 
-                                    <li class="left clearfix">
-                                        <div class="row-fluid">
-                                            <div class="span2">Shinaku<br />15:32</div>
-                                            <div class="span9 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
-                                        </div>
-                                    </li>
-                                    <li class="left clearfix">
-                                        <div class="row-fluid">
-                                            <div class="span2">Shinaku<br />15:32</div>
-                                            <div class="span9 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
-                                        </div>
-                                    </li>
+                            <div class="span2 text-center" ng-repeat="gameCard in cardsInTopRow">
 
-
-                                    <li class="left clearfix">
-                                        <div class="row-fluid">
-                                            <div class="span2">Shinaku<br />15:32</div>
-                                            <div class="span9 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
-                                        </div>
-                                    </li>
-
-                                    <li class="left clearfix">
-                                        <div class="row-fluid">
-                                            <div class="span2">Shinaku<br />15:32</div>
-                                            <div class="span9 text-left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
-                                        </div>
-                                    </li>
-
-                                </ul>
-                                <div id="chat-box-bottom"></div>
+                                <div class="card game-card">
+                                    <div class="card-info">
+                                        <div class="desc">{{ gameCard.Text }}</div>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <button class="btn btn-block" sends-answer-when-clicked guid="{{ gameCard.Guid }}">Play</button>
+                                    </div>
+                                </div>
 
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card-body">
-                        <input type="text" />
+                            <div class="span1"></div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span1"></div>
+
+                            <div class="span2 text-center" ng-repeat="gameCard in cardsInBottomRow">
+
+                                <div class="card game-card">
+                                    <div class="card-info">
+                                        <div class="desc">{{ gameCard.Text }}</div>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <button class="btn btn-block" sends-answer-when-clicked guid="{{ gameCard.Guid }}">Play</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="span1"></div>
+                        </div>
+
                     </div>
                 </div>
-            </section>
+            </div>
+            <div class="span3"></div>
         </div>
-    </div>
+     </div>
 </div>
-    

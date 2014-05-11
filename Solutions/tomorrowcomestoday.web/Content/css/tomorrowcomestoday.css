@@ -7,6 +7,10 @@
     background: whitesmoke;
 }
 
+.player-image {
+    height: 100%;
+}
+
 /* Game Cards, modified from game-card Card inside BootPlus*/
 
 .card.game-card {
@@ -93,16 +97,12 @@
 .card.user-card {
   position: relative;
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 4em;
   padding-top: 0;
   margin-left: 20px;
   overflow: hidden;
   vertical-align: top;
-}
-
-.card .user-card-image {
-    margin-top: 1em;
 }
 
 .card.user-card:first-child {
@@ -219,7 +219,10 @@
 }
 html, body {height: 100%}
 
-.wrap{ height: 100%; overflow: hidden;}
+.wrap {
+    height: 100%;
+    overflow: hidden;
+}
 
 .sidebar .sidebar-content{ 
     height:100%;
@@ -268,9 +271,14 @@ html, body {height: 100%}
     margin-right: 5px;
 }
 
-.panel-body
+.panel-scroll-body
 {
     overflow-y: scroll;
+    height: 90%;
+}
+
+.panel-body
+{
     height: 90%;
 }
 
