@@ -61,7 +61,7 @@
                     Component.For(typeof(IUserContextService))
                         .ImplementedBy(typeof(UserContextService))
                         .Named("UserContextService")
-                        .LifestylePerWebRequest());
+                        .LifestylePerThread());
 
                 container.Register(
                     Component.For(typeof(IGameLobbyService))

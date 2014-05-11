@@ -20,7 +20,7 @@
         /// <summary>
         /// The cards being delt to the player at the beginning of the game
         /// </summary>
-        public IList<GameInitialCardDealtViewModel> DealtCards { get; set; }
+        public IList<GameCardDealtViewModel> DealtCards { get; set; }
 
         /// <summary>
         /// The guid of the player in the current game

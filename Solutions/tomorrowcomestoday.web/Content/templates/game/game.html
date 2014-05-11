@@ -43,14 +43,17 @@
                 <div class="row-fluid">
                     <div class="span1"></div>
 
-                    <div class="span2 text-center" ng-repeat="i in shownCards">
+                    <div class="span2 text-center" ng-repeat="gameCard in shownCards">
+
                         <div class="card game-card">
                             <div class="card-info">
-                                <div class="desc muted">Played Card</div>
+                                <div class="desc">{{ gameCard.Text }}</div>
                             </div>
                             <div class="card-bottom">
+                                <button class="btn btn-block" ng-show="{{ playerGameGuid == activePlayerGuid }}" sends-answer-when-clicked guid="{{ gameCard.Guid }}">Choose</button>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="span1"></div>

@@ -187,9 +187,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChatViewModel.cs" />
+    <Compile Include="Models\GameAllChosenViewModel.cs" />
     <Compile Include="Models\GameInitialPlayerViewModel.cs" />
     <Compile Include="Models\GameInitialStateViewModel.cs" />
-    <Compile Include="Models\GameInitialCardDealtViewModel.cs" />
+    <Compile Include="Models\GameCardDealtViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootplus-responsive.css" />

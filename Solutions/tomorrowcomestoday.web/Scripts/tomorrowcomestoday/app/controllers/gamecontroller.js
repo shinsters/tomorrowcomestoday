@@ -1,5 +1,5 @@
 ﻿// define controllers
-angular.module("app").controller('GameController', function ($scope, $location, $anchorScroll) {
+angular.module("app").controller('GameController', function ($scope) {
     // Reference the auto-generated proxy for the hub.  
     var gameHub = $.connection.gameHub;
 
@@ -15,7 +15,7 @@ angular.module("app").controller('GameController', function ($scope, $location, 
     $scope.players = [];
     $scope.playerGameGuid = "";
     $scope.activePlayerGuid = "";
-
+    
     // number of shown cards on the main page
     $scope.shownCards = [];
 
@@ -24,6 +24,10 @@ angular.module("app").controller('GameController', function ($scope, $location, 
         gameHub.server.sendChatMessage($scope.newChatMessage);
         $scope.newChatMessage = "";
     }
+
+    $scope.ackGameJoin = function() {
+        gameHub.server.ackGame();
+    };
 
     /// Gets a new chat message and binds to list
     gameHub.client.getChatMessage = function (message) {
@@ -41,10 +45,15 @@ angular.module("app").controller('GameController', function ($scope, $location, 
 
     /// Called when the server says we can show a card
     gameHub.client.showGameCard = function () {
-        $scope.shownCards.push(true);
+        $scope.shownCards.push({'Text': "Played Card", "Guid" : ""});
         $scope.$apply();
     }
 
+    /// Called when all cards have been played
+    gameHub.client.showAllCards = function (gameAllChosenViewModel) {
+        $scope.shownCards = gameAllChosenViewModel.AnswerCards;
+        $scope.$apply();
+    }
 
     /// Called when user has been joined to a game, contains state of game
     gameHub.client.sendInitialState = function (gameInitialStateViewModel) {
@@ -70,8 +79,9 @@ angular.module("app").controller('GameController', function ($scope, $location, 
         $scope.playerGameGuid = gameInitialStateViewModel.PlayerInGameGuid;
         $scope.activePlayerGuid = gameInitialStateViewModel.ActivePlayerGuid;
 
+        $scope.ackGameJoin();
         $scope.$apply();
-    }
+   }
 
     $.connection.hub.start().done(function () {
         gameHub.server.joinServer("shinsters" + Math.floor(Math.random() * 100));

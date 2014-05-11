@@ -11,6 +11,7 @@
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
     using TomorrowComesToday.Infrastructure.Enums;
+    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
     using TomorrowComesToday.Web.Models;
 
@@ -40,15 +41,22 @@
         /// </summary>
         private readonly IGameService gameService;
 
+        /// <summary>
+        /// The game repository
+        /// </summary>
+        private readonly IGameRepository gameRepository;
+
         public GameHub(IUserContextService userContextService,
             IGameLobbyService gameLobbyService,
             IConnectedPlayerService connectedPlayerService,
-            IGameService gameService)
+            IGameService gameService,
+            IGameRepository gameRepository)
         {
             this.userContextService = userContextService;
             this.gameLobbyService = gameLobbyService;
             this.connectedPlayerService = connectedPlayerService;
             this.gameService = gameService;
+            this.gameRepository = gameRepository;
         }
 
         /// <summary>
@@ -125,13 +133,25 @@
                 // move onto next state
                 case CardPlayStateEnum.AllPlayed:
                     this.ShowAllCards();
-                    break;
+                            break;
 
                 // update all clients, but don't progress
                 case CardPlayStateEnum.CardPlayed:
                     this.ShowPlayedCard();
                     break;
             }
+        }
+
+        /// <summary>
+        /// Call back from the game to set up local context from joined new game
+        /// </summary>
+        public void AckGame()
+        {
+            var connectedPlayer = this.userContextService.ConnectedPlayer;
+
+            // just set the game property in the user context of this player
+            var game = gameRepository.GetByGuid(connectedPlayer.ActiveGameGuid);
+            this.userContextService.CurrentGame = game;
         }
 
         public void Send(string name, string message)
@@ -152,7 +172,12 @@
 
             foreach (var connectedPlayer in connectedPlayers)
             {
-                this.Clients.Client(connectedPlayer.ConnectionId).showGameCard();
+                var viewModel = this.GenerateAllChosenViewModel(connectedPlayer);
+
+                if (viewModel != null)
+                {
+                    this.Clients.Client(connectedPlayer.ConnectionId).showAllCards(viewModel);
+                }
             }
         }
 
@@ -168,6 +193,37 @@
             {
                 this.Clients.Client(connectedPlayer.ConnectionId).showGameCard();
             }
+        }
+
+        /// <summary>
+        /// Generate an all chosen view model
+        /// </summary>
+        /// <param name="connectedPlayer">The player</param>
+        /// <returns>The view model</returns>
+        private GameAllChosenViewModel GenerateAllChosenViewModel(ConnectedPlayer connectedPlayer)
+        {
+            var activeGame = this.userContextService.CurrentGame;
+            var activeGamePlayer = activeGame.GamePlayers.FirstOrDefault(o => o.GamePlayerGuid == connectedPlayer.ActiveGamePlayerGuid);
+
+            if (activeGamePlayer == null)
+            {
+                return null;
+            }
+
+            var playedWhiteCards = new List<GameCard>();
+            
+            foreach (var gamePlayer in activeGame.GamePlayers)
+            {
+                playedWhiteCards.AddRange(gamePlayer.WhiteCardsInHand.Where(o => o.GameCardState == GameCardState.IsInPlay));
+            }
+
+            var viewModel = new GameAllChosenViewModel
+                       {
+                           CanSelectWinner = activeGamePlayer.PlayerState == PlayerState.IsActivePlayerSelecting,
+                           AnswerCards = playedWhiteCards.Select(GenerateInitialCardDealtViewModel).ToList()
+                       };
+
+            return viewModel;
         }
 
         /// <summary>
@@ -224,9 +280,6 @@
 
             var game = this.gameLobbyService.StartGame(connectedPlayers);
 
-            // mark yourself as joined
-            this.userContextService.CurrentGame = game;
-
             // generate view model to send back to users
             var modelsToSendToClients = new Dictionary<ConnectedPlayer, GameInitialStateViewModel>();
 
@@ -270,9 +323,9 @@
         /// </summary>
         /// <param name="gameCard"></param>
         /// <returns></returns>
-        private GameInitialCardDealtViewModel GenerateInitialCardDealtViewModel(GameCard gameCard)
+        private GameCardDealtViewModel GenerateInitialCardDealtViewModel(GameCard gameCard)
         {
-            return new GameInitialCardDealtViewModel
+            return new GameCardDealtViewModel
                                                     {
                                                         Guid = gameCard.GameCardGuid.ToString(),
                                                         Text = gameCard.Card.Text

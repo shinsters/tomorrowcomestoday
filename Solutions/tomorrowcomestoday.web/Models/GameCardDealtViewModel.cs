@@ -3,7 +3,7 @@
     /// <summary>
     /// View model of a card being handed to a player
     /// </summary>
-    public class GameInitialCardDealtViewModel
+    public class GameCardDealtViewModel
     {
         /// <summary>
         /// The text of the card
