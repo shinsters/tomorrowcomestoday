@@ -9,13 +9,13 @@
     public class UserContextService : IUserContextService
     {
         /// <summary>
-        /// Active player for this context
-        /// </summary>
-        public Player Player { get; set; }
-
-        /// <summary>
         /// Active id of user in the context of the active application
         /// </summary>
-        public string CurrentActiveSessionId { get; set; }
+        public ConnectedPlayer ConnectedPlayer { get; set; }
+
+        /// <summary>
+        /// The game the player is in
+        /// </summary>
+        public Game CurrentGame { get; set; }
     }
 }

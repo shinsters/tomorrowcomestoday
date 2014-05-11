@@ -1,5 +1,7 @@
 ﻿namespace TomorrowComesToday.Domain.Entities
 {
+    using System;
+
     using TomorrowComesToday.Domain.Enums;
 
     /// <summary>
@@ -21,5 +23,10 @@
         /// The state of the player in the current game
         /// </summary>
         public ConnectedPlayerState ConnectedPlayerState { get; set; }
+
+        /// <summary>
+        /// Guid of the game this player is currently in
+        /// </summary>
+        public Guid ActiveGameGuid { get; set; }
     }
 }

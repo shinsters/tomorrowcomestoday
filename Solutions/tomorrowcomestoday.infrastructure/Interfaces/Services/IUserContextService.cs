@@ -8,13 +8,13 @@
     public interface IUserContextService
     {
         /// <summary>
-        /// Active player for this context
-        /// </summary>
-        Player Player { get; set; }
-
-        /// <summary>
         /// Active id of user in the context of the active application
         /// </summary>
-        string CurrentActiveSessionId { get; set; }
+        ConnectedPlayer ConnectedPlayer { get; set; }
+
+        /// <summary>
+        /// The game the player is in
+        /// </summary>
+        Game CurrentGame { get; set; }
     }
 }

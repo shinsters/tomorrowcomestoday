@@ -3,6 +3,10 @@ angular.module("app").controller('GameController', function ($scope, $location, 
     // Reference the auto-generated proxy for the hub.  
     var gameHub = $.connection.gameHub;
 
+    // Next chat message to send to client
+    $scope.newChatMessage = "";
+    $scope.chatMessages = [];
+
     $scope.cardsInHand = [];
     $scope.cardsInTopRow = [];
     $scope.cardsInBottomRow = [];
@@ -11,7 +15,19 @@ angular.module("app").controller('GameController', function ($scope, $location, 
     $scope.players = [];
     $scope.playerGameGuid = "";
 
-    gameHub.client.broadcastMessage = function (message) {
+    // bind to local dom events
+    $scope.sendChatMessage = function () {
+        gameHub.server.sendChatMessage($scope.newChatMessage);
+        $scope.newChatMessage = "";
+    }
+
+    /// Gets a new chat message and binds to list
+    gameHub.client.getChatMessage = function (message) {
+        $scope.chatMessages.push(message);
+        $scope.$apply();
+        var chatBody = angular.element(document.getElementById('chat-body'));
+        var chatBoxBottom = angular.element(document.getElementById('chat-box-bottom'));
+        chatBody.scrollTo(chatBoxBottom, 0, 1000);
     }
 
     /// Called when user has been joined to a game, contains state of game

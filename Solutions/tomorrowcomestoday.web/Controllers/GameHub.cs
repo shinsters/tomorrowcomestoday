@@ -1,5 +1,6 @@
 ﻿namespace TomorrowComesToday.Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -72,12 +73,49 @@
             }
         }
 
+        /// <summary>
+        /// Send message from client
+        /// </summary>
+        public void SendChatMessage(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
+
+            var chatViewModel = this.GenerateChatViewModel(message);
+            var currentGame = this.userContextService.CurrentGame;
+            var connectedPlayers = this.gameLobbyService.GetPlayersInGame(currentGame);
+
+            foreach (var connectedPlayer in connectedPlayers)
+            {
+                this.Clients.Client(connectedPlayer.ConnectionId).getChatMessage(chatViewModel);
+            }
+        }
+
+
         public void Send(string name, string message)
         {
             Clients.All.broadcastMessage(message);
         }
 
         #region private methods
+
+        /// <summary>
+        /// Generates a player to chat view model to send to players
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns>A chat view model</returns>
+        private ChatViewModel GenerateChatViewModel(string message)
+        {
+            return new ChatViewModel
+                       {
+                           UserName = userContextService.ConnectedPlayer.Player.Name,
+                           Image = "http://lorempixel.com/50/50/",
+                           Message = message,
+                           TimeStamp = DateTime.Now.ToShortTimeString()
+                       };
+        }
 
         /// <summary>
         /// Set the Id of the user in the user context service
@@ -94,8 +132,7 @@
             }
 
             // now set the connected player in the local context
-            this.userContextService.CurrentActiveSessionId = connectionId;
-            this.userContextService.Player = connectedPlayer.Player;
+            this.userContextService.ConnectedPlayer = connectedPlayer;
 
             // add the user to the lobby
             gameLobbyService.ConnectedPlayers.Add(connectedPlayer);
@@ -118,6 +155,9 @@
 
             var game = this.gameLobbyService.StartGame(connectedPlayers);
 
+            // mark yourself as joined
+            this.userContextService.CurrentGame = game;
+
             // generate view model to send back to users
             var modelsToSendToClients = new Dictionary<ConnectedPlayer, GameInitialStateViewModel>();
 
@@ -134,7 +174,7 @@
                                     BlackCardText = game.BlackCardsInDeck.First(o => o.GameCardState == GameCardState.IsInPlay).Card.Text
                                 };
                 modelsToSendToClients.Add(connectedPlayer, model);
-
+                connectedPlayer.ActiveGameGuid = game.GameGuid;
                 connectedPlayer.ConnectedPlayerState = ConnectedPlayerState.IsPlayingGame;
             }
 

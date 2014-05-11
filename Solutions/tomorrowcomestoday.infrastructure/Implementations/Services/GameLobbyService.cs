@@ -62,5 +62,16 @@ namespace TomorrowComesToday.Infrastructure.Implementations.Services
             // send the game back to the hub to make a view model
             return game;
         }
+
+        /// <summary>
+        /// Get a collection of connected player objects from a specific game
+        /// </summary>
+        /// <param name="game">The game</param>
+        /// <returns>Connected players</returns>
+        public IList<ConnectedPlayer> GetPlayersInGame(Game game)
+        {
+            // I guess this is more like a repository method, but I prefer to not have repos exposed to controllers...
+            return ConnectedPlayers.Where(o => o.ActiveGameGuid == game.GameGuid).ToList();
+        }
     }
 }

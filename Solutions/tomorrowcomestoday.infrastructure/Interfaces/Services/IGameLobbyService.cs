@@ -20,5 +20,12 @@
         /// <param name="connectedPlayers">A list of connected players</param>
         /// <returns>A started game</returns>
         Game StartGame(IList<ConnectedPlayer> connectedPlayers);
+
+        /// <summary>
+        /// Get a collection of connected player objects from a specific game
+        /// </summary>
+        /// <param name="game">The game</param>
+        /// <returns>Connected players</returns>
+        IList<ConnectedPlayer> GetPlayersInGame(Game game);
     }
 }

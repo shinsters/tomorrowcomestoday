@@ -11,7 +11,6 @@
                                 <h3>Players</h3>
                             </div>
 
-
                             <div class="card user-card" ng-repeat="player in players">
                                 <div class="row-fluid">
                                     <div class="span3">
@@ -23,27 +22,6 @@
                                 </div>
                             </div>
 
-                            <div class="card user-card" ng-repeat="player in players">
-                                <div class="row-fluid">
-                                    <div class="span3">
-                                        <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="player-image" />
-                                    </div>
-                                    <div class="span9">
-                                        <h4>{{ player.Name }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card user-card" ng-repeat="player in players">
-                                <div class="row-fluid">
-                                    <div class="span3">
-                                        <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="player-image" />
-                                    </div>
-                                    <div class="span9">
-                                        <h4>{{ player.Name }}</h4>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </section>
                 </div>
@@ -64,42 +42,45 @@
                 <div class="sidebar-content">
                     <section>
 
-                            <div class="text-center">
-                                <h3>Chat</h3>
-                            </div>
+                        <div class="text-center">
+                            <h3>Chat</h3>
+                        </div>
 
-                                    <div class="card">
-                                        <div class="panel-body" id="chat-body">
-                                            <div class="card-actions">
-                                                <ul class="chat">
-                                                    <li class="left clearfix">
-                                                        <div class="row-fluid">
-                                                            <div class="span3 text-center">
-                                                                <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=30" class="img-polaroid" />
-                                                                <p>shinaku</p>
-                                                            </div>
-                                                            <div class="span9">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            <div id="chat-box-bottom"></div>
-                                        </div>  
-                                        <div class="card-bottom ">
+                        <div class="card">
+                            <div class="panel-body" id="chat-body">
+                                <div class="card-actions">
+                                    <ul class="chat">
+                                        <li class="left clearfix" ng-repeat="chatMessage in chatMessages">
                                             <div class="row-fluid">
-                                                <div class="span1"></div>
-                                                <div class="span8">
-                                                    <input type="text" value="wddwq" class="chat-box-enter" />
+                                                <div class="span3 text-center">
+                                                    <img src="" class="img-polaroid" />
+                                                    <p>{{ chatMessage.UserName }}</p>
                                                 </div>
-                                                <div class="span1"></div>
-                                                    <button class="btn" type="button">Send</button>
-                                                </div>
-                                                <div class="span1"></div>
-
+                                                <div class="span9">{{ chatMessage.Message }}</div>
                                             </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            <div id="chat-box-bottom"></div>
+
+                            </div>  
+                            <div class="card-bottom ">
+                                <div class="row-fluid">
+                                    <form ng-submit="sendChatMessage()">
+                                        <div class="span1"></div>
+                                        <div class="span8">
+                                            <input type="text" placeholder="Enter message..." class="chat-box-enter" ng-model="newChatMessage"/>
                                         </div>
-                                    </div>
+                                        <div class="span1"></div>
+
+                                        <button class="btn" type="submit">Send</button>
+                                    </form>
+                                </div>
+                                <div class="span1"></div>
+
+                            </div>
+                        </div>
                     </section>
                 </div>
             </div>
