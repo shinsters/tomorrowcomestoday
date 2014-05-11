@@ -16,6 +16,9 @@ angular.module("app").controller('GameController', function ($scope, $location, 
     $scope.playerGameGuid = "";
     $scope.activePlayerGuid = "";
 
+    // number of shown cards on the main page
+    $scope.shownCards = [];
+
     // bind to local dom events
     $scope.sendChatMessage = function () {
         gameHub.server.sendChatMessage($scope.newChatMessage);
@@ -35,6 +38,13 @@ angular.module("app").controller('GameController', function ($scope, $location, 
     $scope.sendWhiteCard = function(cardGuid) {
         gameHub.server.sendWhiteCard(cardGuid);
     }
+
+    /// Called when the server says we can show a card
+    gameHub.client.showGameCard = function () {
+        $scope.shownCards.push(true);
+        $scope.$apply();
+    }
+
 
     /// Called when user has been joined to a game, contains state of game
     gameHub.client.sendInitialState = function (gameInitialStateViewModel) {
@@ -60,14 +70,11 @@ angular.module("app").controller('GameController', function ($scope, $location, 
         $scope.playerGameGuid = gameInitialStateViewModel.PlayerInGameGuid;
         $scope.activePlayerGuid = gameInitialStateViewModel.ActivePlayerGuid;
 
-        // set the active player display
-        var activePlayerDisplay = angular.element(document.getElementById('player_' + $scope.activePlayerGuid));
-
-
         $scope.$apply();
     }
 
     $.connection.hub.start().done(function () {
-        gameHub.server.joinServer("hank" + Math.floor(Math.random() * 100));
+        gameHub.server.joinServer("shinsters" + Math.floor(Math.random() * 100));
     });
 });
+

@@ -4,6 +4,8 @@
 
     using NHibernate.Id;
 
+    using TomorrowComesToday.Infrastructure.Enums;
+
     /// <summary>
     /// This handles changes in the game state
     /// </summary>
@@ -21,7 +23,8 @@
         /// <param name="gameGuid">The GUID of the game</param>
         /// <param name="gamePlayerGuid">The GUID of the in game player attempting to play the card</param>
         /// <param name="gameCardGuid">The GUID of the in game card attempting to be played</param>
-        void PlayWhiteCard(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid);
+        /// <returns>A bool if all players have played their turn</returns>
+        CardPlayStateEnum PlayWhiteCard(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid);
 
         /// <summary>
         /// Selects a white card as the winner of a round

@@ -10,6 +10,7 @@
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
+    using TomorrowComesToday.Infrastructure.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
     using TomorrowComesToday.Web.Models;
 
@@ -100,7 +101,6 @@
             }
         }
 
-
         /// <summary>
         /// Send a card to play from client
         /// </summary>
@@ -115,12 +115,23 @@
             }
 
             // otherwise attempt to play it
-            gameService.PlayWhiteCard(
+            var cardPlayState = gameService.PlayWhiteCard(
                 this.userContextService.CurrentGame.GameGuid,
                 this.userContextService.ConnectedPlayer.ActiveGamePlayerGuid,
                 gameCard.GameCardGuid);
 
-            // now game state needs checking
+            switch (cardPlayState)
+            {
+                // move onto next state
+                case CardPlayStateEnum.AllPlayed:
+                    this.ShowAllCards();
+                    break;
+
+                // update all clients, but don't progress
+                case CardPlayStateEnum.CardPlayed:
+                    this.ShowPlayedCard();
+                    break;
+            }
         }
 
         public void Send(string name, string message)
@@ -129,6 +140,35 @@
         }
 
         #region private methods
+
+        /// <summary>
+        /// All cards have been played in a game, let everyone see
+        /// </summary>
+        private void ShowAllCards()
+        {
+            // we want to put them in a random order
+            var currentGame = this.userContextService.CurrentGame;
+            var connectedPlayers = this.gameLobbyService.GetPlayersInGame(currentGame);
+
+            foreach (var connectedPlayer in connectedPlayers)
+            {
+                this.Clients.Client(connectedPlayer.ConnectionId).showGameCard();
+            }
+        }
+
+        /// <summary>
+        /// A single card has been played, but no one can see it 
+        /// </summary>
+        private void ShowPlayedCard()
+        {
+            var currentGame = this.userContextService.CurrentGame;
+            var connectedPlayers = this.gameLobbyService.GetPlayersInGame(currentGame);
+
+            foreach (var connectedPlayer in connectedPlayers)
+            {
+                this.Clients.Client(connectedPlayer.ConnectionId).showGameCard();
+            }
+        }
 
         /// <summary>
         /// Generates a player to chat view model to send to players

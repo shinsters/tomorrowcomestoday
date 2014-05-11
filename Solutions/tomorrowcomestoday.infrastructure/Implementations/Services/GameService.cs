@@ -8,6 +8,7 @@
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
+    using TomorrowComesToday.Infrastructure.Enums;
     using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
 
@@ -80,7 +81,7 @@
         /// <param name="gameGuid">The GUID of the game</param>
         /// <param name="gamePlayerGuid">The GUID of the in game player attempting to play the card</param>
         /// <param name="gameCardGuid">The GUID of the in game card attempting to be played</param>
-        public void PlayWhiteCard(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid)
+        public CardPlayStateEnum PlayWhiteCard(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid)
         {
             // I guess technically we don't need the guid of the game, but doesn't seem nice 
             // to get that out of lists. Maybe smarten this up later.
@@ -91,7 +92,7 @@
 
             if (cardInGame == null)
             {
-                return;
+                return CardPlayStateEnum.WasNotPlayed;
             }
 
             // now check card is currently in the game
@@ -99,7 +100,7 @@
 
             if (playerOwningCard == null)
             {
-                return;
+                return CardPlayStateEnum.WasNotPlayed;
             }
 
             // and check the owner is as expected
@@ -107,13 +108,13 @@
 
             if (!correctPlayerPlayingCard)
             {
-                return;
+                return CardPlayStateEnum.WasNotPlayed;
             }
 
             // and check that the player is allowed to play currently
             if (playerOwningCard.PlayerState != PlayerState.IsNormalPlayerSelecting)
             {
-                return;
+                return CardPlayStateEnum.WasNotPlayed;
             }
 
             // otherwise mark the card as played, and the player as having played it
@@ -127,7 +128,11 @@
                 // so change the card tsars game state
                 var activePlayer = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerWaiting);
                 activePlayer.PlayerState = PlayerState.IsActivePlayerSelecting;
+                return CardPlayStateEnum.AllPlayed;
             }
+
+            // no state changes, so just return false
+            return CardPlayStateEnum.CardPlayed;
         }
 
         /// <summary>
