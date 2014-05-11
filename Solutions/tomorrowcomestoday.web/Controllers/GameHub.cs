@@ -47,18 +47,25 @@
         /// </summary>
         private readonly IGameLobbyService gameLobbyService;
 
+        /// <summary>
+        /// The connected player service
+        /// </summary>
+        private readonly IConnectedPlayerService connectedPlayerService;
+
         public GameHub(
             IGameService gameService,
             IGameRepository gameRepository,
             IUserContextService userContextService,
             IPlayerRepository playerRepository,
-            IGameLobbyService gameLobbyService)
+            IGameLobbyService gameLobbyService,
+            IConnectedPlayerService connectedPlayerService)
         {
             this.gameService = gameService;
             this.gameRepository = gameRepository;
             this.userContextService = userContextService;
             this.playerRepository = playerRepository;
             this.gameLobbyService = gameLobbyService;
+            this.connectedPlayerService = connectedPlayerService;
         }
 
         /// <summary>
@@ -86,7 +93,7 @@
             {
                 var connectedPlayer = playerAndModel.Key;
                 var viewModel = playerAndModel.Value;
-                this.Clients.Client(connectedPlayer.SessionId).sendInitialState(viewModel);
+                this.Clients.Client(connectedPlayer.ConnectionId).sendInitialState(viewModel);
             }
         }
 
@@ -104,32 +111,20 @@
         /// </summary>
         private void SetUserIdInContext(string playerName)
         {
-            var currentActiveSessionId = Context.ConnectionId;
-            this.userContextService.CurrentActiveSessionId = currentActiveSessionId;
+            // create a connected player with their signalr connection id
+            var connectionId = Context.ConnectionId;
 
-            // just for now, make a new player
-            var existingPlayer = playerRepository.GetByName(playerName);
-            if (existingPlayer != null)
+            var connectedPlayer = this.connectedPlayerService.GetConnectedPlayer(connectionId, playerName);
+            if (connectedPlayer == null)
             {
-                throw new Exception("Player handle already taken");
+                return;
             }
 
-            var player = new PlayerBuilder()
-                .Named(playerName)
-                .Create();
+            // now set the connected player in the local context
+            this.userContextService.CurrentActiveSessionId = connectionId;
+            this.userContextService.Player = connectedPlayer.Player;
 
-            // get signalr connection guid
-
-            this.playerRepository.SaveOrUpdate(player);
-            userContextService.Player = player;
-
-            var connectedPlayer = new ConnectedPlayer
-                                      {
-                                          Player = player,
-                                          ConnectedPlayerState = ConnectedPlayerState.IsWaitingInLobby,
-                                          SessionId = currentActiveSessionId
-                                      };
-
+            // add the user to the lobby
             gameLobbyService.ConnectedPlayers.Add(connectedPlayer);
         }
 
