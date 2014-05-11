@@ -1,18 +1,14 @@
 ﻿namespace TomorrowComesToday.Web.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Script.Serialization;
 
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Hubs;
 
     using TomorrowComesToday.Domain;
-    using TomorrowComesToday.Domain.Builders;
     using TomorrowComesToday.Domain.Entities;
     using TomorrowComesToday.Domain.Enums;
-    using TomorrowComesToday.Infrastructure.Interfaces.Repositories;
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
     using TomorrowComesToday.Web.Models;
 
@@ -23,24 +19,9 @@
     public class GameHub : Hub
     {
         /// <summary>
-        /// Performs actions in games
-        /// </summary>
-        private readonly IGameService gameService;
-
-        /// <summary>
-        /// Gets games
-        /// </summary>
-        private readonly IGameRepository gameRepository;
-
-        /// <summary>
         /// The user context service
         /// </summary>
         private readonly IUserContextService userContextService;
-
-        /// <summary>
-        /// The player repository
-        /// </summary>
-        private readonly IPlayerRepository playerRepository;
 
         /// <summary>
         /// Contains active application state
@@ -52,18 +33,11 @@
         /// </summary>
         private readonly IConnectedPlayerService connectedPlayerService;
 
-        public GameHub(
-            IGameService gameService,
-            IGameRepository gameRepository,
-            IUserContextService userContextService,
-            IPlayerRepository playerRepository,
+        public GameHub(IUserContextService userContextService,
             IGameLobbyService gameLobbyService,
             IConnectedPlayerService connectedPlayerService)
         {
-            this.gameService = gameService;
-            this.gameRepository = gameRepository;
             this.userContextService = userContextService;
-            this.playerRepository = playerRepository;
             this.gameLobbyService = gameLobbyService;
             this.connectedPlayerService = connectedPlayerService;
         }
@@ -135,31 +109,21 @@
         private Dictionary<ConnectedPlayer, GameInitialStateViewModel> StartGame()
         {
             // grab the first n players who're ready to join the game
-            var players =
-                this.gameLobbyService.ConnectedPlayers.Where(
-                    o => o.ConnectedPlayerState == ConnectedPlayerState.IsWaitingInLobby)
-                    .Take(CommonConcepts.GAME_PLAYER_LIMIT).ToList();
+            var connectedPlayers = this.gameLobbyService.ConnectedPlayers
+                .Where(o => o.ConnectedPlayerState == ConnectedPlayerState.IsWaitingInLobby)
+                .Take(CommonConcepts.GAME_PLAYER_LIMIT).ToList();
 
-            if (players.Count() < 2)
+            if (connectedPlayers.Count() < 2)
             {
                 return new Dictionary<ConnectedPlayer, GameInitialStateViewModel>();
             }
 
-            var game = new GameBuilder()
-                .AddPlayers(players.Select(o => o.Player)
-                .ToList())
-                .Create();
-
-
-            gameRepository.SaveOrUpdate(game);
-
-            gameService.DealRound(game.GameGuid);
+            var game = this.gameLobbyService.StartGame(connectedPlayers);
 
             // generate view model to send back to users
-
             var modelsToSendToClients = new Dictionary<ConnectedPlayer, GameInitialStateViewModel>();
 
-            foreach (var connectedPlayer in players)
+            foreach (var connectedPlayer in connectedPlayers)
             {
                 var playerInGame = game.GamePlayers.First(o => o.Player.Guid == connectedPlayer.Player.Guid);
 
@@ -202,9 +166,7 @@
         {
             return new GameInitialCardDealtViewModel
                                                     {
-                                                        Guid =
-                                                            gameCard.GameCardGuid.ToString
-                                                            (),
+                                                        Guid = gameCard.GameCardGuid.ToString(),
                                                         Text = gameCard.Card.Text
                                                     };
         }

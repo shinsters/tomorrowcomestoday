@@ -13,5 +13,12 @@
         /// Collection of players waiting to be assigned game
         /// </summary>
         IList<ConnectedPlayer> ConnectedPlayers { get; set; }
+
+        /// <summary>
+        /// Starts a new game
+        /// </summary>
+        /// <param name="connectedPlayers">A list of connected players</param>
+        /// <returns>A started game</returns>
+        Game StartGame(IList<ConnectedPlayer> connectedPlayers);
     }
 }
