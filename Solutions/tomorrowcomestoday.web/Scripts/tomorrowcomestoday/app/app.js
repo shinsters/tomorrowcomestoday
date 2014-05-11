@@ -1,5 +1,5 @@
 ﻿// angular app
-var app = angular.module("app", ['ngRoute']).config(function ($routeProvider) {
+var app = angular.module('app', ['ngRoute']).config(function ($routeProvider) {
 
     $routeProvider.when('/game', {
         templateUrl : '/Content/templates/game/game.html',
@@ -11,6 +11,8 @@ var app = angular.module("app", ['ngRoute']).config(function ($routeProvider) {
     });
 });
 
+
+// define controllers
 app.controller('GameController', function ($scope) {
     // Reference the auto-generated proxy for the hub.  
     var gameHub = $.connection.gameHub;
