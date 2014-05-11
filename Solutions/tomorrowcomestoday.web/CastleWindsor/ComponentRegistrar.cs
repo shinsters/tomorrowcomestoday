@@ -53,6 +53,11 @@
                         .Named("PlayerRepository"));
 
             container.Register(
+                Component.For(typeof(IConnectedPlayerService))
+                    .ImplementedBy(typeof(ConnectedPlayerService))
+                    .Named("ConnectedPlayerService"));
+
+            container.Register(
                     Component.For(typeof(IUserContextService))
                         .ImplementedBy(typeof(UserContextService))
                         .Named("UserContextService")

@@ -13,9 +13,9 @@
         public Player Player { get; set; }
 
         /// <summary>
-        /// The session id given by signalr
+        /// The connection id given by signalr
         /// </summary>
-        public string SessionId { get; set; }
+        public string ConnectionId { get; set; }
 
         /// <summary>
         /// The state of the player in the current game

@@ -70,6 +70,7 @@
 
         /// <summary>
         /// First called method on joining the application's hub
+        /// Todo: this totally wants how it's called being changed to the correct join hub events, not a manual call back
         /// </summary>
         /// <param name="name"></param>
         public void JoinServer(string name)
