@@ -110,6 +110,12 @@
                 return;
             }
 
+            // and check that the player is allowed to play currently
+            if (playerOwningCard.PlayerState != PlayerState.IsNormalPlayerSelecting)
+            {
+                return;
+            }
+
             // otherwise mark the card as played, and the player as having played it
             cardInGame.GameCardState = GameCardState.IsInPlay;
             playerOwningCard.PlayerState = PlayerState.IsNormalPlayerWaiting;

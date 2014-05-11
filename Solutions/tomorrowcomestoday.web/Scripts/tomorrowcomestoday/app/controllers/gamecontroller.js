@@ -30,10 +30,13 @@ angular.module("app").controller('GameController', function ($scope, $location, 
         chatBody.scrollTo(chatBoxBottom, 0, 1000);
     }
 
+    /// Send a card back to the server
+    $scope.sendWhiteCard = function(cardGuid) {
+        gameHub.server.sendWhiteCard(cardGuid);
+    }
+
     /// Called when user has been joined to a game, contains state of game
     gameHub.client.sendInitialState = function (gameInitialStateViewModel) {
-
-        // grab out the cards in hand
 
         // to split cards in hand in two for view
         var rowCounter = 1;

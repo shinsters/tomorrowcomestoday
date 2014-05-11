@@ -28,5 +28,10 @@
         /// Guid of the game this player is currently in
         /// </summary>
         public Guid ActiveGameGuid { get; set; }
+
+        /// <summary>
+        /// The Guid of the game player of this player in their current game
+        /// </summary>
+        public Guid ActiveGamePlayerGuid { get; set; }
     }
 }

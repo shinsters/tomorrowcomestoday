@@ -34,13 +34,20 @@
         /// </summary>
         private readonly IConnectedPlayerService connectedPlayerService;
 
+        /// <summary>
+        /// The game service
+        /// </summary>
+        private readonly IGameService gameService;
+
         public GameHub(IUserContextService userContextService,
             IGameLobbyService gameLobbyService,
-            IConnectedPlayerService connectedPlayerService)
+            IConnectedPlayerService connectedPlayerService,
+            IGameService gameService)
         {
             this.userContextService = userContextService;
             this.gameLobbyService = gameLobbyService;
             this.connectedPlayerService = connectedPlayerService;
+            this.gameService = gameService;
         }
 
         /// <summary>
@@ -93,6 +100,28 @@
             }
         }
 
+
+        /// <summary>
+        /// Send a card to play from client
+        /// </summary>
+        /// <param name="cardGuid"></param>
+        public void SendWhiteCard(string cardGuid)
+        {
+            // first check card is in this game
+            var gameCard = this.userContextService.CurrentGame.WhiteCardsInDeck.FirstOrDefault(o => o.GameCardGuid.ToString() == cardGuid);
+            if (gameCard == null)
+            {
+                return;
+            }
+
+            // otherwise attempt to play it
+            gameService.PlayWhiteCard(
+                this.userContextService.CurrentGame.GameGuid,
+                this.userContextService.ConnectedPlayer.ActiveGamePlayerGuid,
+                gameCard.GameCardGuid);
+
+            // now game state needs checking
+        }
 
         public void Send(string name, string message)
         {
@@ -175,6 +204,7 @@
                                 };
                 modelsToSendToClients.Add(connectedPlayer, model);
                 connectedPlayer.ActiveGameGuid = game.GameGuid;
+                connectedPlayer.ActiveGamePlayerGuid = playerInGame.GamePlayerGuid;
                 connectedPlayer.ConnectedPlayerState = ConnectedPlayerState.IsPlayingGame;
             }
 

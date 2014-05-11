@@ -20,9 +20,8 @@ app.directive("sendsAnswerWhenClicked", function() {
         restrict: "A",
         link: function(scope, element, attributes) {
             //var originalMessage = scope.message;
-            element.bind("mousedown", function() {
-                alert(attributes.guid);
-                scope.$apply();
+            element.bind("mousedown", function () {
+                scope.sendWhiteCard(attributes.guid);
             });
         }
     }
