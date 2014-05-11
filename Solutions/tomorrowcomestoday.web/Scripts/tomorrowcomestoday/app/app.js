@@ -22,6 +22,11 @@ app.directive("sendsAnswerWhenClicked", function() {
             //var originalMessage = scope.message;
             element.bind("mousedown", function() {
                 alert("clicked" + attributes.guid);
+
+                var chatBody = angular.element(document.getElementById('chat-body'));
+                var chatBoxBottom = angular.element(document.getElementById('chat-box-bottom'));
+                chatBody.scrollTo(chatBoxBottom, 0 , 1000);
+
                 scope.$apply();
             });
         }
