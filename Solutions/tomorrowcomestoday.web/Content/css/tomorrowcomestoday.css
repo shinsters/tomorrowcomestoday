@@ -11,6 +11,11 @@
     height: 100%;
 }
 
+.chat-box-enter {
+    z-index: 2000;
+    width: 100%;
+}
+
     /* Game Cards, modified from game-card Card inside BootPlus*/
 
 .card.game-card {
@@ -238,7 +243,8 @@
 
 .panel-body
 {
-    height: 90%;
+    overflow-y: scroll;
+    height: 20em;
 }
 
 ::-webkit-scrollbar-track
