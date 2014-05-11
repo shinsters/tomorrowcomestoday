@@ -12,8 +12,8 @@
 .card.game-card {
   position: relative;
   display: inline-block;
-  width: 170px;
-  height: 130px;
+  width: 130px;
+  height: 160px;
   padding-top: 0;
   margin-left: 20px;
   overflow: hidden;
@@ -46,7 +46,7 @@
   position: absolute;
   top: 15px;
   width: 100%;
-  height: 50px;
+  height: 70px;
   overflow: hidden;
   background: #ffffff;
   -webkit-box-sizing: border-box;
@@ -75,6 +75,91 @@
 }
 
 .card.game-card .card-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  padding: 10px 20px;
+  line-height: 29px;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* User Cards */
+
+.card.user-card {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  padding-top: 0;
+  margin-left: 20px;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.card .user-card-image {
+    margin-top: 1em;
+}
+
+.card.user-card:first-child {
+  margin-left: 0;
+}
+
+.card.user-card .card-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 170px;
+  height: 10px;
+  background-color: #ffffff;
+}
+
+.card.user-card .card-top.green {
+  background-color: #53a93f;
+}
+
+.card.user-card .card-top.blue {
+  background-color: #427fed;
+}
+
+.card.user-card .card-info {
+  position: absolute;
+  top: 15px;
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  background: #ffffff;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.card.user-card .card-info .title {
+  display: block;
+  margin: 8px 14px 0 14px;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 18px;
+  color: #404040;
+}
+
+.card.user-card .card-info .desc {
+  display: block;   
+  margin: 8px 14px 0 14px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 16px;
+  color: #737373;
+  text-overflow: ellipsis;
+}
+
+.card.user-card .card-bottom {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -121,6 +206,28 @@
     border-top: 0;
 }
 
+/* chat new */
+
+.sidebar{
+     
+    background-color:#eee;
+    background-repeat: repeat;
+    padding:0;
+    min-height:100% !important;
+    position:relative;
+   
+}
+html, body {height: 100%}
+
+.wrap{ height: 100%; overflow: hidden;}
+
+.sidebar .sidebar-content{ 
+    height:100%;
+        width:100%;
+    padding: 5px;
+        margin:0;
+        position:relative;
+}
 
 
 
@@ -164,7 +271,7 @@
 .panel-body
 {
     overflow-y: scroll;
-    height: 250px;
+    height: 90%;
 }
 
 ::-webkit-scrollbar-track

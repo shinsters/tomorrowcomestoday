@@ -7,7 +7,6 @@ angular.module("app").controller('GameController', function ($scope, $location, 
     $scope.cardsInTopRow = [];
     $scope.cardsInBottomRow = [];
 
-    $scope.playerNames = [];
     $scope.blackCardText = "";
     $scope.players = [];
     $scope.playerGameGuid = "";
@@ -34,7 +33,7 @@ angular.module("app").controller('GameController', function ($scope, $location, 
 
         // grab out the players
         angular.forEach(gameInitialStateViewModel.PlayerNames, function (item) {
-            $scope.playerNames.push(item);
+            $scope.players.push(item);
         });
 
         $scope.blackCardText = gameInitialStateViewModel.BlackCardText;

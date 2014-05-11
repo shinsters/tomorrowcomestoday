@@ -498,15 +498,14 @@
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\tomorrowcomestoday\app\modules\scrollglue.js" />
+    <Content Include="Scripts\tomorrowcomestoday\app\controllers\gamecontroller.js" />
+    <Content Include="Scripts\tomorrowcomestoday\app\modules\angular-scroll.min.js" />
     <Content Include="Scripts\tomorrowcomestoday\tomorrowcomestoday.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Game\Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Game\Index.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -529,7 +528,6 @@
     <Folder Include="Controllers\Queries\" />
     <Folder Include="Controllers\ViewModels\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Scripts\tomorrowcomestoday\app\controllers\" />
     <Folder Include="Scripts\tomorrowcomestoday\app\directives\" />
   </ItemGroup>
   <ItemGroup>
