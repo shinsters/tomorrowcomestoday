@@ -10,11 +10,13 @@ angular.module("app").controller('GameController', function ($scope) {
     $scope.cardsInHand = [];
     $scope.cardsInTopRow = [];
     $scope.cardsInBottomRow = [];
+    $scope.winnerGuid = "";
 
     $scope.blackCardText = "";
     $scope.players = [];
     $scope.playerGameGuid = "";
     $scope.activePlayerGuid = "";
+    $scope.winningPlayerGuid = "";
 
     $scope.token = "";
     
@@ -44,6 +46,13 @@ angular.module("app").controller('GameController', function ($scope) {
     /// Called when the server says we can show a card
     gameHub.client.showGameCard = function () {
         $scope.shownCards.push({'Text': "Played Card", "Guid" : ""});
+        $scope.$apply();
+    }
+
+    /// Called when a player has won
+    gameHub.client.sendWinner = function(winnerGuid) {
+        $scope.winningPlayerGuid = winnerGuid;
+        alert(winnerGuid);
         $scope.$apply();
     }
 

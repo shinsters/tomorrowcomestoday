@@ -142,7 +142,9 @@
                     connectedPlayer.ActiveGamePlayerGuid,
                     gameCard.GameCardGuid);
 
-                this.StartNextRound();
+                // sending token because it is a key to game and active players
+                this.SendWinner(token, winningGamePlayer.GamePlayerGuid);
+                this.StartNextRound(token);
             }
             else
             {
@@ -168,17 +170,37 @@
             }
         }
 
-
-
         #region private methods
 
         /// <summary>
-        /// Start 
+        /// Start next round
         /// </summary>
-        private void StartNextRound()
+        /// <param name="token"></param>
+        private void StartNextRound(string token)
         {
+            // todo, delay by 10 seconds
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Inform users that someone has won
+        /// </summary>
+        /// <param name="token">The token unique for the player </param>
+        /// <param name="winnerGamePlayerGuid">Guid in game of the winner</param>
+        private void SendWinner(string token, Guid winnerGamePlayerGuid)
+        {
+            // todo we want to put them in a random order
+            var currentPlayer = this.GetPlayerFromToken(token);
+            var currentGame = this.gameRepository.GetByGuid(currentPlayer.ActiveGameGuid);
+
+            var connectedPlayers = this.gameLobbyService.GetPlayersInGame(currentGame);
+
+            foreach (var connectedPlayer in connectedPlayers)
+            {
+                this.Clients.Client(connectedPlayer.ConnectionId).sendWinner(winnerGamePlayerGuid.ToString());
+            }
+        }
+
 
         /// <summary>
         /// Get the player from token if valid
