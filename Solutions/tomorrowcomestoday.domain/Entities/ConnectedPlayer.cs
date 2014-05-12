@@ -33,5 +33,10 @@
         /// The Guid of the game player of this player in their current game
         /// </summary>
         public Guid ActiveGamePlayerGuid { get; set; }
+
+        /// <summary>
+        /// The communications token to be sent back by each user to verify
+        /// </summary>
+        public Guid Token { get; set; }
     }
 }

@@ -15,19 +15,17 @@ angular.module("app").controller('GameController', function ($scope) {
     $scope.players = [];
     $scope.playerGameGuid = "";
     $scope.activePlayerGuid = "";
+
+    $scope.token = "";
     
     // number of shown cards on the main page
     $scope.shownCards = [];
 
     // bind to local dom events
     $scope.sendChatMessage = function () {
-        gameHub.server.sendChatMessage($scope.newChatMessage);
+        gameHub.server.sendChatMessage($scope.token, $scope.newChatMessage);
         $scope.newChatMessage = "";
     }
-
-    $scope.ackGameJoin = function() {
-        gameHub.server.ackGame();
-    };
 
     /// Gets a new chat message and binds to list
     gameHub.client.getChatMessage = function (message) {
@@ -40,7 +38,7 @@ angular.module("app").controller('GameController', function ($scope) {
 
     /// Send a card back to the server
     $scope.sendWhiteCard = function(cardGuid) {
-        gameHub.server.sendWhiteCard(cardGuid);
+        gameHub.server.sendWhiteCard($scope.token, cardGuid);
     }
 
     /// Called when the server says we can show a card
@@ -78,8 +76,8 @@ angular.module("app").controller('GameController', function ($scope) {
         $scope.blackCardText = gameInitialStateViewModel.BlackCardText;
         $scope.playerGameGuid = gameInitialStateViewModel.PlayerInGameGuid;
         $scope.activePlayerGuid = gameInitialStateViewModel.ActivePlayerGuid;
+        $scope.token = gameInitialStateViewModel.Token;
 
-        $scope.ackGameJoin();
         $scope.$apply();
    }
 

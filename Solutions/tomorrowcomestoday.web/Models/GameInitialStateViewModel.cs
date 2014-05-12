@@ -31,5 +31,10 @@
         /// The text of the active black card
         /// </summary>
         public string BlackCardText { get; set; }
+
+        /// <summary>
+        /// The private token of the player in the game
+        /// </summary>
+        public string Token { get; set; }
     }
 }

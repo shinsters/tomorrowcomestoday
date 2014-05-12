@@ -22,11 +22,6 @@
     public class GameHub : Hub
     {
         /// <summary>
-        /// The user context service
-        /// </summary>
-        private readonly IUserContextService userContextService;
-
-        /// <summary>
         /// Contains active application state
         /// </summary>
         private readonly IGameLobbyService gameLobbyService;
@@ -46,13 +41,16 @@
         /// </summary>
         private readonly IGameRepository gameRepository;
 
-        public GameHub(IUserContextService userContextService,
-            IGameLobbyService gameLobbyService,
+        /// <summary>
+        /// Holds active players, in a singleton
+        /// </summary>
+        private List<ConnectedPlayer> ConnectedPlayers { get; set; } 
+
+        public GameHub(IGameLobbyService gameLobbyService,
             IConnectedPlayerService connectedPlayerService,
             IGameService gameService,
             IGameRepository gameRepository)
         {
-            this.userContextService = userContextService;
             this.gameLobbyService = gameLobbyService;
             this.connectedPlayerService = connectedPlayerService;
             this.gameService = gameService;
@@ -66,6 +64,7 @@
         /// <param name="name"></param>
         public void JoinServer(string name)
         {
+            
             this.SetUserIdInContext(name);
             Clients.All.broadcastMessage(string.Format("{0} has joined the server", name));
 
@@ -92,15 +91,20 @@
         /// <summary>
         /// Send message from client
         /// </summary>
-        public void SendChatMessage(string message)
+        /// <param name="token">The players private unique token</param>
+        /// <param name="message">The message they're saying</param>
+        public void SendChatMessage(string token, string message)
         {
-            if (string.IsNullOrEmpty(message))
+            var activePlayer = this.GetPlayerFromToken(token);
+
+            if (string.IsNullOrEmpty(message) || activePlayer == null)
             {
                 return;
             }
 
-            var chatViewModel = this.GenerateChatViewModel(message);
-            var currentGame = this.userContextService.CurrentGame;
+            var chatViewModel = this.GenerateChatViewModel(message, activePlayer.Player.Name);
+
+            var currentGame = this.gameRepository.GetByGuid(activePlayer.ActiveGameGuid);
             var connectedPlayers = this.gameLobbyService.GetPlayersInGame(currentGame);
 
             foreach (var connectedPlayer in connectedPlayers)
@@ -112,11 +116,20 @@
         /// <summary>
         /// Send a card to play from client
         /// </summary>
-        /// <param name="cardGuid"></param>
-        public void SendWhiteCard(string cardGuid)
+        /// <param name="token">The players private unique token</param>
+        /// <param name="cardGuid">The guid of the card in game to play</param>
+        public void SendWhiteCard(string token, string cardGuid)
         {
+            var connectedPlayer = this.GetPlayerFromToken(token);
+            if (connectedPlayer == null)
+            {
+                return;
+            }
+
+            var currentGame = gameRepository.GetByGuid(connectedPlayer.ActiveGameGuid);
+
             // first check card is in this game
-            var gameCard = this.userContextService.CurrentGame.WhiteCardsInDeck.FirstOrDefault(o => o.GameCardGuid.ToString() == cardGuid);
+            var gameCard = currentGame.WhiteCardsInDeck.FirstOrDefault(o => o.GameCardGuid.ToString() == cardGuid);
             if (gameCard == null)
             {
                 return;
@@ -124,50 +137,47 @@
 
             // otherwise attempt to play it
             var cardPlayState = gameService.PlayWhiteCard(
-                this.userContextService.CurrentGame.GameGuid,
-                this.userContextService.ConnectedPlayer.ActiveGamePlayerGuid,
+                currentGame.GameGuid,
+                connectedPlayer.ActiveGamePlayerGuid,
                 gameCard.GameCardGuid);
 
             switch (cardPlayState)
             {
                 // move onto next state
                 case CardPlayStateEnum.AllPlayed:
-                    this.ShowAllCards();
+                    this.ShowAllCards(token);
                             break;
 
                 // update all clients, but don't progress
                 case CardPlayStateEnum.CardPlayed:
-                    this.ShowPlayedCard();
+                    this.ShowPlayedCard(token);
                     break;
             }
-        }
-
-        /// <summary>
-        /// Call back from the game to set up local context from joined new game
-        /// </summary>
-        public void AckGame()
-        {
-            var connectedPlayer = this.userContextService.ConnectedPlayer;
-
-            // just set the game property in the user context of this player
-            var game = gameRepository.GetByGuid(connectedPlayer.ActiveGameGuid);
-            this.userContextService.CurrentGame = game;
-        }
-
-        public void Send(string name, string message)
-        {
-            Clients.All.broadcastMessage(message);
         }
 
         #region private methods
 
         /// <summary>
+        /// Get the player from token if valid
+        /// </summary>
+        /// <param name="token">The token sent with the request, unique guid for person in game</param>
+        /// <returns></returns>
+        private ConnectedPlayer GetPlayerFromToken(string token)
+        {
+            // first get player
+            return this.ConnectedPlayers.FirstOrDefault(o => o.Token.ToString() == token);
+        }
+
+        /// <summary>
         /// All cards have been played in a game, let everyone see
         /// </summary>
-        private void ShowAllCards()
+        /// <param name="token">The token sent with the request, unique guid for person in game</param>
+        private void ShowAllCards(string token)
         {
-            // we want to put them in a random order
-            var currentGame = this.userContextService.CurrentGame;
+            // todo we want to put them in a random order
+            var currentPlayer = this.GetPlayerFromToken(token);
+            var currentGame = this.gameRepository.GetByGuid(currentPlayer.ActiveGameGuid);
+
             var connectedPlayers = this.gameLobbyService.GetPlayersInGame(currentGame);
 
             foreach (var connectedPlayer in connectedPlayers)
@@ -184,9 +194,12 @@
         /// <summary>
         /// A single card has been played, but no one can see it 
         /// </summary>
-        private void ShowPlayedCard()
+        /// <param name="token">The token sent with the request, unique guid for person in game</param>
+        private void ShowPlayedCard(string token)
         {
-            var currentGame = this.userContextService.CurrentGame;
+            var currentPlayer = this.GetPlayerFromToken(token);
+            var currentGame = this.gameRepository.GetByGuid(currentPlayer.ActiveGameGuid);
+
             var connectedPlayers = this.gameLobbyService.GetPlayersInGame(currentGame);
 
             foreach (var connectedPlayer in connectedPlayers)
@@ -202,7 +215,7 @@
         /// <returns>The view model</returns>
         private GameAllChosenViewModel GenerateAllChosenViewModel(ConnectedPlayer connectedPlayer)
         {
-            var activeGame = this.userContextService.CurrentGame;
+            var activeGame = this.gameRepository.GetByGuid(connectedPlayer.ActiveGameGuid);
             var activeGamePlayer = activeGame.GamePlayers.FirstOrDefault(o => o.GamePlayerGuid == connectedPlayer.ActiveGamePlayerGuid);
 
             if (activeGamePlayer == null)
@@ -230,12 +243,13 @@
         /// Generates a player to chat view model to send to players
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="username">The username</param>
         /// <returns>A chat view model</returns>
-        private ChatViewModel GenerateChatViewModel(string message)
+        private ChatViewModel GenerateChatViewModel(string message, string username)
         {
             return new ChatViewModel
                        {
-                           UserName = userContextService.ConnectedPlayer.Player.Name,
+                           UserName = username,
                            Image = "http://lorempixel.com/50/50/",
                            Message = message,
                            TimeStamp = DateTime.Now.ToShortTimeString()
@@ -256,9 +270,12 @@
                 return;
             }
 
-            // now set the connected player in the local context
-            this.userContextService.ConnectedPlayer = connectedPlayer;
+            if (this.ConnectedPlayers == null)
+            {
+                this.ConnectedPlayers = new List<ConnectedPlayer>();
+            }
 
+            this.ConnectedPlayers.Add(connectedPlayer);
             // add the user to the lobby
             gameLobbyService.ConnectedPlayers.Add(connectedPlayer);
         }
@@ -287,18 +304,23 @@
             {
                 var playerInGame = game.GamePlayers.First(o => o.Player.Guid == connectedPlayer.Player.Guid);
 
+                connectedPlayer.ActiveGameGuid = game.GameGuid;
+                connectedPlayer.ActiveGamePlayerGuid = playerInGame.GamePlayerGuid;
+                connectedPlayer.ConnectedPlayerState = ConnectedPlayerState.IsPlayingGame;
+                connectedPlayer.Token = Guid.NewGuid();
+
                 var model = new GameInitialStateViewModel
                                 {
                                     DealtCards = playerInGame.WhiteCardsInHand.Select(this.GenerateInitialCardDealtViewModel).ToList(),
                                     ActivePlayerGuid = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerWaiting).GamePlayerGuid.ToString(),
                                     PlayerInGameGuid = playerInGame.GamePlayerGuid.ToString(),
                                     PlayerNames = game.GamePlayers.Select(this.GameInitialPlayerViewModel).ToList(),
-                                    BlackCardText = game.BlackCardsInDeck.First(o => o.GameCardState == GameCardState.IsInPlay).Card.Text
+                                    BlackCardText = game.BlackCardsInDeck.First(o => o.GameCardState == GameCardState.IsInPlay).Card.Text,
+                                    Token = connectedPlayer.Token.ToString()
                                 };
+
                 modelsToSendToClients.Add(connectedPlayer, model);
-                connectedPlayer.ActiveGameGuid = game.GameGuid;
-                connectedPlayer.ActiveGamePlayerGuid = playerInGame.GamePlayerGuid;
-                connectedPlayer.ConnectedPlayerState = ConnectedPlayerState.IsPlayingGame;
+
             }
 
             return modelsToSendToClients;
