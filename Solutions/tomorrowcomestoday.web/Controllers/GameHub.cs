@@ -64,7 +64,6 @@
         /// <param name="name"></param>
         public void JoinServer(string name)
         {
-            
             this.SetUserIdInContext(name);
             Clients.All.broadcastMessage(string.Format("{0} has joined the server", name));
 
@@ -118,7 +117,7 @@
         /// </summary>
         /// <param name="token">The players private unique token</param>
         /// <param name="cardGuid">The guid of the card in game to play</param>
-        public void SendWhiteCard(string token, string cardGuid)
+        public void SendCard(string token, string cardGuid)
         {
             var connectedPlayer = this.GetPlayerFromToken(token);
             if (connectedPlayer == null)
@@ -135,27 +134,51 @@
                 return;
             }
 
-            // otherwise attempt to play it
-            var cardPlayState = gameService.PlayWhiteCard(
+            // do we have a card tsar picking
+            if(currentGame.GamePlayers.Any(o => o.PlayerState == PlayerState.IsActivePlayerSelecting))
+            {
+                var winningGamePlayer = this.gameService.SelectWhiteCardAsWinner(
+                    currentGame.GameGuid,
+                    connectedPlayer.ActiveGamePlayerGuid,
+                    gameCard.GameCardGuid);
+
+                this.StartNextRound();
+            }
+            else
+            {
+                // otherwise attempt to play it
+
+                var cardPlayState = gameService.PlayWhiteCard(
                 currentGame.GameGuid,
                 connectedPlayer.ActiveGamePlayerGuid,
                 gameCard.GameCardGuid);
 
-            switch (cardPlayState)
-            {
-                // move onto next state
-                case CardPlayStateEnum.AllPlayed:
-                    this.ShowAllCards(token);
-                            break;
+                switch (cardPlayState)
+                {
+                    // move onto next state
+                    case CardPlayStateEnum.AllPlayed:
+                        this.ShowAllCards(token);
+                        break;
 
-                // update all clients, but don't progress
-                case CardPlayStateEnum.CardPlayed:
-                    this.ShowPlayedCard(token);
-                    break;
+                    // update all clients, but don't progress
+                    case CardPlayStateEnum.CardPlayed:
+                        this.ShowPlayedCard(token);
+                        break;
+                }
             }
         }
 
+
+
         #region private methods
+
+        /// <summary>
+        /// Start 
+        /// </summary>
+        private void StartNextRound()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Get the player from token if valid

@@ -37,8 +37,8 @@ angular.module("app").controller('GameController', function ($scope) {
     }
 
     /// Send a card back to the server
-    $scope.sendWhiteCard = function(cardGuid) {
-        gameHub.server.sendWhiteCard($scope.token, cardGuid);
+    $scope.sendCard = function(cardGuid) {
+        gameHub.server.sendCard($scope.token, cardGuid);
     }
 
     /// Called when the server says we can show a card

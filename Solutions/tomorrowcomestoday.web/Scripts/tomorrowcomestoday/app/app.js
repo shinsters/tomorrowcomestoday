@@ -14,14 +14,13 @@ var app = angular.module('app', ['ngRoute', 'duScroll']).config(function ($route
 });
 
 // directives
-
-app.directive("sendsAnswerWhenClicked", function() {
+app.directive("sendsCardWhenClicked", function() {
     return {
         restrict: "A",
         link: function(scope, element, attributes) {
             //var originalMessage = scope.message;
             element.bind("mousedown", function () {
-                scope.sendWhiteCard(attributes.guid);
+                scope.sendCard(attributes.guid);
             });
         }
     }

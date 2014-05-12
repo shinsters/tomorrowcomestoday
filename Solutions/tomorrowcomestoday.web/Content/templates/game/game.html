@@ -50,7 +50,7 @@
                                 <div class="desc">{{ gameCard.Text }}</div>
                             </div>
                             <div class="card-bottom">
-                                <button class="btn btn-block" ng-show="{{ playerGameGuid == activePlayerGuid }}" sends-answer-when-clicked guid="{{ gameCard.Guid }}">Choose</button>
+                                <button class="btn btn-block" ng-show="{{ playerGameGuid == activePlayerGuid }}" sends-card-when-clicked guid="{{ gameCard.Guid }}">Choose</button>
                             </div>
                         </div>
 
@@ -130,7 +130,7 @@
                                         <div class="desc">{{ gameCard.Text }}</div>
                                     </div>
                                     <div class="card-bottom">
-                                        <button class="btn btn-block" ng-hide="{{ playerGameGuid == activePlayerGuid }}" sends-answer-when-clicked guid="{{ gameCard.Guid }}">Play</button>
+                                        <button class="btn btn-block" ng-hide="{{ playerGameGuid == activePlayerGuid }}" sends-card-when-clicked guid="{{ gameCard.Guid }}">Play</button>
                                     </div>
                                 </div>
 

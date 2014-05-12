@@ -141,9 +141,8 @@
         /// <param name="gameGuid">The GUID of the game</param>
         /// <param name="gamePlayerGuid">The GUID of the in game player attempting to play the card</param>
         /// <param name="gameCardGuid">The GUID of the in game card attempting to be played</param>
-        public void SelectWhiteCardAsWinner(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid)
+        public GamePlayer SelectWhiteCardAsWinner(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid)
         {   
-            // this logic looks very similar to the method above, but a few key changes
             var game = this.gameRepository.GetByGuid(gameGuid);
 
             // first check to see the card exists in the game
@@ -151,7 +150,7 @@
 
             if (cardInGame == null)
             {
-                return;
+                return null;
             }
 
             // now check card is currently in the game
@@ -159,7 +158,7 @@
 
             if (playerOwningCard == null)
             {
-                return;
+                return null;
             }
 
             // and check the active player is not the person who owns the card
@@ -167,7 +166,7 @@
 
             if (!correctPlayerPlayingCard)
             {
-                return;
+                return null;
             }
 
             // otherwise give the player a point
@@ -191,6 +190,8 @@
             {
                 blackCard.GameCardState = GameCardState.HasBeenPlayed;
             }
+
+            return playerOwningCard;
         }
 
         /// <summary>
