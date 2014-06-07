@@ -2,26 +2,19 @@
         <div class="row-fluid">
 
             <div class="span3">
+                
+                <div class="card">
+                
+                    <table class="table">
+                        
+                        <tr ng-repeat="player in players" class="text-center">
+                            <td ng-class="{'active-player-card': player.Guid == activePlayerGuid}">
+                                {{ player.Name }}
+                            </td>
+                        </tr>
 
-                <div class="sidebar-content">
-                    <section>
-                        <div class="container-fluid">
+                    </table>
 
-                            <div ng-repeat="player in players">
-                                <div class="card user-card" ng-class="{'active-player-card': player.Guid == activePlayerGuid}">
-                                    <div class="row-fluid">
-                                        <div class="span3">
-                                            <img src="http://www.gravatar.com/avatar/44368bdcd74a64ae91fe04490107d2e3.jpg?s=50" class="player-image" />
-                                        </div>
-                                        <div class="span7">
-                                            <h3>{{ player.Name }}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </section>
                 </div>
 
             </div>
