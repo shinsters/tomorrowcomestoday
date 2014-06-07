@@ -52,11 +52,14 @@ angular.module("app").controller('GameController', function ($scope) {
     /// Called when a player has won
     gameHub.client.sendWinner = function(winnerGuid) {
         $scope.winningPlayerGuid = winnerGuid;
+        alert("a winrar is " + winnerGuid);
         $scope.$apply();
     }
 
     /// Called when a new round has begun
-    gameHub.client.sendNextRound = function(gameNextRoundStateViewModel) {
+    gameHub.client.sendNextRound = function (gameNextRoundStateViewModel) {
+        alert("next round view model recieved");
+        alert("active player = " + gameNextRoundStateViewModel.ActivePlayerGuid);
         alert(stringify(gameNextRoundStateViewModel));
     }
 
