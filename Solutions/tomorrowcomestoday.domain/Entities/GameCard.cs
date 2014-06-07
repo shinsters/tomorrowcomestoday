@@ -23,5 +23,10 @@
         /// What is the current play state of this card
         /// </summary>
         public GameCardState GameCardState { get; set; }
+
+        /// <summary>
+        /// Has this card been sent to the client or not
+        /// </summary>
+        public bool HasBeenSentToClient { get; set; }
     }
 }

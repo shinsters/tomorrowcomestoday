@@ -43,11 +43,6 @@
         /// </summary>
         private readonly IGameRepository gameRepository;
 
-        /// <summary>
-        /// Holds active players, in a singleton
-        /// </summary>
-        private List<ConnectedPlayer> ConnectedPlayers { get; set; }
-
         public GameHub(
             IGameLobbyService gameLobbyService,
             IConnectedPlayerService connectedPlayerService,
@@ -61,8 +56,13 @@
         }
 
         /// <summary>
+        /// Holds active players, in a singleton
+        /// </summary>
+        private List<ConnectedPlayer> ConnectedPlayers { get; set; }
+
+        /// <summary>
         /// First called method on joining the application's hub
-        /// Todo: this totally wants how it's called being changed to the correct join hub events, not a manual call back
+        /// To do: this totally wants how it's called being changed to the correct join hub events, not a manual call back
         /// </summary>
         /// <param name="name"></param>
         public void JoinServer(string name)
@@ -119,7 +119,7 @@
         /// Send a card to play from client
         /// </summary>
         /// <param name="token">The players private unique token</param>
-        /// <param name="cardGuid">The guid of the card in game to play</param>
+        /// <param name="cardGuid">The GUID of the card in game to play</param>
         public void SendCard(string token, string cardGuid)
         {
             var connectedPlayer = this.GetPlayerFromToken(token);
@@ -190,7 +190,7 @@
         /// Inform users that someone has won
         /// </summary>
         /// <param name="token">The token unique for the player </param>
-        /// <param name="winnerGamePlayerGuid">Guid in game of the winner</param>
+        /// <param name="winnerGamePlayerGuid">GUID in game of the winner</param>
         private void SendWinner(string token, Guid winnerGamePlayerGuid)
         {
             // todo we want to put them in a random order
@@ -205,11 +205,10 @@
             }
         }
 
-
         /// <summary>
         /// Get the player from token if valid
         /// </summary>
-        /// <param name="token">The token sent with the request, unique guid for person in game</param>
+        /// <param name="token">The token sent with the request, unique GUID for person in game</param>
         /// <returns></returns>
         private ConnectedPlayer GetPlayerFromToken(string token)
         {
@@ -220,10 +219,10 @@
         /// <summary>
         /// All cards have been played in a game, let everyone see
         /// </summary>
-        /// <param name="token">The token sent with the request, unique guid for person in game</param>
+        /// <param name="token">The token sent with the request, unique GUID for person in game</param>
         private void ShowAllCards(string token)
         {
-            // todo we want to put them in a random order
+            // todo we want to put them in a random order so you can't see which player played which card
             var currentPlayer = this.GetPlayerFromToken(token);
             var currentGame = this.gameRepository.GetByGuid(currentPlayer.ActiveGameGuid);
 
@@ -243,7 +242,7 @@
         /// <summary>
         /// A single card has been played, but no one can see it 
         /// </summary>
-        /// <param name="token">The token sent with the request, unique guid for person in game</param>
+        /// <param name="token">The token sent with the request, unique GUID for person in game</param>
         private void ShowPlayedCard(string token)
         {
             var currentPlayer = this.GetPlayerFromToken(token);
@@ -282,7 +281,7 @@
             var viewModel = new GameAllChosenViewModel
                        {
                            CanSelectWinner = activeGamePlayer.PlayerState == PlayerState.IsActivePlayerSelecting,
-                           AnswerCards = playedWhiteCards.Select(GenerateInitialCardDealtViewModel).ToList()
+                           AnswerCards = playedWhiteCards.Select(this.GenerateDealtCard).ToList()
                        };
 
             return viewModel;
@@ -325,8 +324,9 @@
             }
 
             this.ConnectedPlayers.Add(connectedPlayer);
+
             // add the user to the lobby
-            gameLobbyService.ConnectedPlayers.Add(connectedPlayer);
+            this.gameLobbyService.ConnectedPlayers.Add(connectedPlayer);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@
 
                 var model = new GameInitialStateViewModel
                                 {
-                                    DealtCards = playerInGame.WhiteCardsInHand.Select(this.GenerateInitialCardDealtViewModel).ToList(),
+                                    DealtCards = playerInGame.WhiteCardsInHand.Select(this.GenerateDealtCard).ToList(),
                                     ActivePlayerGuid = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerWaiting).GamePlayerGuid.ToString(),
                                     PlayerInGameGuid = playerInGame.GamePlayerGuid.ToString(),
                                     PlayerNames = game.GamePlayers.Select(this.GameInitialPlayerViewModel).ToList(),
@@ -369,7 +369,6 @@
                                 };
 
                 modelsToSendToClients.Add(connectedPlayer, model);
-
             }
 
             return modelsToSendToClients;
@@ -394,12 +393,12 @@
         /// </summary>
         /// <param name="gameCard"></param>
         /// <returns></returns>
-        private GameCardDealtViewModel GenerateInitialCardDealtViewModel(GameCard gameCard)
+        private GameCardDealtViewModel GenerateDealtCard(GameCard gameCard)
         {
             return new GameCardDealtViewModel
                                                     {
                                                         Guid = gameCard.GameCardGuid.ToString(),
-                                                        Text = gameCard.Card.Text
+                                                        Text = gameCard.Card.Text,
                                                     };
         }
         #endregion
