@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Policy;
 
     using TomorrowComesToday.Domain;
     using TomorrowComesToday.Domain.Entities;
@@ -59,9 +58,9 @@
                 this.CreateDeck(game);
                 game.GameState = GameState.BeingPlayed;
             }
-            // assign the next active player if it's not the first turn  
             else
             {
+                // assign the next active player if it's not the first turn  
                 var activePlayer = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerSelecting);
                 var nextActivePlayer = game.GamePlayers.FirstOrDefault(o => o.GamePlayerId == activePlayer.GamePlayerId + 1)
                                        ?? game.GamePlayers.OrderBy(o => o.GamePlayerId).First();
@@ -81,6 +80,7 @@
         /// <param name="gameGuid">The GUID of the game</param>
         /// <param name="gamePlayerGuid">The GUID of the in game player attempting to play the card</param>
         /// <param name="gameCardGuid">The GUID of the in game card attempting to be played</param>
+        /// <returns>The <see cref="CardPlayStateEnum"/>.</returns>
         public CardPlayStateEnum PlayWhiteCard(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid)
         {
             // I guess technically we don't need the guid of the game, but doesn't seem nice 
@@ -141,6 +141,7 @@
         /// <param name="gameGuid">The GUID of the game</param>
         /// <param name="gamePlayerGuid">The GUID of the in game player attempting to play the card</param>
         /// <param name="gameCardGuid">The GUID of the in game card attempting to be played</param>
+        /// <returns>The <see cref="GamePlayer"/>.</returns>
         public GamePlayer SelectWhiteCardAsWinner(Guid gameGuid, Guid gamePlayerGuid, Guid gameCardGuid)
         {   
             var game = this.gameRepository.GetByGuid(gameGuid);
@@ -201,11 +202,11 @@
         private void CreateDeck(Game game)
         {
             // just get them all for the moment
-            var whiteCards = cardRepository.GetCardFromDeck(CardType.White);
+            var whiteCards = this.cardRepository.GetCardFromDeck(CardType.White);
             var whiteCardsInDeck = this.GenerateCardsInDeck(whiteCards);
             game.WhiteCardsInDeck = whiteCardsInDeck;
 
-            var blackCards = cardRepository.GetCardFromDeck(CardType.Black);
+            var blackCards = this.cardRepository.GetCardFromDeck(CardType.Black);
             var blackCardsInDeck = this.GenerateCardsInDeck(blackCards);
             game.BlackCardsInDeck = blackCardsInDeck;
         }
@@ -249,18 +250,9 @@
         /// <returns>A shuffled deck of cards</returns>
         private IList<GameCard> GenerateCardsInDeck(IEnumerable<Card> cardsInDeck)
         {
-            var deckCards = new List<GameCard>();
-
-            foreach (var card in cardsInDeck)
-            {
-                deckCards.Add(new GameCard
-                {
-                    Card = card,
-                    GameCardGuid = Guid.NewGuid(),
-                    GameCardState = GameCardState.IsAwaitingPlay
-
-                });
-            }
+            var deckCards = cardsInDeck
+                .Select(card => new GameCard { Card = card, GameCardGuid = Guid.NewGuid(), GameCardState = GameCardState.IsAwaitingPlay })
+                .ToList();
 
             // shuffling by the card guid should give us some kind of shuffle for the deck.
             // if it's crap then i'll make a better shuffle.

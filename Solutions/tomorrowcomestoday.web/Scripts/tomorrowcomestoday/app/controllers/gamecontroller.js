@@ -52,7 +52,6 @@ angular.module("app").controller('GameController', function ($scope) {
     /// Called when a player has won
     gameHub.client.sendWinner = function(winnerGuid) {
         $scope.winningPlayerGuid = winnerGuid;
-        alert(winnerGuid);
         $scope.$apply();
     }
 

@@ -19,5 +19,10 @@
         /// The amount of people required to play a game
         /// </summary>
         public const int GAME_PLAYER_LIMIT = 2;
+
+        /// <summary>
+        /// The amount of time between game rounds
+        /// </summary>
+        public const int TIME_BETWEEN_ROUNDS = 5;
     }
 }

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace TomorrowComesToday.Infrastructure.Implementations.Services
+﻿namespace TomorrowComesToday.Infrastructure.Implementations.Services
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using TomorrowComesToday.Domain.Builders;
@@ -27,6 +26,8 @@ namespace TomorrowComesToday.Infrastructure.Implementations.Services
         /// <summary>
         /// Constructs a game lobby service
         /// </summary>
+        /// <param name="gameRepository">The game Repository.</param>
+        /// <param name="gameService">The game Service.</param>
         public GameLobbyService(
             IGameRepository gameRepository,
             IGameService gameService)
@@ -54,10 +55,10 @@ namespace TomorrowComesToday.Infrastructure.Implementations.Services
                 .ToList())
                 .Create();
 
-            gameRepository.SaveOrUpdate(game);
+            this.gameRepository.SaveOrUpdate(game);
 
             // start the first turn
-            gameService.DealRound(game.GameGuid);
+            this.gameService.DealRound(game.GameGuid);
 
             // send the game back to the hub to make a view model
             return game;
@@ -71,7 +72,7 @@ namespace TomorrowComesToday.Infrastructure.Implementations.Services
         public IList<ConnectedPlayer> GetPlayersInGame(Game game)
         {
             // I guess this is more like a repository method, but I prefer to not have repos exposed to controllers...
-            return ConnectedPlayers.Where(o => o.ActiveGameGuid == game.GameGuid).ToList();
+            return this.ConnectedPlayers.Where(o => o.ActiveGameGuid == game.GameGuid).ToList();
         }
     }
 }

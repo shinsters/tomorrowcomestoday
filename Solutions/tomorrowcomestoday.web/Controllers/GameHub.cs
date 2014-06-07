@@ -15,6 +15,8 @@
     using TomorrowComesToday.Infrastructure.Interfaces.Services;
     using TomorrowComesToday.Web.Models;
 
+    using Timer = System.Timers.Timer;
+
     /// <summary>
     /// The hub that handles communications to and from clients 
     /// </summary>
@@ -44,9 +46,10 @@
         /// <summary>
         /// Holds active players, in a singleton
         /// </summary>
-        private List<ConnectedPlayer> ConnectedPlayers { get; set; } 
+        private List<ConnectedPlayer> ConnectedPlayers { get; set; }
 
-        public GameHub(IGameLobbyService gameLobbyService,
+        public GameHub(
+            IGameLobbyService gameLobbyService,
             IConnectedPlayerService connectedPlayerService,
             IGameService gameService,
             IGameRepository gameRepository)
@@ -68,7 +71,7 @@
             Clients.All.broadcastMessage(string.Format("{0} has joined the server", name));
 
             // if we have enough people in the lobby then start a game
-            var amountOfWaitingUsers = gameLobbyService.ConnectedPlayers.Count(o => o.ConnectedPlayerState == ConnectedPlayerState.IsWaitingInLobby);
+            var amountOfWaitingUsers = this.gameLobbyService.ConnectedPlayers.Count(o => o.ConnectedPlayerState == ConnectedPlayerState.IsWaitingInLobby);
             var hasEnoughPlayersToStartGame = amountOfWaitingUsers == CommonConcepts.GAME_PLAYER_LIMIT;
 
             if (!hasEnoughPlayersToStartGame)
@@ -125,7 +128,7 @@
                 return;
             }
 
-            var currentGame = gameRepository.GetByGuid(connectedPlayer.ActiveGameGuid);
+            var currentGame = this.gameRepository.GetByGuid(connectedPlayer.ActiveGameGuid);
 
             // first check card is in this game
             var gameCard = currentGame.WhiteCardsInDeck.FirstOrDefault(o => o.GameCardGuid.ToString() == cardGuid);
@@ -135,7 +138,7 @@
             }
 
             // do we have a card tsar picking
-            if(currentGame.GamePlayers.Any(o => o.PlayerState == PlayerState.IsActivePlayerSelecting))
+            if (currentGame.GamePlayers.Any(o => o.PlayerState == PlayerState.IsActivePlayerSelecting))
             {
                 var winningGamePlayer = this.gameService.SelectWhiteCardAsWinner(
                     currentGame.GameGuid,
@@ -144,13 +147,15 @@
 
                 // sending token because it is a key to game and active players
                 this.SendWinner(token, winningGamePlayer.GamePlayerGuid);
-                this.StartNextRound(token);
+
+                // wait an elapse period, then start the next round
+                var newRoundTimer = new Timer(1000 * CommonConcepts.TIME_BETWEEN_ROUNDS);
+                newRoundTimer.Elapsed += (sender, args) => this.StartNextRound(currentGame.GameGuid);
             }
             else
             {
                 // otherwise attempt to play it
-
-                var cardPlayState = gameService.PlayWhiteCard(
+                var cardPlayState = this.gameService.PlayWhiteCard(
                 currentGame.GameGuid,
                 connectedPlayer.ActiveGamePlayerGuid,
                 gameCard.GameCardGuid);
@@ -169,17 +174,16 @@
                 }
             }
         }
-
+        
         #region private methods
 
         /// <summary>
         /// Start next round
         /// </summary>
-        /// <param name="token"></param>
-        private void StartNextRound(string token)
+        /// <param name="gameGuid">The game GUID</param>
+        private void StartNextRound(Guid gameGuid)
         {
-            // todo, delay by 10 seconds
-            throw new NotImplementedException();
+            this.gameService.DealRound(gameGuid);
         }
 
         /// <summary>
