@@ -14,5 +14,10 @@
         /// The Guid of the player in this game
         /// </summary>
         public string Guid { get; set; }
+
+        /// <summary>
+        /// The points of that player
+        /// </summary>
+        public int Points { get; set; }
     }
 }

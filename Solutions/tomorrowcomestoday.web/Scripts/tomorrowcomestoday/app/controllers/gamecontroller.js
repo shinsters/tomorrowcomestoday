@@ -21,6 +21,7 @@ angular.module("app").controller('GameController', function ($scope) {
     $scope.activePlayerName = "";
     
     $scope.winningPlayerGuid = "";
+    $scope.winningCardGuid = "";
 
     // the players token
     $scope.token = "";
@@ -64,9 +65,11 @@ angular.module("app").controller('GameController', function ($scope) {
     }
 
     /// Called when a player has won
-    gameHub.client.sendWinner = function(winnerGuid) {
+    gameHub.client.sendWinner = function(winnerGuid, cardGuid) {
         $scope.winningPlayerGuid = winnerGuid;
-        alert("a winrar is " + winnerGuid);
+        $scope.winningCardGuid = cardGuid;
+
+        addPointToPlayer(winnerGuid);
         $scope.$apply();
     }
 
@@ -147,6 +150,15 @@ angular.module("app").controller('GameController', function ($scope) {
         angular.forEach($scope.players, function (player) {
             if (player.Guid === $scope.activePlayerGuid) {
                 $scope.activePlayerName = player.Name;
+            }
+        });
+    }
+
+    /// add a point to a players total
+    function addPointToPlayer(playerGuid) {
+        angular.forEach($scope.players, function (player) {
+            if (player.Guid === playerGuid) {
+                player.Points++;
             }
         });
     }

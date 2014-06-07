@@ -146,7 +146,7 @@
                     gameCard.GameCardGuid);
 
                 // sending token because it is a key to game and active players
-                this.SendWinner(token, winningGamePlayer.GamePlayerGuid);
+                this.SendWinner(token, winningGamePlayer.GamePlayerGuid, gameCard.GameCardGuid);
 
                 // wait an elapse period, then start the next round
                 var newRoundTimer = new Timer(1000 * CommonConcepts.TIME_BETWEEN_ROUNDS);
@@ -217,7 +217,8 @@
         /// </summary>
         /// <param name="token">The token unique for the player </param>
         /// <param name="winnerGamePlayerGuid">GUID in game of the winner</param>
-        private void SendWinner(string token, Guid winnerGamePlayerGuid)
+        /// <param name="winnerGameCardGuid">GUID in the game of the card</param>
+        private void SendWinner(string token, Guid winnerGamePlayerGuid, Guid winnerGameCardGuid)
         {
             // todo we want to put them in a random order
             var currentPlayer = this.GetPlayerFromToken(token);
@@ -227,7 +228,8 @@
 
             foreach (var connectedPlayer in connectedPlayers)
             {
-                this.Clients.Client(connectedPlayer.ConnectionId).sendWinner(winnerGamePlayerGuid.ToString());
+                // todo, move this into a view model
+                this.Clients.Client(connectedPlayer.ConnectionId).sendWinner(winnerGamePlayerGuid.ToString(), winnerGameCardGuid);
             }
         }
 

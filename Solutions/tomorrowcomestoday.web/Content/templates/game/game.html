@@ -1,22 +1,15 @@
 ﻿    <div class="container-fluid">
         <div class="row-fluid">
-
             <div class="span3">
-                
                 <div class="card">
-                
                     <table class="table">
-                        
                         <tr ng-repeat="player in players" class="text-center">
-                            <td ng-class="{'active-player-card': player.Guid == activePlayerGuid}">
-                                {{ player.Name }}
+                            <td ng-class="{'active-player-card': player.Guid == activePlayerGuid, 'winner' : player.Guid == winningPlayerGuid}">
+                                {{ player.Points }} - {{ player.Name }}
                             </td>
                         </tr>
-
                     </table>
-
                 </div>
-
             </div>
 
             <div class="span6">
@@ -31,11 +24,11 @@
 
                     <div class="span2 text-center" ng-repeat="gameCard in shownCards">
 
-                        <div class="card game-card played">
-                            <div class="card-info">
+                        <div class="card game-card played" ng-class="{'winner' : gameCard.Guid == winningCardGuid}">
+                            <div class="card-info" ng-class="{'winner' : gameCard.Guid == winningCardGuid}">
                                 <div class="desc">{{ gameCard.Text }}</div>
                             </div>
-                            <div class="card-bottom">
+                            <div class="card-bottom" ng-class="{'winner' : gameCard.Guid == winningCardGuid}">
                                 <button class="btn btn-block" ng-show="{{ playerGameGuid == activePlayerGuid }}" sends-card-when-clicked guid="{{ gameCard.Guid }}">Choose</button>
                             </div>
                         </div>

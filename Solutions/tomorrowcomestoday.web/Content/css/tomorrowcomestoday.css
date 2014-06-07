@@ -20,6 +20,10 @@
     background: #f2f0f2;
 }
 
+.winner {
+    background: #b3a9a9;
+}
+
     /* Game Cards, modified from game-card Card inside BootPlus*/
 
 #played-card-holder {
