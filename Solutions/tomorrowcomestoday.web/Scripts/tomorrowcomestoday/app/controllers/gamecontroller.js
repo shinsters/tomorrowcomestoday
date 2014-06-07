@@ -18,7 +18,11 @@ angular.module("app").controller('GameController', function ($scope) {
     $scope.activePlayerGuid = "";
     $scope.winningPlayerGuid = "";
 
+    // the players token
     $scope.token = "";
+
+    // the guid of the card that has just been played
+    $scope.sentCardGuids = [];
     
     // number of shown cards on the main page
     $scope.shownCards = [];
@@ -41,6 +45,7 @@ angular.module("app").controller('GameController', function ($scope) {
     /// Send a card back to the server
     $scope.sendCard = function(cardGuid) {
         gameHub.server.sendCard($scope.token, cardGuid);
+        $scope.sentCardGuids.push(cardGuid);
     }
 
     /// Called when the server says we can show a card
@@ -64,7 +69,20 @@ angular.module("app").controller('GameController', function ($scope) {
         $scope.blackCardText = gameNextRoundStateViewModel.BlackCardText;
         $scope.shownCards = [];
 
+
+        var newCards = gameNextRoundStateViewModel.WhiteCards;
+
+        alert(JSON.stringify(newCards));
+
         // set the cards
+        angular.forEach($scope.sentCardGuids, function (cardGuid) {
+            angular.forEach($scope.cardsInHand, function (cardInHand) {
+                if (cardInHand.Guid === cardGuid) {
+                }
+            });
+        });
+
+        $scope.sentCardGuids = [];
 
         $scope.$apply();
     }

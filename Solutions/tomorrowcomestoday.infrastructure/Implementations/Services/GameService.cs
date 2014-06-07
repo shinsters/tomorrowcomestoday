@@ -238,6 +238,7 @@
                 // players already have a player counter 
                 game.GamePlayers.First(o => o.GamePlayerId == playerCounter + 1).WhiteCardsInHand.Add(gameCard);
                 gameCard.GameCardState = GameCardState.IsInHand;
+                gameCard.HasBeenSentToClient = false;
 
                 playerCounter++;
             }
