@@ -11,7 +11,7 @@
         public string Text { get; set; }
 
         /// <summary>
-        /// The game specific guid of a card
+        /// The game specific GUID of a card
         /// </summary>
         public string Guid { get; set; }
     }

@@ -183,7 +183,24 @@
         /// <param name="gameGuid">The game GUID</param>
         private void StartNextRound(Guid gameGuid)
         {
+            // deal the round internally
             this.gameService.DealRound(gameGuid);
+
+            var game = this.gameRepository.GetByGuid(gameGuid);
+            var activePlayerGuid = game.GamePlayers.First(o => o.PlayerState == PlayerState.IsActivePlayerWaiting).GamePlayerGuid;
+            var activeBlackCardText = game.BlackCardsInDeck.First(o => o.GameCardState == GameCardState.IsInPlay).Card.Text;
+
+            // generate a new card view model and send to each of the players
+            foreach (var gamePlayer in game.GamePlayers)
+            {
+                var unsentGameCards = gamePlayer.WhiteCardsInHand.Where(o => !o.HasBeenSentToClient);
+                var model = this.GenerateGameNextRoundStateViewModel(
+                    unsentGameCards,
+                    activeBlackCardText,
+                    activePlayerGuid);
+
+
+            }
         }
 
         /// <summary>
@@ -395,11 +412,30 @@
         /// <returns></returns>
         private GameCardDealtViewModel GenerateDealtCard(GameCard gameCard)
         {
+            gameCard.HasBeenSentToClient = true;
+
             return new GameCardDealtViewModel
                                                     {
                                                         Guid = gameCard.GameCardGuid.ToString(),
                                                         Text = gameCard.Card.Text,
                                                     };
+        }
+
+        /// <summary>
+        /// Generate a view model to send to a specific client at the beginning of their next turn
+        /// </summary>
+        /// <param name="newCards">The new white cards in the players hand</param>
+        /// <param name="blackCardText">The active black card's question</param>
+        /// <param name="activePlayerGuid">The GUID of the player currently the card tsar</param>
+        /// <returns></returns>
+        private GameNextRoundStateViewModel GenerateGameNextRoundStateViewModel(IEnumerable<GameCard> newCards, string blackCardText, Guid activePlayerGuid)
+        {
+            return new GameNextRoundStateViewModel
+                            {
+                                ActivePlayerGuid = activePlayerGuid.ToString(),
+                                BlackCardText = blackCardText,
+                                WhiteCards = newCards.Select(this.GenerateDealtCard).ToList()
+                            };
         }
         #endregion
     }

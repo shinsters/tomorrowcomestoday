@@ -251,7 +251,13 @@
         private IList<GameCard> GenerateCardsInDeck(IEnumerable<Card> cardsInDeck)
         {
             var deckCards = cardsInDeck
-                .Select(card => new GameCard { Card = card, GameCardGuid = Guid.NewGuid(), GameCardState = GameCardState.IsAwaitingPlay })
+                .Select(card => new GameCard
+                                    {
+                                        Card = card, 
+                                        GameCardGuid = Guid.NewGuid(), 
+                                        GameCardState = GameCardState.IsAwaitingPlay,
+                                        HasBeenSentToClient = false
+                                    })
                 .ToList();
 
             // shuffling by the card guid should give us some kind of shuffle for the deck.

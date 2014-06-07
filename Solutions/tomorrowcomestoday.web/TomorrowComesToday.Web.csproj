@@ -191,6 +191,7 @@
     <Compile Include="Models\GameInitialPlayerViewModel.cs" />
     <Compile Include="Models\GameInitialStateViewModel.cs" />
     <Compile Include="Models\GameCardDealtViewModel.cs" />
+    <Compile Include="Models\GameNextRoundStateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootplus-responsive.css" />
