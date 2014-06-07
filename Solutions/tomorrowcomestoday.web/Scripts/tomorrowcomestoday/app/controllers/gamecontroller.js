@@ -55,6 +55,11 @@ angular.module("app").controller('GameController', function ($scope) {
         $scope.$apply();
     }
 
+    /// Called when a new round has begun
+    gameHub.client.sendNextRound = function(gameNextRoundStateViewModel) {
+        alert(stringify(gameNextRoundStateViewModel));
+    }
+
     /// Called when all cards have been played
     gameHub.client.showAllCards = function (gameAllChosenViewModel) {
         $scope.shownCards = gameAllChosenViewModel.AnswerCards;

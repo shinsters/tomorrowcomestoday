@@ -150,7 +150,13 @@
 
                 // wait an elapse period, then start the next round
                 var newRoundTimer = new Timer(1000 * CommonConcepts.TIME_BETWEEN_ROUNDS);
-                newRoundTimer.Elapsed += (sender, args) => this.StartNextRound(currentGame.GameGuid);
+                newRoundTimer.Elapsed += (sender, args) =>
+                    {
+                        // only need this to run once
+                        newRoundTimer.Enabled = false;
+                        this.StartNextRound(currentGame.GameGuid);
+                    };
+                newRoundTimer.Enabled = true;
             }
             else
             {
@@ -199,7 +205,10 @@
                     activeBlackCardText,
                     activePlayerGuid);
 
+                // grab connected player and send model
+                var connectedPlayer = this.ConnectedPlayers.First(o => o.Player.Guid == gamePlayer.Player.Guid);
 
+                this.Clients.Client(connectedPlayer.ConnectionId).sendNextRound(model);
             }
         }
 
