@@ -52,11 +52,9 @@
                                     <ul class="chat">
                                         <li class="left clearfix" ng-repeat="chatMessage in chatMessages">
                                             <div class="row-fluid">
-                                                <div class="span3 text-center">
-                                                    <img src="" class="img-polaroid" />
-                                                    <p>{{ chatMessage.UserName }}</p>
+                                                <div class="span12">
+                                                    &lt;{{ chatMessage.UserName }}&gt; {{ chatMessage.Message }}
                                                 </div>
-                                                <div class="span9">{{ chatMessage.Message }}</div>
                                             </div>
                                         </li>
                                     </ul>
