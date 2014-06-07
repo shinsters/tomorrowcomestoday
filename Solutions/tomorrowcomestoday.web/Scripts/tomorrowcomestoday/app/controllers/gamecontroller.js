@@ -15,7 +15,11 @@ angular.module("app").controller('GameController', function ($scope) {
     $scope.blackCardText = "";
     $scope.players = [];
     $scope.playerGameGuid = "";
+
+    // details of the current card tsar
     $scope.activePlayerGuid = "";
+    $scope.activePlayerName = "";
+    
     $scope.winningPlayerGuid = "";
 
     // the players token
@@ -75,6 +79,8 @@ angular.module("app").controller('GameController', function ($scope) {
         $scope.shownCards = [];
         $scope.hasPlayed = false;
 
+        updateCurrentPlayerName();
+
         var newCards = gameNextRoundStateViewModel.WhiteCards;
 
         // set the cards, could be more efficient but JS arrays aren't fun
@@ -82,7 +88,6 @@ angular.module("app").controller('GameController', function ($scope) {
             angular.forEach($scope.sentCardGuids, function (cardGuid) {
                 angular.forEach($scope.cardsInHand, function (cardInHand) {
                     if (cardInHand.Guid === cardGuid) {
-                        alert("found played card " + cardInHand.Text);
                         var index = $scope.cardsInHand.indexOf(cardInHand);
                         $scope.cardsInHand[index].Guid = newCard.Guid;
                         $scope.cardsInHand[index].Text = newCard.Text;
@@ -127,11 +132,23 @@ angular.module("app").controller('GameController', function ($scope) {
         $scope.activePlayerGuid = gameInitialStateViewModel.ActivePlayerGuid;
         $scope.token = gameInitialStateViewModel.Token;
 
+        updateCurrentPlayerName();
+
         $scope.$apply();
    }
 
     $.connection.hub.start().done(function () {
         gameHub.server.joinServer("shinsters" + Math.floor(Math.random() * 100));
     });
+
+    /// update the name of the curent player
+    function updateCurrentPlayerName() {
+
+        angular.forEach($scope.players, function (player) {
+            if (player.Guid === $scope.activePlayerGuid) {
+                $scope.activePlayerName = player.Name;
+            }
+        });
+    }
 });
 

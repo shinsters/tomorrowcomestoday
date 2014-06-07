@@ -7,10 +7,6 @@
                     <section>
                         <div class="container-fluid">
 
-                            <div class="text-center">
-                                <h3>Players</h3>
-                            </div>
-
                             <div ng-repeat="player in players">
                                 <div class="card user-card" ng-class="{'active-player-card': player.Guid == activePlayerGuid}">
                                     <div class="row-fluid">
@@ -34,7 +30,7 @@
 
                 <div id="blackCard" class="text-center">
                     <h2>"{{ blackCardText }}"</h2>
-                    <p>asks Shinaku</p>
+                    <p>asks {{ activePlayerName }}</p>
                 </div>
                 
                 <div class="row-fluid" id="played-card-holder">
@@ -42,7 +38,7 @@
 
                     <div class="span2 text-center" ng-repeat="gameCard in shownCards">
 
-                        <div class="card game-card">
+                        <div class="card game-card played">
                             <div class="card-info">
                                 <div class="desc">{{ gameCard.Text }}</div>
                             </div>
@@ -55,50 +51,7 @@
 
                     <div class="span1"></div>
                 </div>
-                
-                <div class="row-fluid">
-                    <div class="container-fluid">
-                        <div class="row-fluid">
 
-                            <div class="text-center"><h3>Your Cards</h3></div>
-                            <div class="row-fluid">
-                                <div class="span1"></div>
-                                <div class="span2 text-center" ng-repeat="gameCard in cardsInTopRow">
-
-                                    <div class="card game-card">
-                                        <div class="card-info">
-                                            <div class="desc">{{ gameCard.Text }}</div>
-                                        </div>
-                                        <div class="card-bottom">
-                                            <button class="btn btn-block" ng-show="playerGameGuid != activePlayerGuid && !hasPlayed" sends-card-when-clicked guid="{{ gameCard.Guid }}">Play</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="span1"></div>
-                            </div>
-
-                            <div class="row-fluid">
-                                <div class="span1"></div>
-
-                                <div class="span2 text-center" ng-repeat="gameCard in cardsInBottomRow">
-
-                                    <div class="card game-card">
-                                        <div class="card-info">
-                                            <div class="desc">{{ gameCard.Text }}</div>
-                                        </div>
-                                        <div class="card-bottom">
-                                            <button class="btn btn-block" ng-show="playerGameGuid != activePlayerGuid && !hasPlayed" sends-card-when-clicked guid="{{ gameCard.Guid }}">Play</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="span1"></div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
 
             </div>
 
@@ -106,10 +59,6 @@
 
                 <div class="sidebar-content">
                     <section>
-
-                        <div class="text-center">
-                            <h3>Chat</h3>
-                        </div>
 
                         <div class="card">
                             <div class="panel-body" id="chat-body">
@@ -134,12 +83,10 @@
                                 <div class="row-fluid">
                                     <form ng-submit="sendChatMessage()">
                                         <div class="span1"></div>
-                                        <div class="span8">
+                                        <div class="span9">
                                             <input type="text" placeholder="Enter message..." class="chat-box-enter" ng-model="newChatMessage"/>
                                         </div>
                                         <div class="span1"></div>
-
-                                        <button class="btn" type="submit">Send</button>
                                     </form>
                                 </div>
                                 <div class="span1"></div>
@@ -153,6 +100,48 @@
 
         <div class="container-fluid">
 
+            <div class="row-fluid">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+
+                        <div class="row-fluid">
+                            <div class="span1"></div>
+                            <div class="span2 text-center" ng-repeat="gameCard in cardsInTopRow">
+
+                                <div class="card game-card">
+                                    <div class="card-info">
+                                        <div class="desc">{{ gameCard.Text }}</div>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <button class="btn btn-block" ng-show="playerGameGuid != activePlayerGuid && !hasPlayed" sends-card-when-clicked guid="{{ gameCard.Guid }}">Play</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="span1"></div>
+                        </div>
+
+                        <div class="row-fluid">
+                            <div class="span1"></div>
+
+                            <div class="span2 text-center" ng-repeat="gameCard in cardsInBottomRow">
+
+                                <div class="card game-card">
+                                    <div class="card-info">
+                                        <div class="desc">{{ gameCard.Text }}</div>
+                                    </div>
+                                    <div class="card-bottom">
+                                        <button class="btn btn-block" ng-show="playerGameGuid != activePlayerGuid && !hasPlayed" sends-card-when-clicked guid="{{ gameCard.Guid }}">Play</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
 

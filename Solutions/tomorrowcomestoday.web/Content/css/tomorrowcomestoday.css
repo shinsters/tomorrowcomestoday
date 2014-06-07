@@ -30,11 +30,15 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  height: 12em;
+  height: 9em;
   padding-top: 0;
   margin-left: 20px;
   overflow: hidden;
   vertical-align: top;
+}
+
+.card.game-card.played {
+    height: 11em;
 }
 
 .card.game-card:first-child {
@@ -252,7 +256,7 @@
 .panel-body
 {
     overflow-y: scroll;
-    height: 500px;
+    height: 20em;
 }
 
 ::-webkit-scrollbar-track
