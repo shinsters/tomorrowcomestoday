@@ -28,5 +28,10 @@
         /// Has this card been sent to the client or not
         /// </summary>
         public bool HasBeenSentToClient { get; set; }
+
+        /// <summary>
+        /// Has this card been dealt to a user
+        /// </summary>
+        public bool HasBeenDealt { get; set; }
     }
 }

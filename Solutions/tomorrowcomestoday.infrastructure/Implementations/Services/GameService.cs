@@ -68,6 +68,15 @@
                 activePlayer.PlayerState = PlayerState.IsNormalPlayerSelecting;
                 nextActivePlayer.PlayerState = PlayerState.IsActivePlayerWaiting;
             }
+            
+            // mark all played cards as such
+            foreach (var gamePlayer in game.GamePlayers)
+            {
+                foreach (var gameCard in gamePlayer.WhiteCardsInHand.Where(o => o.GameCardState == GameCardState.IsInPlay))
+                {
+                    gameCard.GameCardState = GameCardState.HasBeenPlayed;
+                }
+            }
 
             // then assign a selection to a user
             this.DealWhiteTurn(game);
@@ -221,26 +230,23 @@
             var numberOfCardsRequired = game.GamePlayers.Sum(gamePlayerState => CommonConcepts.HAND_SIZE - gamePlayerState.WhiteCardsInHand.Count(o => o.GameCardState == GameCardState.IsInHand));
 
             // get either the number of required cards, of if there aren't enough - every card that's left
-            var gameCardsToDeal = game.WhiteCardsInDeck.Count(o => o.GameCardState == GameCardState.IsAwaitingPlay)
+            var gameCardsToDeal = game.WhiteCardsInDeck.Count(o => !o.HasBeenDealt)
                              > numberOfCardsRequired
-                                 ? game.WhiteCardsInDeck.Take(numberOfCardsRequired).ToList()
-                                 : game.WhiteCardsInDeck;
+                                 ? game.WhiteCardsInDeck.Where(o => !o.HasBeenDealt).Take(numberOfCardsRequired).ToList()
+                                 : game.WhiteCardsInDeck.Where(o => !o.HasBeenDealt);
 
-            var playerCounter = 0;
-
+            // this whole thing can be made much more efficient, but trying not to prematurely optimise
             foreach (var gameCard in gameCardsToDeal)
             {
-                if (playerCounter > game.GamePlayers.Count - 1)
+                foreach (var gamePlayer in game.GamePlayers)
                 {
-                    playerCounter = 0;
+                    if (gamePlayer.WhiteCardsInHand.Count(o => o.GameCardState == GameCardState.IsAwaitingPlay) < CommonConcepts.HAND_SIZE && !gameCard.HasBeenDealt)
+                    {
+                        gamePlayer.WhiteCardsInHand.Add(gameCard);
+                        gameCard.HasBeenSentToClient = false;
+                        gameCard.HasBeenDealt = true;
+                    }
                 }
-
-                // players already have a player counter 
-                game.GamePlayers.First(o => o.GamePlayerId == playerCounter + 1).WhiteCardsInHand.Add(gameCard);
-                gameCard.GameCardState = GameCardState.IsInHand;
-                gameCard.HasBeenSentToClient = false;
-
-                playerCounter++;
             }
         }
 

@@ -165,7 +165,7 @@
                 currentGame.GameGuid,
                 connectedPlayer.ActiveGamePlayerGuid,
                 gameCard.GameCardGuid);
-
+                
                 switch (cardPlayState)
                 {
                     // move onto next state

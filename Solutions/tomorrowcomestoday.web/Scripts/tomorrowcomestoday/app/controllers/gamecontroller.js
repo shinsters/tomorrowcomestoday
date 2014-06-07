@@ -73,20 +73,19 @@ angular.module("app").controller('GameController', function ($scope) {
         $scope.activePlayerGuid = gameNextRoundStateViewModel.ActivePlayerGuid;
         $scope.blackCardText = gameNextRoundStateViewModel.BlackCardText;
         $scope.shownCards = [];
+        $scope.hasPlayed = false;
 
         var newCards = gameNextRoundStateViewModel.WhiteCards;
 
         // set the cards, could be more efficient but JS arrays aren't fun
         angular.forEach(newCards, function (newCard) {
-            var hasBeenSet = false;
             angular.forEach($scope.sentCardGuids, function (cardGuid) {
                 angular.forEach($scope.cardsInHand, function (cardInHand) {
-                    if (cardInHand.Guid === cardGuid && !hasBeenSet) {
+                    if (cardInHand.Guid === cardGuid) {
+                        alert("found played card " + cardInHand.Text);
                         var index = $scope.cardsInHand.indexOf(cardInHand);
                         $scope.cardsInHand[index].Guid = newCard.Guid;
                         $scope.cardsInHand[index].Text = newCard.Text;
-                        hasBeenSet = true;
-                        cardGuid = "";
                     }
                 });
             });
