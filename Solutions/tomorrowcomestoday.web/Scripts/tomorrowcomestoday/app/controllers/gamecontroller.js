@@ -27,6 +27,9 @@ angular.module("app").controller('GameController', function ($scope) {
     // number of shown cards on the main page
     $scope.shownCards = [];
 
+    // has this user played this turn
+    $scope.hasPlayed = false;
+
     // bind to local dom events
     $scope.sendChatMessage = function () {
         gameHub.server.sendChatMessage($scope.token, $scope.newChatMessage);
@@ -46,6 +49,8 @@ angular.module("app").controller('GameController', function ($scope) {
     $scope.sendCard = function(cardGuid) {
         gameHub.server.sendCard($scope.token, cardGuid);
         $scope.sentCardGuids.push(cardGuid);
+        $scope.hasPlayed = true;
+        $scope.$apply();
     }
 
     /// Called when the server says we can show a card
